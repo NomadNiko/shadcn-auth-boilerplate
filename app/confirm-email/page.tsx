@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
 import api from "@/lib/api";
 import { AUTH_CONFIRM_EMAIL_URL } from "@/lib/config";
+import { useAuthActions, useAuthTokens } from "@/hooks/use-auth";
 
 function ConfirmEmailContent() {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,6 +15,8 @@ function ConfirmEmailContent() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { setUser } = useAuthActions();
+  const { setTokensInfo } = useAuthTokens();
 
   useEffect(() => {
     const confirmEmail = async () => {
@@ -28,11 +31,23 @@ function ConfirmEmailContent() {
       try {
         const response = await api.post(AUTH_CONFIRM_EMAIL_URL, { hash });
         
-        if (response.status === 204) {
+        if (response.status === 200 && response.data) {
+          const loginData = response.data;
+
+          // Store tokens
+          setTokensInfo({
+            token: loginData.token,
+            refreshToken: loginData.refreshToken,
+            tokenExpires: loginData.tokenExpires,
+          });
+
+          // Set user data
+          setUser(loginData.user);
+
           setSuccess(true);
-          // Redirect to login after 3 seconds
+          // Redirect to dashboard after 3 seconds
           setTimeout(() => {
-            router.push("/auth/login?message=Email confirmed successfully! Please sign in.");
+            router.push("/dashboard");
           }, 3000);
         } else {
           setError("Email confirmation failed");
@@ -80,16 +95,16 @@ function ConfirmEmailContent() {
               Email Confirmed!
             </CardTitle>
             <CardDescription>
-              Your email address has been successfully verified. 
-              You will be redirected to the login page shortly.
+              Your email address has been successfully verified and you have been logged in. 
+              You will be redirected to your dashboard shortly.
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center">
             <Button 
-              onClick={() => router.push("/auth/login")}
+              onClick={() => router.push("/dashboard")}
               className="w-full"
             >
-              Go to Login
+              Go to Dashboard
             </Button>
           </CardContent>
         </Card>

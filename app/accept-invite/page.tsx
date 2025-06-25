@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,13 +10,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import api from "@/lib/api";
-import { AUTH_RESET_PASSWORD_URL } from "@/lib/config";
-import { Eye, EyeOff, Loader2, ArrowLeft, AlertTriangle, Key } from "lucide-react";
+import { AUTH_ACCEPT_INVITE_URL } from "@/lib/config";
 import { useAuthActions, useAuthTokens } from "@/hooks/use-auth";
+import { Eye, EyeOff, Loader2, AlertTriangle, UserPlus } from "lucide-react";
 
-const passwordChangeSchema = z.object({
+const acceptInviteSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
   passwordConfirmation: z.string().min(6, "Password confirmation is required"),
 }).refine((data) => data.password === data.passwordConfirmation, {
@@ -24,59 +23,31 @@ const passwordChangeSchema = z.object({
   path: ["passwordConfirmation"],
 });
 
-type PasswordChangeFormData = z.infer<typeof passwordChangeSchema>;
+type AcceptInviteFormData = z.infer<typeof acceptInviteSchema>;
 
-function PasswordChangeContent() {
+function AcceptInviteContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentTime, setCurrentTime] = useState(() => Date.now());
   const router = useRouter();
   const searchParams = useSearchParams();
   const { setUser } = useAuthActions();
   const { setTokensInfo } = useAuthTokens();
 
   const hash = searchParams.get("hash");
-  const expires = useMemo(() => {
-    const expiresParam = searchParams.get("expires");
-    return expiresParam ? Number(expiresParam) * 1000 : null; // Convert to milliseconds
-  }, [searchParams]);
 
-  const form = useForm<PasswordChangeFormData>({
-    resolver: zodResolver(passwordChangeSchema),
+  const form = useForm<AcceptInviteFormData>({
+    resolver: zodResolver(acceptInviteSchema),
     defaultValues: {
       password: "",
       passwordConfirmation: "",
     },
   });
 
-  // Update current time every second to check expiration
-  useEffect(() => {
-    if (!expires) return;
-
-    const interval = setInterval(() => {
-      const now = Date.now();
-      setCurrentTime(now);
-
-      if (expires < now) {
-        clearInterval(interval);
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [expires]);
-
-  const isExpired = expires ? expires < currentTime : false;
-
-  const onSubmit = async (data: PasswordChangeFormData) => {
+  const onSubmit = async (data: AcceptInviteFormData) => {
     if (!hash) {
-      setError("Invalid reset link");
-      return;
-    }
-
-    if (isExpired) {
-      setError("Reset link has expired");
+      setError("Invalid invite link");
       return;
     }
 
@@ -84,42 +55,42 @@ function PasswordChangeContent() {
     setError(null);
 
     try {
-      const response = await api.post(AUTH_RESET_PASSWORD_URL, {
+      const response = await api.post(AUTH_ACCEPT_INVITE_URL, {
         password: data.password,
         hash,
       });
 
-      if (response.status === 200 && response.data) {
-        const loginData = response.data;
+      const loginData = response.data;
 
-        // Store tokens
-        setTokensInfo({
-          token: loginData.token,
-          refreshToken: loginData.refreshToken,
-          tokenExpires: loginData.tokenExpires,
-        });
+      // Store tokens
+      setTokensInfo({
+        token: loginData.token,
+        refreshToken: loginData.refreshToken,
+        tokenExpires: loginData.tokenExpires,
+      });
 
-        // Set user data
-        setUser(loginData.user);
+      // Set user data
+      setUser(loginData.user);
 
-        // Redirect to dashboard
-        router.push("/dashboard");
-      } else {
-        setError("Failed to reset password. Please try again.");
-      }
+      // Redirect to dashboard
+      router.push("/dashboard");
     } catch (error: unknown) {
-      console.error("Password reset error:", error);
+      console.error("Accept invite error:", error);
       
       const axiosError = error as { response?: { status: number; data: { errors?: { [key: string]: string } } } };
       if (axiosError.response?.status === 422) {
         const errorData = axiosError.response.data;
-        if (errorData.errors?.password) {
+        if (errorData.errors?.hash) {
+          setError("Invalid or expired invite link");
+        } else if (errorData.errors?.password) {
           form.setError("password", { message: errorData.errors.password });
         } else {
-          setError("Invalid or expired reset link");
+          setError("Invalid or expired invite link");
         }
+      } else if (axiosError.response?.status === 404) {
+        setError("Invalid or expired invite link");
       } else {
-        setError("Failed to reset password. Please try again.");
+        setError("Failed to accept invite. Please try again.");
       }
     } finally {
       setIsLoading(false);
@@ -135,16 +106,16 @@ function PasswordChangeContent() {
               <AlertTriangle className="w-6 h-6 text-red-500" />
             </div>
             <CardTitle className="text-2xl font-bold text-red-500">
-              Invalid Reset Link
+              Invalid Invite Link
             </CardTitle>
             <CardDescription>
-              The password reset link is invalid or missing required parameters.
+              The invite link is invalid or missing required parameters.
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center">
-            <Link href="/auth/forgot-password">
+            <Link href="/auth/login">
               <Button className="w-full">
-                Request New Reset Link
+                Go to Login
               </Button>
             </Link>
           </CardContent>
@@ -158,25 +129,16 @@ function PasswordChangeContent() {
       <Card className="w-full max-w-md border-slate-700 bg-card card-glow">
         <CardHeader className="space-y-1 text-center">
           <div className="mx-auto w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
-            <Key className="w-6 h-6 text-primary" />
+            <UserPlus className="w-6 h-6 text-primary" />
           </div>
           <CardTitle className="text-2xl font-bold">
-            Reset Your Password
+            Complete Your Sign-up
           </CardTitle>
           <CardDescription>
-            Enter your new password below
+            You&apos;ve been invited to join HostelShifts. Set your password to get started.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {isExpired && (
-            <Alert className="mb-4 border-red-800/30 bg-red-950/20">
-              <AlertTriangle className="h-4 w-4 text-red-400" />
-              <AlertDescription className="text-red-400">
-                This password reset link has expired. Please request a new one.
-              </AlertDescription>
-            </Alert>
-          )}
-          
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
@@ -184,14 +146,14 @@ function PasswordChangeContent() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>New Password</FormLabel>
+                    <FormLabel>Password</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Input
                           {...field}
                           type={showPassword ? "text" : "password"}
-                          placeholder="Enter your new password"
-                          disabled={isLoading || isExpired}
+                          placeholder="Enter your password"
+                          disabled={isLoading}
                         />
                         <Button
                           type="button"
@@ -199,7 +161,7 @@ function PasswordChangeContent() {
                           size="sm"
                           className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                           onClick={() => setShowPassword(!showPassword)}
-                          disabled={isLoading || isExpired}
+                          disabled={isLoading}
                         >
                           {showPassword ? (
                             <EyeOff className="h-4 w-4" />
@@ -219,14 +181,14 @@ function PasswordChangeContent() {
                 name="passwordConfirmation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Confirm New Password</FormLabel>
+                    <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Input
                           {...field}
                           type={showPasswordConfirmation ? "text" : "password"}
-                          placeholder="Confirm your new password"
-                          disabled={isLoading || isExpired}
+                          placeholder="Confirm your password"
+                          disabled={isLoading}
                         />
                         <Button
                           type="button"
@@ -234,7 +196,7 @@ function PasswordChangeContent() {
                           size="sm"
                           className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                           onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
-                          disabled={isLoading || isExpired}
+                          disabled={isLoading}
                         >
                           {showPasswordConfirmation ? (
                             <EyeOff className="h-4 w-4" />
@@ -258,15 +220,15 @@ function PasswordChangeContent() {
               <Button 
                 type="submit" 
                 className="w-full" 
-                disabled={isLoading || isExpired}
+                disabled={isLoading}
               >
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Resetting password...
+                    Completing sign-up...
                   </>
                 ) : (
-                  "Reset Password"
+                  "Complete Sign-up"
                 )}
               </Button>
             </form>
@@ -274,25 +236,18 @@ function PasswordChangeContent() {
         </CardContent>
         <CardFooter className="flex flex-col space-y-2">
           <p className="text-sm text-muted-foreground text-center">
-            Remember your password?{" "}
+            Already have an account?{" "}
             <Link href="/auth/login" className="text-primary hover:underline">
               Sign in
             </Link>
           </p>
-          <Link 
-            href="/auth/forgot-password" 
-            className="text-sm text-muted-foreground hover:text-foreground flex items-center"
-          >
-            <ArrowLeft className="mr-1 h-3 w-3" />
-            Request new reset link
-          </Link>
         </CardFooter>
       </Card>
     </div>
   );
 }
 
-export default function PasswordChangePage() {
+export default function AcceptInvitePage() {
   return (
     <Suspense 
       fallback={
@@ -310,7 +265,7 @@ export default function PasswordChangePage() {
         </div>
       }
     >
-      <PasswordChangeContent />
+      <AcceptInviteContent />
     </Suspense>
   );
 }
