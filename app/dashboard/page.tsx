@@ -282,7 +282,7 @@ export default function DashboardPage() {
               <p className="text-sm text-muted-foreground mb-4">
                 {t("welcomeCard.description")}
               </p>
-              <div className="space-y-2">
+              <div className="space-y-3 mb-4">
                 <p className="text-xs text-slate-400">
                   <strong>{t("welcomeCard.userId")}</strong> {userId}
                 </p>
@@ -293,6 +293,12 @@ export default function DashboardPage() {
                   <strong>{t("welcomeCard.authentication")}</strong> {t("welcomeCard.authMethod")}
                 </p>
               </div>
+              <Button 
+                onClick={() => router.push("/schedule-manager")}
+                className="w-full bg-primary hover:bg-primary/90"
+              >
+                Open Schedule Manager
+              </Button>
             </CardContent>
           </Card>
         </div>
