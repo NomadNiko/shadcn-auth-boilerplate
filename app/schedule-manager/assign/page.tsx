@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, ArrowRight, GripVertical } from "lucide-react";
+import { ArrowLeft, ArrowRight, GripVertical, Copy, Trash2 } from "lucide-react";
 import { 
   DndContext, 
   DragEndEvent, 
@@ -26,6 +26,7 @@ import {
   type ScheduleShift,
   type Employee 
 } from "@/types/schedule";
+import { CreateShiftTypeDialog } from "@/components/create-shift-type-dialog";
 
 const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const dayNumbers = [15, 16, 17, 18, 19, 20, 21];
@@ -47,7 +48,21 @@ function DroppableEmployeeDay({ employeeId, dayIndex, children }: { employeeId: 
   );
 }
 
-function DraggableShiftType({ shiftType }: { shiftType: ShiftType }) {
+function DraggableShiftType({ 
+  shiftType, 
+  isSelected, 
+  onSelect,
+  selectedCount,
+  quantity,
+  onQuantityChange
+}: { 
+  shiftType: ShiftType; 
+  isSelected: boolean;
+  onSelect: (shiftType: ShiftType, selected: boolean) => void;
+  selectedCount: number;
+  quantity: number;
+  onQuantityChange: (shiftTypeId: string, quantity: number) => void;
+}) {
   const {
     attributes,
     listeners,
@@ -63,23 +78,79 @@ function DraggableShiftType({ shiftType }: { shiftType: ShiftType }) {
     transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
   } : undefined;
 
+  const handleSelectClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onSelect(shiftType, !isSelected);
+  };
+
+  const handleQuantityChange = (delta: number, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const newQuantity = Math.max(1, Math.min(9, quantity + delta));
+    onQuantityChange(shiftType.id, newQuantity);
+  };
+
   return (
     <div
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
-      className={`p-2 rounded border cursor-move ${
+      className={`rounded-lg border transition-all relative flex ${
         isDragging ? 'opacity-50' : ''
-      } ${shiftTypeColors[shiftType.colorIndex]}`}
+      } ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''} ${shiftTypeColors[shiftType.colorIndex]}`}
     >
-      <div className="flex items-center mb-1">
-        <GripVertical className="w-3 h-3 opacity-60 mr-1" />
-        <div className="text-xs font-medium">{shiftType.name}</div>
+      {/* Left 60% - Draggable area */}
+      <div
+        {...attributes}
+        {...listeners}
+        className="flex-1 p-2 cursor-move flex items-center space-x-2"
+        style={{ width: '60%' }}
+      >
+        <GripVertical className="w-4 h-4 opacity-60 flex-shrink-0" />
+        <div className="flex-1">
+          <div className="text-sm font-medium">{shiftType.name}</div>
+          <div className="text-xs opacity-90">
+            {shiftType.startTime} - {shiftType.endTime}
+          </div>
+        </div>
       </div>
-      <div className="text-xs opacity-90">
-        {shiftType.startTime} - {shiftType.endTime}
+
+      {/* Middle 25% - Quantity selector */}
+      <div className="flex items-center justify-center p-1 border-l border-current/20 space-x-1" style={{ width: '25%' }}>
+        <button
+          onClick={(e) => handleQuantityChange(-1, e)}
+          className="w-4 h-4 text-xs font-bold hover:bg-current/20 rounded flex items-center justify-center"
+        >
+          −
+        </button>
+        <div className="text-xs font-bold px-1">{quantity}</div>
+        <button
+          onClick={(e) => handleQuantityChange(1, e)}
+          className="w-4 h-4 text-xs font-bold hover:bg-current/20 rounded flex items-center justify-center"
+        >
+          +
+        </button>
       </div>
+
+      {/* Right 15% - Selection area */}
+      <div
+        onClick={handleSelectClick}
+        className="flex items-center justify-center cursor-pointer p-2 border-l border-current/20"
+        style={{ width: '15%' }}
+      >
+        <div className={`w-4 h-4 border border-current rounded flex items-center justify-center text-xs font-bold ${
+          isSelected ? 'bg-primary text-primary-foreground' : 'opacity-60 hover:opacity-100'
+        }`}>
+          {isSelected ? '✓' : ''}
+        </div>
+      </div>
+
+      {/* Selection count badge */}
+      {isSelected && selectedCount > 1 && (
+        <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+          {selectedCount}
+        </div>
+      )}
     </div>
   );
 }
@@ -406,6 +477,10 @@ export default function AssignShiftsPage() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [draggedItem, setDraggedItem] = useState<{ type: string; data: ShiftType | Employee | ScheduleShift } | null>(null);
   const [selectedRequiredShifts, setSelectedRequiredShifts] = useState<Set<string>>(new Set());
+  const [availableShiftTypes, setAvailableShiftTypes] = useState<ShiftType[]>(mockShiftTypes);
+  const [sidebarView, setSidebarView] = useState<'employees' | 'shifts'>('employees');
+  const [selectedShiftTypes, setSelectedShiftTypes] = useState<Set<string>>(new Set());
+  const [shiftQuantities, setShiftQuantities] = useState<Map<string, number>>(new Map());
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -579,18 +654,35 @@ export default function AssignShiftsPage() {
     // Handle dropping shift type onto unassigned day (add new required shift)
     if (draggedItem.type === 'shiftType' && overId.startsWith('unassigned-day-')) {
       const dayIndex = parseInt(overId.replace('unassigned-day-', ''));
-      const shiftType = draggedItem.data as ShiftType;
+      const draggedShiftType = draggedItem.data as ShiftType;
 
-      // Always add new required shift when dropped on unassigned area
-      const newShift: ScheduleShift = {
-        id: `unassigned-${Date.now()}`,
-        shiftTypeId: shiftType.id,
-        shiftType,
-        date: weekDates[dayIndex],
-        order: unassignedShifts.filter(s => s.date === weekDates[dayIndex]).length + 1
-      };
+      // If there are selected shift types and the dragged one is selected, create shifts for all selected
+      const shiftTypesToCreate = selectedShiftTypes.has(draggedShiftType.id) && selectedShiftTypes.size > 1
+        ? availableShiftTypes.filter(st => selectedShiftTypes.has(st.id))
+        : [draggedShiftType];
 
-      setUnassignedShifts(prev => [...prev, newShift]);
+      const currentShiftsCount = unassignedShifts.filter(s => s.date === weekDates[dayIndex]).length;
+      
+      // Create multiple instances based on quantity settings
+      const newShifts: ScheduleShift[] = [];
+      let orderCounter = currentShiftsCount + 1;
+      
+      shiftTypesToCreate.forEach((shiftType) => {
+        const quantity = getQuantityForShiftType(shiftType.id);
+        for (let i = 0; i < quantity; i++) {
+          newShifts.push({
+            id: `unassigned-${Date.now()}-${shiftType.id}-${i}`,
+            shiftTypeId: shiftType.id,
+            shiftType: shiftType,
+            date: weekDates[dayIndex],
+            order: orderCounter++
+          });
+        }
+      });
+
+      setUnassignedShifts(prev => [...prev, ...newShifts]);
+      
+      // Keep selections so user can repeat the action on other days
     }
 
     setActiveId(null);
@@ -632,6 +724,65 @@ export default function AssignShiftsPage() {
     setSelectedRequiredShifts(new Set());
   };
 
+  const handleCreateShiftType = (newShiftTypeData: Omit<ShiftType, 'id'>) => {
+    const newShiftType: ShiftType = {
+      ...newShiftTypeData,
+      id: `custom-${Date.now()}`
+    };
+    setAvailableShiftTypes(prev => [...prev, newShiftType]);
+  };
+
+  const handleShiftTypeSelect = (shiftType: ShiftType, selected: boolean) => {
+    setSelectedShiftTypes(prev => {
+      const newSet = new Set(prev);
+      if (selected) {
+        newSet.add(shiftType.id);
+      } else {
+        newSet.delete(shiftType.id);
+      }
+      return newSet;
+    });
+  };
+
+  const clearAllSelections = () => {
+    setSelectedShiftTypes(new Set());
+  };
+
+  const handleQuantityChange = (shiftTypeId: string, quantity: number) => {
+    setShiftQuantities(prev => new Map(prev.set(shiftTypeId, quantity)));
+  };
+
+  const getQuantityForShiftType = (shiftTypeId: string): number => {
+    return shiftQuantities.get(shiftTypeId) || 1;
+  };
+
+  const copyPreviousWeek = () => {
+    // Add some additional shifts when copying
+    const additionalShifts: ScheduleShift[] = [
+      {
+        id: `copy-${Date.now()}-1`,
+        shiftTypeId: '5',
+        shiftType: mockShiftTypes[4],
+        date: weekDates[2], // Wednesday
+        order: 4
+      },
+      {
+        id: `copy-${Date.now()}-2`,
+        shiftTypeId: '6',
+        shiftType: mockShiftTypes[5],
+        date: weekDates[4], // Friday
+        order: 4
+      }
+    ];
+    
+    setUnassignedShifts(prev => [...prev, ...additionalShifts]);
+  };
+
+  const clearAllShifts = () => {
+    setScheduleShifts([]);
+    setUnassignedShifts([]);
+  };
+
   return (
     <DndContext
       sensors={sensors}
@@ -669,22 +820,8 @@ export default function AssignShiftsPage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-12 gap-6">
-            {/* Employees List */}
-            <div className="col-span-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Employees</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {mockEmployees.map((employee) => (
-                    <DraggableEmployee key={employee.id} employee={employee} />
-                  ))}
-                </CardContent>
-              </Card>
-            </div>
-
             {/* Calendar Grid */}
-            <div className="col-span-8">
+            <div className="col-span-9">
               <div className="mb-4 flex items-center justify-center space-x-4">
                 <Button variant="outline" size="sm">
                   <ArrowLeft className="w-4 h-4" />
@@ -785,16 +922,108 @@ export default function AssignShiftsPage() {
 
             </div>
 
-            {/* Available Shifts */}
-            <div className="col-span-2">
+            {/* Sidebar */}
+            <div className="col-span-3">
+              {/* Quick Actions */}
               <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base">Available Shifts</CardTitle>
+                <CardHeader>
+                  <CardTitle className="text-lg">Quick Actions</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-2">
-                  {mockShiftTypes.map((shiftType) => (
-                    <DraggableShiftType key={shiftType.id} shiftType={shiftType} />
-                  ))}
+                <CardContent className="space-y-3">
+                  <Button 
+                    variant="outline" 
+                    onClick={copyPreviousWeek}
+                    className="w-full justify-start"
+                  >
+                    <Copy className="w-4 h-4 mr-2" />
+                    Copy Previous Week
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={clearAllShifts}
+                    className="w-full justify-start"
+                  >
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Clear All Shifts
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card className="mt-4">
+                <CardHeader className="pb-3">
+                  {/* Toggle Buttons */}
+                  <div className="flex justify-center mb-4">
+                    <div className="flex bg-muted rounded-lg p-1">
+                      <Button
+                        variant={sidebarView === 'employees' ? 'default' : 'ghost'}
+                        size="sm"
+                        onClick={() => setSidebarView('employees')}
+                        className="rounded-md"
+                      >
+                        Employees
+                      </Button>
+                      <Button
+                        variant={sidebarView === 'shifts' ? 'default' : 'ghost'}
+                        size="sm"
+                        onClick={() => setSidebarView('shifts')}
+                        className="rounded-md"
+                      >
+                        Available Shifts
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <CardTitle className="text-lg text-center">
+                    {sidebarView === 'employees' ? 'Employees' : 'Available Shifts'}
+                  </CardTitle>
+                  {sidebarView === 'shifts' && (
+                    <p className="text-xs text-muted-foreground text-center mt-2">
+                      Set quantities with <strong>+/-</strong>, select with <strong>✓</strong>, then drag to add shifts
+                    </p>
+                  )}
+                </CardHeader>
+                
+                <CardContent className="space-y-3">
+                  {sidebarView === 'employees' ? (
+                    // Employees List
+                    <>
+                      {mockEmployees.map((employee) => (
+                        <DraggableEmployee key={employee.id} employee={employee} />
+                      ))}
+                    </>
+                  ) : (
+                    // Available Shifts
+                    <>
+                      {selectedShiftTypes.size > 0 && (
+                        <div className="flex justify-between items-center p-2 bg-primary/10 rounded-lg border border-primary/20 mb-3">
+                          <span className="text-sm font-medium">
+                            {selectedShiftTypes.size} shift type{selectedShiftTypes.size > 1 ? 's' : ''} selected
+                          </span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={clearAllSelections}
+                            className="text-xs h-6"
+                          >
+                            Clear
+                          </Button>
+                        </div>
+                      )}
+                      
+                      {availableShiftTypes.map((shiftType) => (
+                        <DraggableShiftType 
+                          key={shiftType.id} 
+                          shiftType={shiftType}
+                          isSelected={selectedShiftTypes.has(shiftType.id)}
+                          onSelect={handleShiftTypeSelect}
+                          selectedCount={selectedShiftTypes.size}
+                          quantity={getQuantityForShiftType(shiftType.id)}
+                          onQuantityChange={handleQuantityChange}
+                        />
+                      ))}
+                      <CreateShiftTypeDialog onCreateShiftType={handleCreateShiftType} />
+                    </>
+                  )}
                 </CardContent>
               </Card>
             </div>
@@ -805,11 +1034,46 @@ export default function AssignShiftsPage() {
           {activeId && draggedItem ? (
             <div className="opacity-80">
               {draggedItem.type === 'shiftType' && (
-                <div className={`p-3 rounded-lg border ${shiftTypeColors[(draggedItem.data as ShiftType).colorIndex]}`}>
-                  <div className="text-sm font-medium">{(draggedItem.data as ShiftType).name}</div>
-                  <div className="text-xs opacity-90">
-                    {(draggedItem.data as ShiftType).startTime} - {(draggedItem.data as ShiftType).endTime}
-                  </div>
+                <div className="relative">
+                  {selectedShiftTypes.has((draggedItem.data as ShiftType).id) && selectedShiftTypes.size > 1 ? (
+                    // Show clean preview for multiple selection with total count
+                    (() => {
+                      const totalShifts = Array.from(selectedShiftTypes).reduce((total, shiftTypeId) => {
+                        return total + getQuantityForShiftType(shiftTypeId);
+                      }, 0);
+                      return (
+                        <div className={`p-3 rounded-lg border shadow-lg ${shiftTypeColors[(draggedItem.data as ShiftType).colorIndex]}`}>
+                          <div className="text-sm font-medium">
+                            {selectedShiftTypes.size} shift types selected
+                          </div>
+                          <div className="text-xs opacity-90">
+                            Dropping {totalShifts} shifts total
+                          </div>
+                          <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+                            {totalShifts}
+                          </div>
+                        </div>
+                      );
+                    })()
+                  ) : (
+                    // Show single shift type with quantity
+                    (() => {
+                      const quantity = getQuantityForShiftType((draggedItem.data as ShiftType).id);
+                      return (
+                        <div className={`p-3 rounded-lg border shadow-lg ${shiftTypeColors[(draggedItem.data as ShiftType).colorIndex]}`}>
+                          <div className="text-sm font-medium">{(draggedItem.data as ShiftType).name}</div>
+                          <div className="text-xs opacity-90">
+                            {(draggedItem.data as ShiftType).startTime} - {(draggedItem.data as ShiftType).endTime}
+                          </div>
+                          {quantity > 1 && (
+                            <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+                              {quantity}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()
+                  )}
                 </div>
               )}
               {draggedItem.type === 'employee' && (

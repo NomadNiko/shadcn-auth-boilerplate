@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, ArrowRight, Plus, Copy, Trash2, GripVertical } from "lucide-react";
+import { ArrowLeft, ArrowRight, Copy, Trash2, GripVertical } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { 
   DndContext, 
@@ -25,6 +25,7 @@ import {
   type ShiftType, 
   type ScheduleShift 
 } from "@/types/schedule";
+import { CreateShiftTypeDialog } from "@/components/create-shift-type-dialog";
 
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -102,33 +103,32 @@ function DraggableShiftType({
       <div
         {...attributes}
         {...listeners}
-        className="flex-1 p-3 cursor-move"
+        className="flex-1 p-2 cursor-move flex items-center space-x-2"
         style={{ width: '60%' }}
       >
-        <div className="flex items-center justify-between mb-1">
-          <GripVertical className="w-4 h-4 opacity-60" />
-          <span></span>
-        </div>
-        <div className="text-sm font-medium">{shiftType.name}</div>
-        <div className="text-xs opacity-90">
-          {shiftType.startTime} - {shiftType.endTime}
+        <GripVertical className="w-4 h-4 opacity-60 flex-shrink-0" />
+        <div className="flex-1">
+          <div className="text-sm font-medium">{shiftType.name}</div>
+          <div className="text-xs opacity-90">
+            {shiftType.startTime} - {shiftType.endTime}
+          </div>
         </div>
       </div>
 
       {/* Middle 25% - Quantity selector */}
-      <div className="flex flex-col items-center justify-center p-1 border-l border-current/20" style={{ width: '25%' }}>
-        <button
-          onClick={(e) => handleQuantityChange(1, e)}
-          className="w-4 h-4 text-xs font-bold hover:bg-current/20 rounded flex items-center justify-center"
-        >
-          +
-        </button>
-        <div className="text-xs font-bold py-1">{quantity}</div>
+      <div className="flex items-center justify-center p-1 border-l border-current/20 space-x-1" style={{ width: '25%' }}>
         <button
           onClick={(e) => handleQuantityChange(-1, e)}
           className="w-4 h-4 text-xs font-bold hover:bg-current/20 rounded flex items-center justify-center"
         >
           −
+        </button>
+        <div className="text-xs font-bold px-1">{quantity}</div>
+        <button
+          onClick={(e) => handleQuantityChange(1, e)}
+          className="w-4 h-4 text-xs font-bold hover:bg-current/20 rounded flex items-center justify-center"
+        >
+          +
         </button>
       </div>
 
@@ -177,22 +177,20 @@ function DraggableScheduleShift({ shift, onRemove }: { shift: ScheduleShift; onR
       style={style}
       {...attributes}
       {...listeners}
-      className={`p-3 rounded-lg border relative group cursor-move ${
+      className={`p-2 rounded-lg border relative group cursor-move ${
         isDragging ? 'opacity-50' : ''
       } ${shiftTypeColors[shift.shiftType.colorIndex]}`}
     >
-      <div className="flex items-center justify-between mb-1">
-        <span></span>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onRemove(shift.id);
-          }}
-          className="opacity-60 hover:opacity-100 text-sm font-bold"
-        >
-          ×
-        </button>
-      </div>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onRemove(shift.id);
+        }}
+        className="absolute opacity-60 hover:opacity-100 text-lg font-bold leading-none"
+        style={{ top: '1px', right: '1px' }}
+      >
+        ×
+      </button>
       <div className="text-sm font-medium">{shift.shiftType.name}</div>
       <div className="text-xs opacity-90">
         {shift.shiftType.startTime} - {shift.shiftType.endTime}
@@ -372,6 +370,7 @@ export default function RequiredShiftsPage() {
   const [draggedShiftType, setDraggedShiftType] = useState<ShiftType | null>(null);
   const [selectedShiftTypes, setSelectedShiftTypes] = useState<Set<string>>(new Set());
   const [shiftQuantities, setShiftQuantities] = useState<Map<string, number>>(new Map());
+  const [availableShiftTypes, setAvailableShiftTypes] = useState<ShiftType[]>(mockShiftTypes);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -406,7 +405,7 @@ export default function RequiredShiftsPage() {
 
       // If there are selected shift types and the dragged one is selected, create shifts for all selected
       const shiftTypesToCreate = selectedShiftTypes.has(draggedShiftType.id) && selectedShiftTypes.size > 1
-        ? mockShiftTypes.filter(st => selectedShiftTypes.has(st.id))
+        ? availableShiftTypes.filter(st => selectedShiftTypes.has(st.id))
         : [draggedShiftType];
 
       const currentShiftsCount = scheduleShifts.filter(s => s.date === weekDates[dayIndex]).length;
@@ -501,6 +500,14 @@ export default function RequiredShiftsPage() {
     return shiftQuantities.get(shiftTypeId) || 1;
   };
 
+  const handleCreateShiftType = (newShiftTypeData: Omit<ShiftType, 'id'>) => {
+    const newShiftType: ShiftType = {
+      ...newShiftTypeData,
+      id: `custom-${Date.now()}`
+    };
+    setAvailableShiftTypes(prev => [...prev, newShiftType]);
+  };
+
   return (
     <DndContext
       sensors={sensors}
@@ -526,15 +533,11 @@ export default function RequiredShiftsPage() {
                   <Button variant="link" className="text-muted-foreground">Reports</Button>
                 </nav>
               </div>
-              <Button className="bg-primary hover:bg-primary/90">
-                <Plus className="w-4 h-4 mr-2" />
-                Create Shift Type
-              </Button>
             </div>
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-6">
           {/* Page Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-4">
@@ -634,7 +637,7 @@ export default function RequiredShiftsPage() {
                     </div>
                   )}
                   
-                  {mockShiftTypes.map((shiftType) => (
+                  {availableShiftTypes.map((shiftType) => (
                     <DraggableShiftType 
                       key={shiftType.id} 
                       shiftType={shiftType}
@@ -646,10 +649,7 @@ export default function RequiredShiftsPage() {
                     />
                   ))}
                   
-                  <Button variant="outline" className="w-full mt-4">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Create Shift Type
-                  </Button>
+                  <CreateShiftTypeDialog onCreateShiftType={handleCreateShiftType} />
                 </CardContent>
               </Card>
             </div>

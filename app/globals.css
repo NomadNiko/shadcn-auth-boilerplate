@@ -41,7 +41,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  
+
   /* Shift color palette - Dark theme with light text */
   --color-shift-0: var(--shift-0);
   --color-shift-1: var(--shift-1);
@@ -88,17 +88,17 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
-  
+
   /* Shift color palette - Dark theme with more pop */
-  --shift-0: oklch(0.38 0.15 230); /* Vibrant dark slate blue */
-  --shift-1: oklch(0.32 0.20 240); /* Vibrant dark blue */
-  --shift-2: oklch(0.35 0.18 200); /* Vibrant dark cyan */
-  --shift-3: oklch(0.37 0.16 180); /* Vibrant dark teal */
-  --shift-4: oklch(0.40 0.17 160); /* Vibrant dark emerald */
-  --shift-5: oklch(0.33 0.22 260); /* Vibrant dark indigo */
-  --shift-6: oklch(0.36 0.23 280); /* Vibrant dark purple */
-  --shift-7: oklch(0.38 0.25 300); /* Vibrant dark violet */
-  --shift-8: oklch(0.40 0.18 220); /* Vibrant dark sky blue */
+  --shift-0: oklch(56.379% 0.13634 121.762); /* Vibrant dark slate blue */
+  --shift-1: oklch(37.979% 0.17723 262.13); /* Vibrant dark blue */
+  --shift-2: oklch(46.229% 0.10551 62.893); /* Vibrant dark cyan */
+  --shift-3: oklch(43.735% 0.07475 173.299); /* Vibrant dark teal */
+  --shift-4: oklch(39.589% 0.17856 308.689); /* Vibrant dark emerald */
+  --shift-5: oklch(44.926% 0.18437 29.223); /* Vibrant dark indigo */
+  --shift-6: oklch(44.879% 0.1369 348.041); /* Vibrant dark purple */
+  --shift-7: oklch(64.945% 0.10708 218.941); /* Vibrant dark violet */
+  --shift-8: oklch(0.4 0.18 220); /* Vibrant dark sky blue */
   --shift-9: oklch(0.28 0.18 245); /* Vibrant very dark blue */
 }
 
@@ -134,17 +134,17 @@
   --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
-  
-  /* Shift color palette - Vibrant dark colors for dark mode */
-  --shift-0: oklch(0.38 0.15 230); /* Vibrant dark slate blue */
-  --shift-1: oklch(0.32 0.20 240); /* Vibrant dark blue */
-  --shift-2: oklch(0.35 0.18 200); /* Vibrant dark cyan */
-  --shift-3: oklch(0.37 0.16 180); /* Vibrant dark teal */
-  --shift-4: oklch(0.40 0.17 160); /* Vibrant dark emerald */
-  --shift-5: oklch(0.33 0.22 260); /* Vibrant dark indigo */
-  --shift-6: oklch(0.36 0.23 280); /* Vibrant dark purple */
-  --shift-7: oklch(0.38 0.25 300); /* Vibrant dark violet */
-  --shift-8: oklch(0.40 0.18 220); /* Vibrant dark sky blue */
+
+  /* Shift color palette - Dark theme with more pop */
+  --shift-0: oklch(56.379% 0.13634 121.762); /* Vibrant dark slate blue */
+  --shift-1: oklch(37.979% 0.17723 262.13); /* Vibrant dark blue */
+  --shift-2: oklch(46.229% 0.10551 62.893); /* Vibrant dark cyan */
+  --shift-3: oklch(43.735% 0.07475 173.299); /* Vibrant dark teal */
+  --shift-4: oklch(39.589% 0.17856 308.689); /* Vibrant dark emerald */
+  --shift-5: oklch(44.926% 0.18437 29.223); /* Vibrant dark indigo */
+  --shift-6: oklch(44.879% 0.1369 348.041); /* Vibrant dark purple */
+  --shift-7: oklch(64.945% 0.10708 218.941); /* Vibrant dark violet */
+  --shift-8: oklch(0.4 0.18 220); /* Vibrant dark sky blue */
   --shift-9: oklch(0.28 0.18 245); /* Vibrant very dark blue */
 }
 
@@ -154,19 +154,35 @@
   }
   body {
     @apply bg-background text-foreground;
-    background-image: radial-gradient(at 40% 20%, oklch(0.159 0.042 264.695) 0px, transparent 50%),
-                      radial-gradient(at 80% 0%, oklch(0.179 0.041 265.755) 0px, transparent 50%),
-                      radial-gradient(at 0% 50%, oklch(0.149 0.041 260.031) 0px, transparent 50%);
+    background-image: radial-gradient(
+        at 40% 20%,
+        oklch(0.159 0.042 264.695) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 80% 0%,
+        oklch(0.179 0.041 265.755) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 0% 50%,
+        oklch(0.149 0.041 260.031) 0px,
+        transparent 50%
+      );
   }
-  
+
   .card-glow {
     @apply relative;
   }
-  
+
   .card-glow::before {
-    content: '';
+    content: "";
     @apply absolute inset-0 rounded-lg opacity-20 pointer-events-none;
-    background: linear-gradient(135deg, oklch(0.488 0.243 264.376) 0%, transparent 50%);
+    background: linear-gradient(
+      135deg,
+      oklch(0.488 0.243 264.376) 0%,
+      transparent 50%
+    );
     filter: blur(20px);
     z-index: -1;
   }

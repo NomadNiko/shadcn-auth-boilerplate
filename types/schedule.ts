@@ -121,18 +121,18 @@ export const mockSchedule: Schedule = {
   status: "draft"
 };
 
-// Color mapping for shift types - Vibrant dark theme with blue-tinted light text
+// Color mapping for shift types - Using custom CSS variables with dark theme
 export const shiftTypeColors = [
-  "bg-slate-700 border-slate-600 text-blue-50", // 0 - Dark slate blue
-  "bg-blue-800 border-blue-700 text-blue-50", // 1 - Dark blue
-  "bg-cyan-800 border-cyan-700 text-blue-50", // 2 - Dark cyan (blue-green)
-  "bg-teal-800 border-teal-700 text-blue-50", // 3 - Dark teal (green-blue)
-  "bg-emerald-800 border-emerald-700 text-blue-50", // 4 - Dark emerald (blue-green)
-  "bg-indigo-800 border-indigo-700 text-blue-50", // 5 - Dark indigo (blue-purple)
-  "bg-purple-800 border-purple-700 text-blue-50", // 6 - Dark purple (blue-purple)
-  "bg-violet-800 border-violet-700 text-blue-50", // 7 - Dark violet (blue-purple)
-  "bg-sky-800 border-sky-700 text-blue-50", // 8 - Dark sky blue
-  "bg-blue-900 border-blue-800 text-blue-50" // 9 - Very dark blue
+  "text-blue-50 border-2 bg-shift-0 border-shift-0", // 0 - Custom shift-0 color
+  "text-blue-50 border-2 bg-shift-1 border-shift-1", // 1 - Custom shift-1 color  
+  "text-blue-50 border-2 bg-shift-2 border-shift-2", // 2 - Custom shift-2 color
+  "text-blue-50 border-2 bg-shift-3 border-shift-3", // 3 - Custom shift-3 color
+  "text-blue-50 border-2 bg-shift-4 border-shift-4", // 4 - Custom shift-4 color
+  "text-blue-50 border-2 bg-shift-5 border-shift-5", // 5 - Custom shift-5 color
+  "text-blue-50 border-2 bg-shift-6 border-shift-6", // 6 - Custom shift-6 color
+  "text-blue-50 border-2 bg-shift-7 border-shift-7", // 7 - Custom shift-7 color
+  "text-blue-50 border-2 bg-shift-8 border-shift-8", // 8 - Custom shift-8 color
+  "text-blue-50 border-2 bg-shift-9 border-shift-9"  // 9 - Custom shift-9 color
 ];
 
 // Utility functions
