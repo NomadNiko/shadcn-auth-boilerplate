@@ -12,6 +12,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import api from "@/lib/api";
 import { AUTH_FORGOT_PASSWORD_URL } from "@/lib/config";
 import { Loader2, ArrowLeft, Mail, CheckCircle } from "lucide-react";
+import { useTranslation } from "@/src/services/i18n";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 const forgotPasswordSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -23,6 +25,7 @@ export default function ForgotPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const { t } = useTranslation("forgot-password");
 
   const form = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -60,16 +63,19 @@ export default function ForgotPasswordPage() {
   if (success) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+        <div className="absolute top-4 right-4">
+          <LanguageSwitcher />
+        </div>
         <Card className="w-full max-w-md border-slate-700 bg-card card-glow">
           <CardHeader className="text-center space-y-4">
             <div className="mx-auto w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
               <CheckCircle className="w-6 h-6 text-primary" />
             </div>
             <CardTitle className="text-2xl font-bold">
-              Email Sent!
+              {t("messages.success")}
             </CardTitle>
             <CardDescription>
-              We&apos;ve sent password reset instructions to your email address.
+              {t("messages.success")}
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center">
@@ -96,16 +102,19 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <Card className="w-full max-w-md border-slate-700 bg-card card-glow">
         <CardHeader className="space-y-1 text-center">
           <div className="mx-auto w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
             <Mail className="w-6 h-6 text-primary" />
           </div>
           <CardTitle className="text-2xl font-bold">
-            Forgot Password?
+            {t("title")}
           </CardTitle>
           <CardDescription>
-            Enter your email address and we&apos;ll send you a link to reset your password
+            {t("subtitle")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -116,12 +125,12 @@ export default function ForgotPasswordPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email Address</FormLabel>
+                    <FormLabel>{t("inputs.email.label")}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type="email"
-                        placeholder="admin@nomadsoft.us"
+                        placeholder={t("inputs.email.placeholder")}
                         disabled={isLoading}
                       />
                     </FormControl>
@@ -140,10 +149,10 @@ export default function ForgotPasswordPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Sending reset email...
+                    {t("actions.submit")}...
                   </>
                 ) : (
-                  "Send Reset Email"
+                  t("actions.submit")
                 )}
               </Button>
             </form>
@@ -151,9 +160,8 @@ export default function ForgotPasswordPage() {
         </CardContent>
         <CardFooter className="flex flex-col space-y-2">
           <p className="text-sm text-muted-foreground text-center">
-            Remember your password?{" "}
             <Link href="/auth/login" className="text-primary hover:underline">
-              Sign in
+              {t("actions.back")}
             </Link>
           </p>
           <Link 
@@ -161,7 +169,7 @@ export default function ForgotPasswordPage() {
             className="text-sm text-muted-foreground hover:text-foreground flex items-center"
           >
             <ArrowLeft className="mr-1 h-3 w-3" />
-            Back to login
+            {t("actions.back")}
           </Link>
         </CardFooter>
       </Card>

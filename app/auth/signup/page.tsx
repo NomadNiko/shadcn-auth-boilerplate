@@ -13,6 +13,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import api from "@/lib/api";
 import { AUTH_REGISTER_URL } from "@/lib/config";
 import { Eye, EyeOff, Loader2, ArrowLeft } from "lucide-react";
+import { useTranslation } from "@/src/services/i18n";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 const signupSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -29,6 +31,7 @@ export default function SignupPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+  const { t } = useTranslation("sign-up");
 
   const form = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
@@ -79,13 +82,16 @@ export default function SignupPage() {
   if (success) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+        <div className="absolute top-4 right-4">
+          <LanguageSwitcher />
+        </div>
         <Card className="w-full max-w-md border-slate-700 bg-card card-glow">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold text-primary">
-              Registration Successful!
+              {t("messages.success")}
             </CardTitle>
             <CardDescription>
-              You have been successfully registered. Redirecting to login...
+              {t("messages.success")}
             </CardDescription>
           </CardHeader>
         </Card>
@@ -95,13 +101,16 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <Card className="w-full max-w-md border-slate-700 bg-card card-glow">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            Join <span className="text-primary">HostelShifts</span>
+            {t("title")}
           </CardTitle>
           <CardDescription className="text-center">
-            Create your account to get started
+            {t("subtitle")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -113,11 +122,11 @@ export default function SignupPage() {
                   name="firstName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>First Name</FormLabel>
+                      <FormLabel>{t("inputs.firstName.label")}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder="John"
+                          placeholder={t("inputs.firstName.placeholder")}
                           disabled={isLoading}
                         />
                       </FormControl>
@@ -130,11 +139,11 @@ export default function SignupPage() {
                   name="lastName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Last Name</FormLabel>
+                      <FormLabel>{t("inputs.lastName.label")}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder="Doe"
+                          placeholder={t("inputs.lastName.placeholder")}
                           disabled={isLoading}
                         />
                       </FormControl>
@@ -149,12 +158,12 @@ export default function SignupPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t("inputs.email.label")}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type="email"
-                        placeholder="john@nomadsoft.us"
+                        placeholder={t("inputs.email.placeholder")}
                         disabled={isLoading}
                       />
                     </FormControl>
@@ -168,13 +177,13 @@ export default function SignupPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("inputs.password.label")}</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Input
                           {...field}
                           type={showPassword ? "text" : "password"}
-                          placeholder="Enter your password"
+                          placeholder={t("inputs.password.placeholder")}
                           disabled={isLoading}
                         />
                         <Button
@@ -208,10 +217,10 @@ export default function SignupPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Creating account...
+                    {t("actions.submit")}...
                   </>
                 ) : (
-                  "Create Account"
+                  t("actions.submit")
                 )}
               </Button>
             </form>
@@ -219,9 +228,8 @@ export default function SignupPage() {
         </CardContent>
         <CardFooter className="flex flex-col space-y-2">
           <p className="text-sm text-muted-foreground text-center">
-            Already have an account?{" "}
             <Link href="/auth/login" className="text-primary hover:underline">
-              Sign in
+              {t("actions.signIn")}
             </Link>
           </p>
           <Link 

@@ -1,0 +1,34 @@
+{
+  "title": "Create Account",
+  "subtitle": "Sign up to get started with HostelShifts.",
+  "actions": {
+    "submit": "Create Account",
+    "signIn": "Already have an account? Sign in"
+  },
+  "inputs": {
+    "firstName": {
+      "label": "First Name",
+      "placeholder": "Enter your first name"
+    },
+    "lastName": {
+      "label": "Last Name",
+      "placeholder": "Enter your last name"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "Enter your email"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Create a password"
+    },
+    "passwordConfirmation": {
+      "label": "Confirm Password",
+      "placeholder": "Confirm your password"
+    }
+  },
+  "messages": {
+    "success": "Account created successfully! Please check your email to confirm your account.",
+    "emailExists": "An account with this email already exists"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "title": "Iniciar Sesión",
+  "subtitle": "¡Bienvenido de vuelta! Por favor inicia sesión en tu cuenta.",
+  "actions": {
+    "submit": "Iniciar Sesión",
+    "createAccount": "Crear Cuenta",
+    "forgotPassword": "¿Olvidaste tu contraseña?"
+  },
+  "inputs": {
+    "email": {
+      "label": "Email",
+      "placeholder": "Ingresa tu email"
+    },
+    "password": {
+      "label": "Contraseña",
+      "placeholder": "Ingresa tu contraseña"
+    }
+  },
+  "messages": {
+    "success": "¡Sesión iniciada exitosamente!",
+    "invalidCredentials": "Email o contraseña inválidos"
+  }
+}

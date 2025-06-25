@@ -1,0 +1,51 @@
+{
+  "app-name": "HostelShifts",
+  "loading": "Cargando...",
+  "navigation": {
+    "home": "Inicio",
+    "dashboard": "Panel",
+    "profile": "Perfil",
+    "logout": "Cerrar Sesión",
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse"
+  },
+  "actions": {
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "retry": "Reintentar"
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "email": {
+      "invalid": "Por favor ingrese un email válido",
+      "required": "El email es obligatorio"
+    },
+    "password": {
+      "required": "La contraseña es obligatoria",
+      "min": "La contraseña debe tener al menos {{min}} caracteres",
+      "match": "Las contraseñas no coinciden"
+    }
+  },
+  "errors": {
+    "generic": "Algo salió mal. Por favor intente de nuevo.",
+    "network": "Error de red. Por favor verifique su conexión.",
+    "unauthorized": "No está autorizado para realizar esta acción.",
+    "notFound": "El recurso solicitado no fue encontrado."
+  },
+  "auth": {
+    "welcome": "¡Bienvenido de vuelta!",
+    "createAccount": "Crear Cuenta",
+    "signInInstead": "¿Ya tienes cuenta? Iniciar sesión",
+    "signUpInstead": "¿No tienes cuenta? Registrarse",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "rememberMe": "Recordarme"
+  }
+}

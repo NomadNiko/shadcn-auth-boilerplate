@@ -1,0 +1,30 @@
+{
+  "title": "Completa tu Registro",
+  "subtitle": "Has sido invitado a unirte a HostelShifts. Establece tu contraseña para comenzar.",
+  "actions": {
+    "submit": "Completar Configuración",
+    "signIn": "¿Ya tienes cuenta? Iniciar sesión"
+  },
+  "inputs": {
+    "password": {
+      "label": "Contraseña",
+      "placeholder": "Ingresa tu contraseña"
+    },
+    "passwordConfirmation": {
+      "label": "Confirmar Contraseña",
+      "placeholder": "Confirma tu contraseña"
+    }
+  },
+  "messages": {
+    "success": "¡Configuración de cuenta completada! Ya estás conectado.",
+    "error": "Error al completar la configuración. Por favor intenta de nuevo.",
+    "invalidInvite": "Enlace de invitación inválido o expirado"
+  },
+  "errors": {
+    "noHash": {
+      "title": "Invitación Inválida",
+      "message": "Este enlace de invitación es inválido o le falta información requerida.",
+      "action": "Contactar Soporte"
+    }
+  }
+}

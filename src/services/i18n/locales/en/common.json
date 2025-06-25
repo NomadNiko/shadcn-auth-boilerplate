@@ -1,0 +1,51 @@
+{
+  "app-name": "HostelShifts",
+  "loading": "Loading...",
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Login",
+    "signup": "Sign Up"
+  },
+  "actions": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "confirm": "Confirm",
+    "retry": "Retry"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": {
+      "invalid": "Please enter a valid email address",
+      "required": "Email is required"
+    },
+    "password": {
+      "required": "Password is required",
+      "min": "Password must be at least {{min}} characters",
+      "match": "Passwords don't match"
+    }
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "network": "Network error. Please check your connection.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "notFound": "The requested resource was not found."
+  },
+  "auth": {
+    "welcome": "Welcome back!",
+    "createAccount": "Create Account",
+    "signInInstead": "Already have an account? Sign in",
+    "signUpInstead": "Don't have an account? Sign up",
+    "forgotPassword": "Forgot Password?",
+    "rememberMe": "Remember me"
+  }
+}

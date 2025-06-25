@@ -14,6 +14,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import api from "@/lib/api";
 import { AUTH_INVITE_USER_URL } from "@/lib/config";
+import { useTranslation } from "@/src/services/i18n";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 const inviteSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -31,6 +33,7 @@ export default function DashboardPage() {
   const [isInviting, setIsInviting] = useState(false);
   const [inviteError, setInviteError] = useState<string | null>(null);
   const [inviteSuccess, setInviteSuccess] = useState<string | null>(null);
+  const { t } = useTranslation("dashboard");
 
   const inviteForm = useForm<InviteFormData>({
     resolver: zodResolver(inviteSchema),
@@ -53,7 +56,7 @@ export default function DashboardPage() {
 
     try {
       await api.post(AUTH_INVITE_USER_URL, data);
-      setInviteSuccess(`Invitation sent successfully to ${data.email}`);
+      setInviteSuccess(t("inviteDialog.messages.success"));
       inviteForm.reset();
       
       // Close dialog after 2 seconds
@@ -68,12 +71,12 @@ export default function DashboardPage() {
       if (axiosError.response?.status === 422) {
         const errorData = axiosError.response.data;
         if (errorData.errors?.email) {
-          setInviteError("Email already exists in the system");
+          setInviteError(t("inviteDialog.messages.error"));
         } else {
           setInviteError("Please check the form data");
         }
       } else {
-        setInviteError("Failed to send invitation. Please try again.");
+        setInviteError(t("inviteDialog.messages.error"));
       }
     } finally {
       setIsInviting(false);
@@ -106,21 +109,22 @@ export default function DashboardPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-foreground">
-            <span className="text-primary">HostelShifts</span> Dashboard
+            <span className="text-primary">HostelShifts</span> {t("title")}
           </h1>
           <div className="flex space-x-3">
+            <LanguageSwitcher />
             <Dialog open={isInviteDialogOpen} onOpenChange={setIsInviteDialogOpen}>
               <DialogTrigger asChild>
                 <Button className="bg-primary hover:bg-primary/90">
                   <UserPlus className="mr-2 h-4 w-4" />
-                  Invite User
+                  {t("actions.inviteUser")}
                 </Button>
               </DialogTrigger>
               <DialogContent className="border-slate-700 bg-card">
                 <DialogHeader>
-                  <DialogTitle>Invite User</DialogTitle>
+                  <DialogTitle>{t("inviteDialog.title")}</DialogTitle>
                   <DialogDescription>
-                    Send an invitation to join HostelShifts. They&apos;ll receive an email with a link to complete their sign-up.
+                    {t("inviteDialog.subtitle")}
                   </DialogDescription>
                 </DialogHeader>
                 <Form {...inviteForm}>
@@ -131,11 +135,11 @@ export default function DashboardPage() {
                         name="firstName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>First Name</FormLabel>
+                            <FormLabel>{t("inviteDialog.inputs.firstName.label")}</FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
-                                placeholder="John"
+                                placeholder={t("inviteDialog.inputs.firstName.placeholder")}
                                 disabled={isInviting}
                               />
                             </FormControl>
@@ -148,11 +152,11 @@ export default function DashboardPage() {
                         name="lastName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Last Name</FormLabel>
+                            <FormLabel>{t("inviteDialog.inputs.lastName.label")}</FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
-                                placeholder="Doe"
+                                placeholder={t("inviteDialog.inputs.lastName.placeholder")}
                                 disabled={isInviting}
                               />
                             </FormControl>
@@ -167,12 +171,12 @@ export default function DashboardPage() {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email</FormLabel>
+                          <FormLabel>{t("inviteDialog.inputs.email.label")}</FormLabel>
                           <FormControl>
                             <Input
                               {...field}
                               type="email"
-                              placeholder="john@example.com"
+                              placeholder={t("inviteDialog.inputs.email.placeholder")}
                               disabled={isInviting}
                             />
                           </FormControl>
@@ -195,16 +199,16 @@ export default function DashboardPage() {
                     
                     <DialogFooter>
                       <Button type="button" variant="outline" onClick={() => setIsInviteDialogOpen(false)} disabled={isInviting}>
-                        Cancel
+                        {t("inviteDialog.actions.cancel")}
                       </Button>
                       <Button type="submit" disabled={isInviting}>
                         {isInviting ? (
                           <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Sending...
+                            {t("inviteDialog.actions.send")}...
                           </>
                         ) : (
-                          "Send Invitation"
+                          t("inviteDialog.actions.send")
                         )}
                       </Button>
                     </DialogFooter>
@@ -214,7 +218,7 @@ export default function DashboardPage() {
             </Dialog>
             <Button onClick={handleLogout} variant="outline" className="border-slate-600 hover:bg-slate-800">
               <LogOut className="mr-2 h-4 w-4" />
-              Sign out
+              {t("signOut")}
             </Button>
           </div>
         </div>
@@ -224,44 +228,44 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <User className="mr-2 h-5 w-5" />
-                User Information
+                {t("userInfo.title")}
               </CardTitle>
               <CardDescription>
-                Your account details and profile information
+                {t("userInfo.subtitle")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-slate-400" />
-                <span className="text-sm font-medium">Email:</span>
+                <span className="text-sm font-medium">{t("userInfo.email")}</span>
                 <span className="text-sm">{userEmail}</span>
               </div>
               {userFirstName && (
                 <div className="flex items-center space-x-2">
                   <User className="h-4 w-4 text-slate-400" />
-                  <span className="text-sm font-medium">Name:</span>
+                  <span className="text-sm font-medium">{t("userInfo.name")}</span>
                   <span className="text-sm">{userFirstName} {userLastName}</span>
                 </div>
               )}
               <div className="flex items-center space-x-2">
                 <Shield className="h-4 w-4 text-slate-400" />
-                <span className="text-sm font-medium">Role:</span>
+                <span className="text-sm font-medium">{t("userInfo.role")}</span>
                 <span className={`text-sm px-2 py-1 rounded-full ${
                   userRole._id === "1" 
                     ? "bg-red-950/30 text-red-300 border border-red-800/30" 
                     : "bg-blue-950/30 text-blue-300 border border-blue-800/30"
                 }`}>
-                  {userRole._id === "1" ? "Admin" : "User"}
+                  {userRole._id === "1" ? t("userInfo.roles.admin") : t("userInfo.roles.user")}
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="text-sm font-medium">Status:</span>
+                <span className="text-sm font-medium">{t("userInfo.status")}</span>
                 <span className={`text-sm px-2 py-1 rounded-full ${
                   userStatus._id === "1" 
                     ? "bg-green-950/30 text-green-300 border border-green-800/30" 
                     : "bg-yellow-950/30 text-yellow-300 border border-yellow-800/30"
                 }`}>
-                  {userStatus._id === "1" ? "Active" : "Inactive"}
+                  {userStatus._id === "1" ? t("userInfo.statuses.active") : t("userInfo.statuses.inactive")}
                 </span>
               </div>
             </CardContent>
@@ -269,24 +273,24 @@ export default function DashboardPage() {
 
           <Card className="border-slate-700 bg-card card-glow">
             <CardHeader>
-              <CardTitle>Welcome to <span className="text-primary">HostelShifts</span></CardTitle>
+              <CardTitle>{t("welcomeCard.title")}</CardTitle>
               <CardDescription>
-                You are successfully authenticated and logged in
+                {t("welcomeCard.subtitle")}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                This is a demo dashboard showing your authentication status. The authentication system is working correctly with the NestJS backend.
+                {t("welcomeCard.description")}
               </p>
               <div className="space-y-2">
                 <p className="text-xs text-slate-400">
-                  <strong>User ID:</strong> {userId}
+                  <strong>{t("welcomeCard.userId")}</strong> {userId}
                 </p>
                 <p className="text-xs text-slate-400">
-                  <strong>API Backend:</strong> http://localhost:3001
+                  <strong>{t("welcomeCard.apiBackend")}</strong> http://localhost:3001
                 </p>
                 <p className="text-xs text-slate-400">
-                  <strong>Authentication:</strong> JWT with refresh tokens
+                  <strong>{t("welcomeCard.authentication")}</strong> {t("welcomeCard.authMethod")}
                 </p>
               </div>
             </CardContent>

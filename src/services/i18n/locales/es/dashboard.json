@@ -1,0 +1,62 @@
+{
+  "title": "Panel",
+  "welcome": "Bienvenido a HostelShifts",
+  "subtitle": "Gestiona las operaciones de tu hostel eficientemente",
+  "signOut": "Cerrar Sesión",
+  "actions": {
+    "inviteUser": "Invitar Usuario",
+    "addShift": "Agregar Turno",
+    "viewReports": "Ver Reportes"
+  },
+  "userInfo": {
+    "title": "Información del Usuario",
+    "subtitle": "Los detalles de tu cuenta e información de perfil",
+    "email": "Email:",
+    "name": "Nombre:",
+    "role": "Rol:",
+    "status": "Estado:",
+    "roles": {
+      "admin": "Administrador",
+      "user": "Usuario"
+    },
+    "statuses": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    }
+  },
+  "welcomeCard": {
+    "title": "Bienvenido a HostelShifts",
+    "subtitle": "Estás autenticado exitosamente y conectado",
+    "description": "Este es un panel de demostración que muestra tu estado de autenticación. El sistema de autenticación está funcionando correctamente con el backend de NestJS.",
+    "userId": "ID del Usuario:",
+    "apiBackend": "API Backend:",
+    "authentication": "Autenticación:",
+    "authMethod": "JWT con tokens de actualización"
+  },
+  "inviteDialog": {
+    "title": "Invitar Usuario",
+    "subtitle": "Envía una invitación para unirse a tu equipo",
+    "inputs": {
+      "firstName": {
+        "label": "Nombre",
+        "placeholder": "Ingresa el nombre"
+      },
+      "lastName": {
+        "label": "Apellido",
+        "placeholder": "Ingresa el apellido"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Ingresa el email"
+      }
+    },
+    "actions": {
+      "send": "Enviar Invitación",
+      "cancel": "Cancelar"
+    },
+    "messages": {
+      "success": "¡Invitación enviada exitosamente!",
+      "error": "Error al enviar la invitación. Por favor intenta de nuevo."
+    }
+  }
+}

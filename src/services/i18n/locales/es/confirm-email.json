@@ -1,0 +1,21 @@
+{
+  "title": "Confirmación de Email",
+  "confirming": {
+    "title": "Confirmando Email",
+    "message": "Por favor espera mientras verificamos tu dirección de email..."
+  },
+  "success": {
+    "title": "¡Email Confirmado!",
+    "message": "Tu dirección de email ha sido verificada exitosamente y ya estás conectado. Serás redirigido a tu panel en breve.",
+    "action": "Ir al Panel"
+  },
+  "error": {
+    "title": "Confirmación Fallida",
+    "message": "No pudimos verificar tu dirección de email.",
+    "description": "El enlace de confirmación puede estar expirado o ser inválido. Por favor intenta solicitar un nuevo email de confirmación.",
+    "actions": {
+      "requestNew": "Solicitar Nueva Confirmación",
+      "signIn": "Ir a Iniciar Sesión"
+    }
+  }
+}

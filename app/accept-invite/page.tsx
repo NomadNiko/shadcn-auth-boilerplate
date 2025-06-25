@@ -13,6 +13,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import api from "@/lib/api";
 import { AUTH_ACCEPT_INVITE_URL } from "@/lib/config";
 import { useAuthActions, useAuthTokens } from "@/hooks/use-auth";
+import { useTranslation } from "@/src/services/i18n";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Eye, EyeOff, Loader2, AlertTriangle, UserPlus } from "lucide-react";
 
 const acceptInviteSchema = z.object({
@@ -34,6 +36,7 @@ function AcceptInviteContent() {
   const searchParams = useSearchParams();
   const { setUser } = useAuthActions();
   const { setTokensInfo } = useAuthTokens();
+  const { t } = useTranslation("accept-invite");
 
   const hash = searchParams.get("hash");
 
@@ -81,16 +84,16 @@ function AcceptInviteContent() {
       if (axiosError.response?.status === 422) {
         const errorData = axiosError.response.data;
         if (errorData.errors?.hash) {
-          setError("Invalid or expired invite link");
+          setError(t("messages.invalidInvite"));
         } else if (errorData.errors?.password) {
           form.setError("password", { message: errorData.errors.password });
         } else {
-          setError("Invalid or expired invite link");
+          setError(t("messages.invalidInvite"));
         }
       } else if (axiosError.response?.status === 404) {
         setError("Invalid or expired invite link");
       } else {
-        setError("Failed to accept invite. Please try again.");
+        setError(t("messages.error"));
       }
     } finally {
       setIsLoading(false);
@@ -100,6 +103,9 @@ function AcceptInviteContent() {
   if (!hash) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+        <div className="absolute top-4 right-4">
+          <LanguageSwitcher />
+        </div>
         <Card className="w-full max-w-md border-slate-700 bg-card card-glow">
           <CardHeader className="text-center space-y-4">
             <div className="mx-auto w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center">
@@ -126,16 +132,19 @@ function AcceptInviteContent() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <Card className="w-full max-w-md border-slate-700 bg-card card-glow">
         <CardHeader className="space-y-1 text-center">
           <div className="mx-auto w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
             <UserPlus className="w-6 h-6 text-primary" />
           </div>
           <CardTitle className="text-2xl font-bold">
-            Complete Your Sign-up
+            {t("title")}
           </CardTitle>
           <CardDescription>
-            You&apos;ve been invited to join HostelShifts. Set your password to get started.
+            {t("subtitle")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -146,13 +155,13 @@ function AcceptInviteContent() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("inputs.password.label")}</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Input
                           {...field}
                           type={showPassword ? "text" : "password"}
-                          placeholder="Enter your password"
+                          placeholder={t("inputs.password.placeholder")}
                           disabled={isLoading}
                         />
                         <Button

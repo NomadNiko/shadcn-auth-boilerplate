@@ -1,0 +1,62 @@
+{
+  "title": "Dashboard",
+  "welcome": "Welcome to HostelShifts",
+  "subtitle": "Manage your hostel operations efficiently",
+  "signOut": "Sign out",
+  "actions": {
+    "inviteUser": "Invite User",
+    "addShift": "Add Shift",
+    "viewReports": "View Reports"
+  },
+  "userInfo": {
+    "title": "User Information",
+    "subtitle": "Your account details and profile information",
+    "email": "Email:",
+    "name": "Name:",
+    "role": "Role:",
+    "status": "Status:",
+    "roles": {
+      "admin": "Admin",
+      "user": "User"
+    },
+    "statuses": {
+      "active": "Active",
+      "inactive": "Inactive"
+    }
+  },
+  "welcomeCard": {
+    "title": "Welcome to HostelShifts",
+    "subtitle": "You are successfully authenticated and logged in",
+    "description": "This is a demo dashboard showing your authentication status. The authentication system is working correctly with the NestJS backend.",
+    "userId": "User ID:",
+    "apiBackend": "API Backend:",
+    "authentication": "Authentication:",
+    "authMethod": "JWT with refresh tokens"
+  },
+  "inviteDialog": {
+    "title": "Invite User",
+    "subtitle": "Send an invitation to join your team",
+    "inputs": {
+      "firstName": {
+        "label": "First Name",
+        "placeholder": "Enter first name"
+      },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Enter last name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter email address"
+      }
+    },
+    "actions": {
+      "send": "Send Invitation",
+      "cancel": "Cancel"
+    },
+    "messages": {
+      "success": "Invitation sent successfully!",
+      "error": "Failed to send invitation. Please try again."
+    }
+  }
+}

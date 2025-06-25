@@ -1,0 +1,21 @@
+{
+  "title": "Email Confirmation",
+  "confirming": {
+    "title": "Confirming Email",
+    "message": "Please wait while we verify your email address..."
+  },
+  "success": {
+    "title": "Email Confirmed!",
+    "message": "Your email address has been successfully verified and you have been logged in. You will be redirected to your dashboard shortly.",
+    "action": "Go to Dashboard"
+  },
+  "error": {
+    "title": "Confirmation Failed",
+    "message": "We couldn't verify your email address.",
+    "description": "The confirmation link may be expired or invalid. Please try requesting a new confirmation email.",
+    "actions": {
+      "requestNew": "Request New Confirmation",
+      "signIn": "Go to Login"
+    }
+  }
+}

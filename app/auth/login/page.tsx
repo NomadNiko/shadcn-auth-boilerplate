@@ -15,6 +15,8 @@ import { AUTH_LOGIN_URL } from "@/lib/config";
 import { LoginResponse } from "@/types/auth";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useTranslation } from "@/src/services/i18n";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -30,6 +32,7 @@ export default function LoginPage() {
   const router = useRouter();
   const { setUser } = useAuthActions();
   const { setTokensInfo } = useAuthTokens();
+  const { t } = useTranslation("sign-in");
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -82,13 +85,16 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <Card className="w-full max-w-md border-slate-700 bg-card card-glow">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            Sign in to <span className="text-primary">HostelShifts</span>
+            {t("title")}
           </CardTitle>
           <CardDescription className="text-center">
-            Enter your email and password to access your account
+            {t("subtitle")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -99,12 +105,12 @@ export default function LoginPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t("inputs.email.label")}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type="email"
-                        placeholder="admin@nomadsoft.us"
+                        placeholder={t("inputs.email.placeholder")}
                         disabled={isLoading}
                       />
                     </FormControl>
@@ -117,13 +123,13 @@ export default function LoginPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("inputs.password.label")}</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Input
                           {...field}
                           type={showPassword ? "text" : "password"}
-                          placeholder="Enter your password"
+                          placeholder={t("inputs.password.placeholder")}
                           disabled={isLoading}
                         />
                         <Button
@@ -152,7 +158,7 @@ export default function LoginPage() {
                   href="/auth/forgot-password"
                   className="text-sm text-primary hover:underline"
                 >
-                  Forgot password?
+                  {t("actions.forgotPassword")}
                 </Link>
               </div>
               
@@ -165,10 +171,10 @@ export default function LoginPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Signing in...
+                    {t("actions.submit")}...
                   </>
                 ) : (
-                  "Sign in"
+                  t("actions.submit")
                 )}
               </Button>
             </form>
@@ -177,9 +183,8 @@ export default function LoginPage() {
         <CardFooter className="flex flex-col space-y-4">
           <div className="text-center">
             <p className="text-sm text-muted-foreground">
-              Don&apos;t have an account?{" "}
               <Link href="/auth/signup" className="text-primary hover:underline">
-                Sign up
+                {t("actions.createAccount")}
               </Link>
             </p>
           </div>

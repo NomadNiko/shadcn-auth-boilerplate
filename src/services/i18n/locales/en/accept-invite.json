@@ -1,0 +1,30 @@
+{
+  "title": "Complete Your Sign-up",
+  "subtitle": "You've been invited to join HostelShifts. Set your password to get started.",
+  "actions": {
+    "submit": "Complete Setup",
+    "signIn": "Already have an account? Sign in"
+  },
+  "inputs": {
+    "password": {
+      "label": "Password",
+      "placeholder": "Enter your password"
+    },
+    "passwordConfirmation": {
+      "label": "Confirm Password",
+      "placeholder": "Confirm your password"
+    }
+  },
+  "messages": {
+    "success": "Account setup completed! You are now logged in.",
+    "error": "Failed to complete setup. Please try again.",
+    "invalidInvite": "Invalid or expired invitation link"
+  },
+  "errors": {
+    "noHash": {
+      "title": "Invalid Invitation",
+      "message": "This invitation link is invalid or missing required information.",
+      "action": "Contact Support"
+    }
+  }
+}
