@@ -55,8 +55,10 @@ export function DroppableEmployeeDay({
     <div 
       ref={setNodeRef}
       onClick={handleClickToPlace}
-      className={`min-h-[80px] p-1 border-r border-b border-border bg-card relative ${
-        isOver ? 'bg-primary/10' : ''
+      data-employee-id={employeeId}
+      data-day-index={dayIndex}
+      className={`min-h-[80px] p-1 border-r border-b border-border relative ${
+        isOver ? 'bg-blue-50' : 'bg-card'
       } ${hasSelectedShift ? 'cursor-pointer hover:bg-green-100 hover:border-green-300' : ''}`}
     >
       {children}
@@ -115,8 +117,9 @@ export function DroppableUnassignedDay({
     <div 
       ref={setNodeRef}
       onClick={handleClickToPlace}
-      className={`min-h-[80px] p-1 border-r border-b border-border bg-card relative ${
-        isOver ? 'bg-primary/10' : ''
+      data-day-index={dayIndex}
+      className={`min-h-[80px] p-1 border-r border-b border-border relative ${
+        isOver ? 'bg-blue-50' : 'bg-card'
       } ${draggedItemType === 'shiftType' ? 'bg-green-500/10 border-green-500/20' : ''} ${
         hasSelectedShift ? 'cursor-pointer hover:bg-blue-100 hover:border-blue-300' : ''
       }`}

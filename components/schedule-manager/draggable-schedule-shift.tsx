@@ -48,7 +48,6 @@ export function DraggableScheduleShift({
     listeners,
     setNodeRef,
     transform,
-    isDragging,
   } = useDraggable({
     id: `shift-${shift.id}`,
     data: { type: 'shift', shift }
@@ -87,15 +86,11 @@ export function DraggableScheduleShift({
       {...attributes}
       {...listeners}
       onClick={handleClickToMove}
-      className={`text-xs p-1 mb-1 rounded cursor-move transition-all relative ${
-        isDragging ? 'opacity-50' : ''
-      } ${isSelected ? 'ring-2 ring-primary ring-offset-1' : ''} ${
-        isClickSelected ? 'ring-4 ring-yellow-400 ring-offset-2' : ''
+      className={`text-xs p-1 mb-1 rounded cursor-move relative ${
+        isSelected ? 'ring-2 ring-primary ring-offset-1' : ''
       } ${
-        isUnassigned 
-          ? `${shiftTypeColors[shift.shiftType.colorIndex]} hover:opacity-80` 
-          : `${shiftTypeColors[shift.shiftType.colorIndex]} hover:opacity-80`
-      }`}
+        isClickSelected ? 'ring-4 ring-yellow-400 ring-offset-2' : ''
+      } ${shiftTypeColors[shift.shiftType.colorIndex]}`}
     >
       <div className="flex items-center justify-between">
         {/* Shift Information */}

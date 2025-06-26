@@ -24,7 +24,6 @@ function DraggableEmployee({ employee }: { employee: Employee }) {
     listeners,
     setNodeRef,
     transform,
-    isDragging,
   } = useDraggable({
     id: `employee-${employee.id}`,
     data: { type: 'employee', employee }
@@ -50,9 +49,9 @@ function DraggableEmployee({ employee }: { employee: Employee }) {
       style={style}
       {...attributes}
       {...listeners}
-      className={`flex items-center space-x-3 p-2 rounded-lg hover:bg-muted cursor-move transition-all ${
-        isDragging ? 'opacity-50' : ''
-      } ${isOver ? 'ring-2 ring-primary bg-primary/5' : ''}`}
+      className={`flex items-center space-x-3 p-2 rounded-lg hover:bg-muted cursor-move ${
+        isOver ? 'ring-2 ring-gray-300' : ''
+      }`}
     >
       {/* Employee Avatar */}
       <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-medium flex-shrink-0">

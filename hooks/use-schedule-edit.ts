@@ -244,7 +244,18 @@ export function useScheduleEdit({
     
     return scheduleShifts
       .filter(shift => shift.userId === employeeId && shift.date === targetDate)
-      .sort((a, b) => a.order - b.order);
+      .sort((a, b) => {
+        // Sort by start time first, then by order as secondary sort
+        const aStartTime = a.shiftType?.startTime || '00:00';
+        const bStartTime = b.shiftType?.startTime || '00:00';
+        
+        if (aStartTime !== bStartTime) {
+          return aStartTime.localeCompare(bStartTime);
+        }
+        
+        // If start times are the same, sort by order
+        return a.order - b.order;
+      });
   }, [scheduleShifts, weekDates]);
   
   const getUnassignedShiftsForDay = useCallback((dayIndex: number) => {
@@ -253,7 +264,18 @@ export function useScheduleEdit({
     
     return unassignedShifts
       .filter(shift => shift.date === targetDate)
-      .sort((a, b) => a.order - b.order);
+      .sort((a, b) => {
+        // Sort by start time first, then by order as secondary sort
+        const aStartTime = a.shiftType?.startTime || '00:00';
+        const bStartTime = b.shiftType?.startTime || '00:00';
+        
+        if (aStartTime !== bStartTime) {
+          return aStartTime.localeCompare(bStartTime);
+        }
+        
+        // If start times are the same, sort by order
+        return a.order - b.order;
+      });
   }, [unassignedShifts, weekDates]);
   
   const getQuantityForShiftType = useCallback((shiftTypeId: string): number => {
@@ -282,24 +304,32 @@ export function useScheduleEdit({
     const targetEmployee = employees.find(emp => emp.id === employeeId || emp._id === employeeId);
     if (!targetEmployee) return;
 
+    // Calculate order for the target location
+    const targetOrder = Math.max(0, ...scheduleShifts
+      .filter(s => s.userId === targetEmployee.id && s.date === targetDate)
+      .map(s => s.order)) + 1;
+
     // Update the shift with new assignment
     const updatedShift = {
       ...selectedShiftForMove,
       userId: targetEmployee.id,
       user: targetEmployee,
       date: targetDate,
-      order: 1 // Default order, can be adjusted
+      order: targetOrder
     };
 
-    // Remove from current location and add to new location
-    setScheduleShifts(prev => {
-      const filtered = prev.filter(s => s.id !== selectedShiftForMove.id);
-      return [...filtered, updatedShift];
-    });
+    // Handle movement based on current location
+    if (selectedShiftForMove.userId) {
+      // Was assigned, update in assigned shifts
+      setScheduleShifts(prev => prev.map(s => s.id === selectedShiftForMove.id ? updatedShift : s));
+    } else {
+      // Was unassigned, move to assigned
+      setUnassignedShifts(prev => prev.filter(s => s.id !== selectedShiftForMove.id));
+      setScheduleShifts(prev => [...prev, updatedShift]);
+    }
 
-    setUnassignedShifts(prev => prev.filter(s => s.id !== selectedShiftForMove.id));
     setSelectedShiftForMove(null);
-  }, [selectedShiftForMove, weekDates, employees]);
+  }, [selectedShiftForMove, weekDates, employees, scheduleShifts]);
 
   const handleClickToUnassignShift = useCallback((dayIndex: number) => {
     if (!selectedShiftForMove) return;
@@ -307,24 +337,32 @@ export function useScheduleEdit({
     const targetDate = weekDates[dayIndex];
     if (!targetDate) return;
 
+    // Calculate order for the target unassigned location
+    const targetOrder = Math.max(0, ...unassignedShifts
+      .filter(s => s.date === targetDate)
+      .map(s => s.order)) + 1;
+
     // Update the shift to be unassigned
     const updatedShift = {
       ...selectedShiftForMove,
       userId: undefined,
       user: undefined,
       date: targetDate,
-      order: 1
+      order: targetOrder
     };
 
-    // Remove from assigned and add to unassigned
-    setScheduleShifts(prev => prev.filter(s => s.id !== selectedShiftForMove.id));
-    setUnassignedShifts(prev => {
-      const filtered = prev.filter(s => s.id !== selectedShiftForMove.id);
-      return [...filtered, updatedShift];
-    });
+    // Handle movement based on current location
+    if (selectedShiftForMove.userId) {
+      // Was assigned, move to unassigned
+      setScheduleShifts(prev => prev.filter(s => s.id !== selectedShiftForMove.id));
+      setUnassignedShifts(prev => [...prev, updatedShift]);
+    } else {
+      // Was unassigned, update in unassigned shifts
+      setUnassignedShifts(prev => prev.map(s => s.id === selectedShiftForMove.id ? updatedShift : s));
+    }
 
     setSelectedShiftForMove(null);
-  }, [selectedShiftForMove, weekDates]);
+  }, [selectedShiftForMove, weekDates, unassignedShifts]);
 
   const clearSelectedShiftForMove = useCallback(() => {
     setSelectedShiftForMove(null);

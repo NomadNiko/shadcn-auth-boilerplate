@@ -7,11 +7,9 @@
 
 "use client";
 
-import { useState } from "react";
 import {
   DndContext,
   DragEndEvent,
-  DragStartEvent,
   DragOverlay,
   useSensor,
   useSensors,
@@ -20,11 +18,6 @@ import {
 } from '@dnd-kit/core';
 import type { ShiftType, ScheduleShift, Employee } from "@/types/schedule";
 import { useDragHandlers } from "./drag-handlers";
-import { 
-  ShiftTypeDragOverlay, 
-  ScheduleShiftDragOverlay, 
-  EmployeeDragOverlay 
-} from "./drag-overlays";
 
 interface DragDropProviderProps {
   /** Child components */
@@ -58,10 +51,6 @@ interface DragDropProviderProps {
   shiftTypes: ShiftType[];
 }
 
-interface DraggedItem {
-  type: 'shiftType' | 'shift' | 'employee';
-  data: ShiftType | ScheduleShift | Employee;
-}
 
 export function DragDropProvider({
   children,
@@ -75,14 +64,12 @@ export function DragDropProvider({
   employees,
   shiftTypes
 }: DragDropProviderProps) {
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const [draggedItem, setDraggedItem] = useState<DraggedItem | null>(null);
 
   // Configure drag sensors
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8,
+        distance: 2,
       },
     }),
     useSensor(KeyboardSensor)
@@ -108,17 +95,8 @@ export function DragDropProvider({
   /**
    * Handle drag start event
    */
-  const handleDragStart = (event: DragStartEvent) => {
-    const { active } = event;
-    setActiveId(active.id as string);
-    
-    // Store the dragged item data
-    if (active.data.current) {
-      setDraggedItem({
-        type: active.data.current.type,
-        data: active.data.current.shiftType || active.data.current.shift || active.data.current.employee
-      });
-    }
+  const handleDragStart = () => {
+    // Drag start event - overlay disabled
   };
 
   /**
@@ -126,9 +104,6 @@ export function DragDropProvider({
    */
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    
-    setActiveId(null);
-    setDraggedItem(null);
 
     if (!over || !active.data.current) return;
 
@@ -151,46 +126,7 @@ export function DragDropProvider({
     }
   };
 
-  /**
-   * Render drag overlay based on dragged item type
-   */
-  const renderDragOverlay = () => {
-    if (!activeId || !draggedItem) return null;
-
-    switch (draggedItem.type) {
-      case 'shiftType': {
-        const shiftType = draggedItem.data as ShiftType;
-        const isMultiSelect = selectedShiftTypes.has(shiftType.id) && selectedShiftTypes.size > 1;
-        const quantity = shiftTypeQuantities.get(shiftType.id) || 1;
-        const totalQuantity = isMultiSelect 
-          ? Array.from(selectedShiftTypes).reduce((sum, id) => sum + (shiftTypeQuantities.get(id) || 1), 0)
-          : quantity;
-        
-        return (
-          <ShiftTypeDragOverlay
-            shiftType={shiftType}
-            isMultiSelect={isMultiSelect}
-            selectedCount={selectedShiftTypes.size}
-            quantity={quantity}
-            totalQuantity={totalQuantity}
-          />
-        );
-      }
-      
-      case 'shift': {
-        const shift = draggedItem.data as ScheduleShift;
-        return <ScheduleShiftDragOverlay shift={shift} />;
-      }
-      
-      case 'employee': {
-        const employee = draggedItem.data as Employee;
-        return <EmployeeDragOverlay employee={employee} />;
-      }
-      
-      default:
-        return null;
-    }
-  };
+  // Drag overlay functionality disabled to remove visual shadow/copy effect
 
   return (
     <DndContext
@@ -201,7 +137,8 @@ export function DragDropProvider({
       {children}
       
       <DragOverlay>
-        {renderDragOverlay()}
+        {/* Disabled drag overlay to remove visual shadow/copy effect */}
+        {null}
       </DragOverlay>
     </DndContext>
   );

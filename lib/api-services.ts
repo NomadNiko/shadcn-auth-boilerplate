@@ -64,6 +64,7 @@ export interface CreateScheduleShiftDto {
 export interface UpdateScheduleShiftDto {
   userId?: string;
   order?: number;
+  date?: string;
 }
 
 // Bulk Operations Types

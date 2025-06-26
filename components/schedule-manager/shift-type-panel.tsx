@@ -60,7 +60,6 @@ function DraggableShiftType({
     listeners,
     setNodeRef,
     transform,
-    isDragging,
   } = useDraggable({
     id: `shifttype-${shiftType.id}`,
     data: { type: 'shiftType', shiftType }
@@ -87,9 +86,9 @@ function DraggableShiftType({
     <div
       ref={setNodeRef}
       style={style}
-      className={`rounded-lg border transition-all relative flex ${
-        isDragging ? 'opacity-50' : ''
-      } ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''} ${shiftTypeColors[shiftType.colorIndex]}`}
+      className={`rounded-lg border relative flex ${
+        isSelected ? 'ring-2 ring-primary ring-offset-2' : ''
+      } ${shiftTypeColors[shiftType.colorIndex]}`}
     >
       {/* Left 60% - Draggable area */}
       <div

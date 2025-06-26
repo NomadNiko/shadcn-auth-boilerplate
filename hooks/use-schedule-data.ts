@@ -260,7 +260,8 @@ export const useScheduleData = (scheduleId?: string) => {
           clientId: `update-${index}`,
           data: {
             userId: shift.userId,
-            order: shift.order
+            order: shift.order,
+            date: shift.date // Include date for day-to-day movements
           }
         });
       });
