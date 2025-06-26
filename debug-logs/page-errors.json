@@ -1,0 +1,7 @@
+[
+  {
+    "message": "page.waitForTimeout is not a function",
+    "stack": "TypeError: page.waitForTimeout is not a function\n    at debugScheduleLoading (/var/dev/hostelshifts-client/debug-schedule-loading.js:102:16)\n    at async runAllTests (/var/dev/hostelshifts-client/debug-schedule-loading.js:242:5)",
+    "timestamp": "2025-06-26T05:22:53.182Z"
+  }
+]

@@ -294,7 +294,7 @@ export default function DashboardPage() {
                 </p>
               </div>
               <Button 
-                onClick={() => router.push("/schedule-manager")}
+                onClick={() => router.push("/schedule-manager/assign")}
                 className="w-full bg-primary hover:bg-primary/90"
               >
                 Open Schedule Manager

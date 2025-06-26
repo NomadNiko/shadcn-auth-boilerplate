@@ -64,7 +64,7 @@ function ConfirmEmailContent() {
     };
 
     confirmEmail();
-  }, [searchParams, router]);
+  }, [searchParams, router, setUser, setTokensInfo, t]);
 
   if (isLoading) {
     return (

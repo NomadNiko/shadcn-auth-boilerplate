@@ -10,7 +10,7 @@ import { shiftTypeColors } from "@/types/schedule";
 import type { ShiftType } from "@/types/schedule";
 
 interface CreateShiftTypeDialogProps {
-  onCreateShiftType: (shiftType: Omit<ShiftType, 'id'>) => void;
+  onCreateShiftType: (shiftType: Omit<ShiftType, 'id' | 'isActive'>) => void;
 }
 
 export function CreateShiftTypeDialog({ onCreateShiftType }: CreateShiftTypeDialogProps) {
@@ -57,7 +57,7 @@ export function CreateShiftTypeDialog({ onCreateShiftType }: CreateShiftTypeDial
       return;
     }
 
-    const newShiftType: Omit<ShiftType, 'id'> = {
+    const newShiftType: Omit<ShiftType, 'id' | 'isActive'> = {
       name: name.trim(),
       startTime,
       endTime,

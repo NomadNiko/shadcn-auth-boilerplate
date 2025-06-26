@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight, GripVertical, Copy, Trash2 } from "lucide-react";
+import { ScheduleSelector } from "@/components/schedule-selector";
 import { 
   DndContext, 
   DragEndEvent, 
@@ -17,19 +19,19 @@ import {
   useDraggable
 } from '@dnd-kit/core';
 import { 
-  mockShiftTypes, 
-  mockEmployees,
-  mockSchedule, 
   shiftTypeColors, 
   getWeekDates,
   type ShiftType, 
   type ScheduleShift,
-  type Employee 
+  type Employee,
+  type Schedule
 } from "@/types/schedule";
+import { useScheduleData } from "@/hooks/use-schedule-data";
+import { useEmployees } from "@/hooks/use-employees";
 import { CreateShiftTypeDialog } from "@/components/create-shift-type-dialog";
+import { useAuth } from "@/hooks/use-auth";
 
 const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-const dayNumbers = [15, 16, 17, 18, 19, 20, 21];
 
 function DroppableEmployeeDay({ employeeId, dayIndex, children }: { employeeId: string; dayIndex: number; children: React.ReactNode }) {
   const { isOver, setNodeRef } = useDroppable({
@@ -228,17 +230,17 @@ function DraggableScheduleShift({
 
   const { isOver, setNodeRef: setDropRef } = useDroppable({
     id: `drop-shift-${shift.id}`,
-    disabled: !isUnassigned
+    disabled: false  // Allow dropping on both assigned and unassigned shifts
   });
 
   const style = transform ? {
     transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
   } : undefined;
 
-  // Combine drag and drop refs for unassigned shifts
+  // Combine drag and drop refs for all shifts
   const combinedRef = (node: HTMLElement | null) => {
     setNodeRef(node);
-    if (isUnassigned) setDropRef(node);
+    setDropRef(node);  // All shifts can now receive drops
   };
 
   const handleSelectClick = (e: React.MouseEvent) => {
@@ -254,7 +256,7 @@ function DraggableScheduleShift({
       style={style}
       className={`mb-1 rounded text-xs relative ${
         isDragging ? 'opacity-50' : ''
-      } ${isOver && isUnassigned ? 'ring-2 ring-primary' : ''} ${
+      } ${isOver ? 'ring-2 ring-primary' : ''} ${
         isSelected ? 'ring-2 ring-primary ring-offset-1' : ''
       } ${shiftTypeColors[shift.shiftType.colorIndex]}`}
     >
@@ -294,16 +296,21 @@ function DraggableScheduleShift({
   );
 }
 
-function DroppableUnassignedDay({ dayIndex, children }: { dayIndex: number; children: React.ReactNode }) {
+function DroppableUnassignedDay({ dayIndex, children, draggedItemType }: { dayIndex: number; children: React.ReactNode; draggedItemType?: string }) {
+  // Only accept shift types, not employees (employees should only drop on specific shifts)
   const { isOver, setNodeRef } = useDroppable({
     id: `unassigned-day-${dayIndex}`,
+    disabled: draggedItemType === 'employee', // Disable drop zone when dragging employees
   });
+
+  // Don't highlight when disabled or when dragging employees
+  const shouldHighlight = isOver && draggedItemType !== 'employee';
 
   return (
     <div 
       ref={setNodeRef}
       className={`space-y-2 min-h-[80px] p-2 border-r border-b border-border bg-slate-800/50 ${
-        isOver ? 'bg-primary/20 border-primary border-dashed' : ''
+        shouldHighlight ? 'bg-primary/20 border-primary border-dashed' : ''
       }`}
     >
       {children}
@@ -312,172 +319,38 @@ function DroppableUnassignedDay({ dayIndex, children }: { dayIndex: number; chil
 }
 
 export default function AssignShiftsPage() {
-  // const router = useRouter(); // Not used in this mockup
-  // Start with empty assigned shifts - users get added dynamically
-  const [scheduleShifts, setScheduleShifts] = useState<ScheduleShift[]>([]);
+  const router = useRouter();
+  const { isLoaded, user } = useAuth();
+  const [selectedSchedule, setSelectedSchedule] = useState<Schedule | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
-  // All shifts start as unassigned - these come from Page 1
-  const [unassignedShifts, setUnassignedShifts] = useState<ScheduleShift[]>([
-    // Monday
-    {
-      id: 'unassigned-1',
-      shiftTypeId: '1',
-      shiftType: { ...mockShiftTypes[0], name: 'Front Desk', startTime: '06:00', endTime: '10:00' },
-      date: getWeekDates(mockSchedule.startDate)[0],
-      order: 1
-    },
-    {
-      id: 'unassigned-2',
-      shiftTypeId: '1',
-      shiftType: { ...mockShiftTypes[0], name: 'Front Desk', startTime: '10:00', endTime: '13:00' },
-      date: getWeekDates(mockSchedule.startDate)[0],
-      order: 2
-    },
-    {
-      id: 'unassigned-3',
-      shiftTypeId: '4',
-      shiftType: { ...mockShiftTypes[3], name: 'Cleaner', startTime: '10:00', endTime: '14:00' },
-      date: getWeekDates(mockSchedule.startDate)[0],
-      order: 3
-    },
-    {
-      id: 'unassigned-4',
-      shiftTypeId: '6',
-      shiftType: { ...mockShiftTypes[5], name: 'Security', startTime: '17:00', endTime: '23:00' },
-      date: getWeekDates(mockSchedule.startDate)[0],
-      order: 4
-    },
-    // Tuesday
-    {
-      id: 'unassigned-5',
-      shiftTypeId: '1',
-      shiftType: { ...mockShiftTypes[0], name: 'Front Desk', startTime: '06:00', endTime: '10:00' },
-      date: getWeekDates(mockSchedule.startDate)[1],
-      order: 1
-    },
-    {
-      id: 'unassigned-6',
-      shiftTypeId: '5',
-      shiftType: { ...mockShiftTypes[4], name: 'Manager', startTime: '09:00', endTime: '17:00' },
-      date: getWeekDates(mockSchedule.startDate)[1],
-      order: 2
-    },
-    {
-      id: 'unassigned-7',
-      shiftTypeId: '4',
-      shiftType: { ...mockShiftTypes[3], name: 'Cleaner', startTime: '10:00', endTime: '14:00' },
-      date: getWeekDates(mockSchedule.startDate)[1],
-      order: 3
-    },
-    // Wednesday
-    {
-      id: 'unassigned-8',
-      shiftTypeId: '1',
-      shiftType: { ...mockShiftTypes[0], name: 'Front Desk', startTime: '06:00', endTime: '10:00' },
-      date: getWeekDates(mockSchedule.startDate)[2],
-      order: 1
-    },
-    {
-      id: 'unassigned-9',
-      shiftTypeId: '1',
-      shiftType: { ...mockShiftTypes[0], name: 'Front Desk', startTime: '10:00', endTime: '13:00' },
-      date: getWeekDates(mockSchedule.startDate)[2],
-      order: 2
-    },
-    {
-      id: 'unassigned-10',
-      shiftTypeId: '1',
-      shiftType: { ...mockShiftTypes[0], name: 'Front Desk', startTime: '13:00', endTime: '17:00' },
-      date: getWeekDates(mockSchedule.startDate)[2],
-      order: 3
-    },
-    // Thursday
-    {
-      id: 'unassigned-11',
-      shiftTypeId: '5',
-      shiftType: { ...mockShiftTypes[4], name: 'Manager', startTime: '09:00', endTime: '17:00' },
-      date: getWeekDates(mockSchedule.startDate)[3],
-      order: 1
-    },
-    {
-      id: 'unassigned-12',
-      shiftTypeId: '4',
-      shiftType: { ...mockShiftTypes[3], name: 'Cleaner', startTime: '10:00', endTime: '14:00' },
-      date: getWeekDates(mockSchedule.startDate)[3],
-      order: 2
-    },
-    {
-      id: 'unassigned-13',
-      shiftTypeId: '6',
-      shiftType: { ...mockShiftTypes[5], name: 'Security', startTime: '17:00', endTime: '23:00' },
-      date: getWeekDates(mockSchedule.startDate)[3],
-      order: 3
-    },
-    // Friday
-    {
-      id: 'unassigned-14',
-      shiftTypeId: '1',
-      shiftType: { ...mockShiftTypes[0], name: 'Front Desk', startTime: '06:00', endTime: '10:00' },
-      date: getWeekDates(mockSchedule.startDate)[4],
-      order: 1
-    },
-    {
-      id: 'unassigned-15',
-      shiftTypeId: '1',
-      shiftType: { ...mockShiftTypes[0], name: 'Front Desk', startTime: '10:00', endTime: '17:00' },
-      date: getWeekDates(mockSchedule.startDate)[4],
-      order: 2
-    },
-    {
-      id: 'unassigned-16',
-      shiftTypeId: '4',
-      shiftType: { ...mockShiftTypes[3], name: 'Cleaner', startTime: '10:00', endTime: '14:00' },
-      date: getWeekDates(mockSchedule.startDate)[4],
-      order: 3
-    },
-    // Saturday
-    {
-      id: 'unassigned-17',
-      shiftTypeId: '1',
-      shiftType: { ...mockShiftTypes[0], name: 'Front Desk', startTime: '10:00', endTime: '13:00' },
-      date: getWeekDates(mockSchedule.startDate)[5],
-      order: 1
-    },
-    {
-      id: 'unassigned-18',
-      shiftTypeId: '4',
-      shiftType: { ...mockShiftTypes[3], name: 'Cleaner', startTime: '14:00', endTime: '18:00' },
-      date: getWeekDates(mockSchedule.startDate)[5],
-      order: 2
-    },
-    {
-      id: 'unassigned-19',
-      shiftTypeId: '6',
-      shiftType: { ...mockShiftTypes[5], name: 'Security', startTime: '17:00', endTime: '23:00' },
-      date: getWeekDates(mockSchedule.startDate)[5],
-      order: 3
-    },
-    // Sunday
-    {
-      id: 'unassigned-20',
-      shiftTypeId: '1',
-      shiftType: { ...mockShiftTypes[0], name: 'Front Desk', startTime: '06:00', endTime: '10:00' },
-      date: getWeekDates(mockSchedule.startDate)[6],
-      order: 1
-    },
-    {
-      id: 'unassigned-21',
-      shiftTypeId: '4',
-      shiftType: { ...mockShiftTypes[3], name: 'Cleaner', startTime: '10:00', endTime: '14:00' },
-      date: getWeekDates(mockSchedule.startDate)[6],
-      order: 2
-    }
-  ]);
+  // Use real data hooks - pass selected schedule ID
+  const {
+    shiftTypes: availableShiftTypes,
+    scheduleShifts: allScheduleShifts,
+    loading: scheduleLoading,
+    error: scheduleError,
+    createShiftType: handleCreateShiftTypeAPI,
+    saveScheduleChanges,
+    copyPreviousWeek: copyPreviousWeekAPI,
+    publishSchedule,
+    unpublishSchedule
+  } = useScheduleData(selectedSchedule?.id);
+
+  const {
+    employees,
+    loading: employeesLoading,
+    error: employeesError
+  } = useEmployees();
+
+  // Local state for UI
+  const [scheduleShifts, setScheduleShifts] = useState<ScheduleShift[]>([]);
+  const [unassignedShifts, setUnassignedShifts] = useState<ScheduleShift[]>([]);
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const [draggedItem, setDraggedItem] = useState<{ type: string; data: ShiftType | Employee | ScheduleShift } | null>(null);
   const [selectedRequiredShifts, setSelectedRequiredShifts] = useState<Set<string>>(new Set());
-  const [availableShiftTypes, setAvailableShiftTypes] = useState<ShiftType[]>(mockShiftTypes);
+  // availableShiftTypes now comes from useScheduleData hook
   const [sidebarView, setSidebarView] = useState<'employees' | 'shifts'>('employees');
   const [selectedShiftTypes, setSelectedShiftTypes] = useState<Set<string>>(new Set());
   const [shiftQuantities, setShiftQuantities] = useState<Map<string, number>>(new Map());
@@ -487,7 +360,89 @@ export default function AssignShiftsPage() {
     useSensor(KeyboardSensor)
   );
 
-  const weekDates = getWeekDates(mockSchedule.startDate);
+  const weekDates = selectedSchedule ? getWeekDates(selectedSchedule.startDate) : [];
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (isLoaded && !user) {
+      router.push('/auth/login');
+    }
+  }, [isLoaded, user, router]);
+
+  // Don't auto-sync currentSchedule - let user explicitly choose schedule
+  // useEffect(() => {
+  //   if (currentSchedule && selectedSchedule?.id !== currentSchedule.id) {
+  //     setSelectedSchedule(currentSchedule);
+  //   }
+  // }, [currentSchedule, selectedSchedule]);
+
+  // Initialize local state with real data when schedule is selected
+  useEffect(() => {
+    if (selectedSchedule && allScheduleShifts && allScheduleShifts.length > 0) {
+      // Only update if we don't already have the same data
+      const totalLocalShifts = scheduleShifts.length + unassignedShifts.length;
+      if (totalLocalShifts !== allScheduleShifts.length) {
+        const assigned = allScheduleShifts.filter(shift => shift.userId);
+        const unassigned = allScheduleShifts.filter(shift => !shift.userId);
+        setScheduleShifts(assigned);
+        setUnassignedShifts(unassigned);
+      }
+    }
+  }, [selectedSchedule, allScheduleShifts, scheduleShifts.length, unassignedShifts.length]);
+
+  // Show schedule selector if no schedule is selected
+  if (!selectedSchedule) {
+    return (
+      <ScheduleSelector 
+        onScheduleSelect={(schedule) => setSelectedSchedule(schedule)}
+      />
+    );
+  }
+
+  // Show loading state
+  if (!isLoaded || scheduleLoading || employeesLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-lg font-semibold mb-2">Loading Schedule...</div>
+          <div className="text-sm text-muted-foreground">
+            {!isLoaded ? "Authenticating..." : "Please wait while we load your data"}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Return early if not authenticated (before redirect completes)
+  if (!user) {
+    return null;
+  }
+
+  // Show error state
+  if (scheduleError || employeesError) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-lg font-semibold mb-2 text-red-500">Error Loading Data</div>
+          <div className="text-sm text-muted-foreground mb-4">
+            {scheduleError || employeesError}
+          </div>
+          <Button onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!selectedSchedule) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-lg font-semibold mb-2">No Schedule Selected</div>
+          <div className="text-sm text-muted-foreground">Please select a schedule first</div>
+        </div>
+      </div>
+    );
+  }
 
   const handleDragStart = (event: DragStartEvent) => {
     setActiveId(event.active.id as string);
@@ -495,7 +450,7 @@ export default function AssignShiftsPage() {
     setDraggedItem(data ? { type: data.type, data: data[data.type] } : null);
   };
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { over } = event;
     
     if (!over || !draggedItem) {
@@ -506,9 +461,34 @@ export default function AssignShiftsPage() {
 
     const overId = over.id as string;
 
-    // Handle dropping employee onto unassigned shift (first assignment)
+    // Handle dropping employee onto specific shift (PRIORITY - handle this first)
+    if (draggedItem.type === 'employee' && overId.startsWith('drop-shift-')) {
+      const employee = draggedItem.data as Employee;
+      const shiftId = overId.replace('drop-shift-', '');
+      const shift = unassignedShifts.find(s => s.id === shiftId);
+      
+      if (shift) {
+        const assignedShift = {
+          ...shift,
+          userId: employee.id,
+          user: employee
+        };
+        
+        setScheduleShifts(prev => [...prev, assignedShift]);
+        setUnassignedShifts(prev => prev.filter(s => s.id !== shift.id));
+      }
+      
+      setActiveId(null);
+      setDraggedItem(null);
+      return; // Exit early to prevent other handlers from running
+    }
+
+    // Handle dropping employee onto unassigned day (DISABLED - only allow drops on specific shifts)
     if (draggedItem.type === 'employee' && overId.startsWith('unassigned-day-')) {
-      // Not implemented in this workflow - user should drag shift to employee or employee to specific shift
+      // Do nothing - employees can only be dropped on specific shifts, not on empty day areas
+      setActiveId(null);
+      setDraggedItem(null);
+      return;
     }
 
     // Handle dropping shift type from sidebar onto employee day
@@ -517,7 +497,7 @@ export default function AssignShiftsPage() {
       const employeeId = parts[1];
       const dayIndex = parseInt(parts[3]);
       
-      const employee = mockEmployees.find(e => e.id === employeeId);
+      const employee = employees.find(e => e.id === employeeId);
       const shiftType = draggedItem.data as ShiftType;
 
       const newShift: ScheduleShift = {
@@ -554,7 +534,7 @@ export default function AssignShiftsPage() {
     if (draggedItem.type === 'shift' && overId.startsWith('employee-')) {
       const parts = overId.split('-');
       const employeeId = parts[1];
-      const employee = mockEmployees.find(e => e.id === employeeId);
+      const employee = employees.find(e => e.id === employeeId);
       const shift = draggedItem.data as ScheduleShift;
 
       // Check if this is an unassigned shift or already assigned shift
@@ -566,12 +546,16 @@ export default function AssignShiftsPage() {
           ? unassignedShifts.filter(s => selectedRequiredShifts.has(s.id))
           : [shift];
 
-        // Assign all selected shifts to the employee
-        const newAssignedShifts = shiftsToAssign.map(s => ({
-          ...s,
-          userId: employeeId,
-          user: employee
-        }));
+        // Assign each shift to the employee (local state only)
+        const newAssignedShifts: ScheduleShift[] = [];
+        for (const shiftToAssign of shiftsToAssign) {
+          const assignedShift = {
+            ...shiftToAssign,
+            userId: employeeId,
+            user: employee
+          };
+          newAssignedShifts.push(assignedShift);
+        }
 
         setScheduleShifts(prev => [...prev, ...newAssignedShifts]);
         setUnassignedShifts(prev => prev.filter(s => !shiftsToAssign.some(as => as.id === s.id)));
@@ -579,41 +563,18 @@ export default function AssignShiftsPage() {
         // Clear selections after assignment
         setSelectedRequiredShifts(new Set());
       } else {
-        // Reassign existing shift to different employee
-        const updatedShift = {
-          ...shift,
-          userId: employeeId,
-          user: employee
-        };
-        
+        // Reassign existing shift to different employee (local state only)
         setScheduleShifts(prev => 
-          prev.map(s => s.id === shift.id ? updatedShift : s)
+          prev.map(s => s.id === shift.id ? { ...s, userId: employeeId, user: employee } : s)
         );
       }
     }
 
-    // Handle dropping employee onto specific unassigned shift (first assignment workflow)
-    if (draggedItem.type === 'employee' && overId.startsWith('drop-shift-')) {
-      const employee = draggedItem.data as Employee;
-      const shiftId = overId.replace('drop-shift-', '');
-      const shift = unassignedShifts.find(s => s.id === shiftId);
-      
-      if (shift) {
-        const assignedShift = {
-          ...shift,
-          userId: employee.id,
-          user: employee
-        };
-        
-        setScheduleShifts(prev => [...prev, assignedShift]);
-        setUnassignedShifts(prev => prev.filter(s => s.id !== shift.id));
-      }
-    }
 
     // Handle dropping shift onto employee in sidebar (assignment workflow)
     if (draggedItem.type === 'shift' && overId.startsWith('drop-employee-')) {
       const employeeId = overId.replace('drop-employee-', '');
-      const employee = mockEmployees.find(e => e.id === employeeId);
+      const employee = employees.find(e => e.id === employeeId);
       const shift = draggedItem.data as ScheduleShift;
 
       // Check if this is an unassigned shift or already assigned shift
@@ -625,12 +586,16 @@ export default function AssignShiftsPage() {
           ? unassignedShifts.filter(s => selectedRequiredShifts.has(s.id))
           : [shift];
 
-        // Assign all selected shifts to the employee
-        const newAssignedShifts = shiftsToAssign.map(s => ({
-          ...s,
-          userId: employeeId,
-          user: employee
-        }));
+        // Assign each shift to the employee (local state only)
+        const newAssignedShifts: ScheduleShift[] = [];
+        for (const shiftToAssign of shiftsToAssign) {
+          const assignedShift = {
+            ...shiftToAssign,
+            userId: employeeId,
+            user: employee
+          };
+          newAssignedShifts.push(assignedShift);
+        }
 
         setScheduleShifts(prev => [...prev, ...newAssignedShifts]);
         setUnassignedShifts(prev => prev.filter(s => !shiftsToAssign.some(as => as.id === s.id)));
@@ -638,15 +603,9 @@ export default function AssignShiftsPage() {
         // Clear selections after assignment
         setSelectedRequiredShifts(new Set());
       } else {
-        // Reassign existing shift to different employee
-        const updatedShift = {
-          ...shift,
-          userId: employeeId,
-          user: employee
-        };
-        
+        // Reassign existing shift to different employee (local state only)
         setScheduleShifts(prev => 
-          prev.map(s => s.id === shift.id ? updatedShift : s)
+          prev.map(s => s.id === shift.id ? { ...s, userId: employeeId, user: employee } : s)
         );
       }
     }
@@ -670,8 +629,10 @@ export default function AssignShiftsPage() {
       shiftTypesToCreate.forEach((shiftType) => {
         const quantity = getQuantityForShiftType(shiftType.id);
         for (let i = 0; i < quantity; i++) {
+          // Generate unique ID with timestamp + random component to avoid collisions
+          const uniqueId = `unassigned-${Date.now()}-${Math.random().toString(36).substr(2, 9)}-${shiftType.id}-${i}`;
           newShifts.push({
-            id: `unassigned-${Date.now()}-${shiftType.id}-${i}`,
+            id: uniqueId,
             shiftTypeId: shiftType.id,
             shiftType: shiftType,
             date: weekDates[dayIndex],
@@ -705,7 +666,7 @@ export default function AssignShiftsPage() {
 
   const getAssignedEmployees = () => {
     const assignedEmployeeIds = new Set(scheduleShifts.map(shift => shift.userId).filter(Boolean));
-    return mockEmployees.filter(employee => assignedEmployeeIds.has(employee.id));
+    return employees.filter(employee => assignedEmployeeIds.has(employee.id));
   };
 
   const handleRequiredShiftSelect = (shift: ScheduleShift, selected: boolean) => {
@@ -724,12 +685,13 @@ export default function AssignShiftsPage() {
     setSelectedRequiredShifts(new Set());
   };
 
-  const handleCreateShiftType = (newShiftTypeData: Omit<ShiftType, 'id'>) => {
-    const newShiftType: ShiftType = {
-      ...newShiftTypeData,
-      id: `custom-${Date.now()}`
-    };
-    setAvailableShiftTypes(prev => [...prev, newShiftType]);
+  const handleCreateShiftType = async (newShiftTypeData: Omit<ShiftType, 'id' | 'isActive'>) => {
+    try {
+      await handleCreateShiftTypeAPI(newShiftTypeData);
+    } catch (err) {
+      console.error('Failed to create shift type:', err);
+      // Could show toast notification here
+    }
   };
 
   const handleShiftTypeSelect = (shiftType: ShiftType, selected: boolean) => {
@@ -756,31 +718,102 @@ export default function AssignShiftsPage() {
     return shiftQuantities.get(shiftTypeId) || 1;
   };
 
-  const copyPreviousWeek = () => {
-    // Add some additional shifts when copying
-    const additionalShifts: ScheduleShift[] = [
-      {
-        id: `copy-${Date.now()}-1`,
-        shiftTypeId: '5',
-        shiftType: mockShiftTypes[4],
-        date: weekDates[2], // Wednesday
-        order: 4
-      },
-      {
-        id: `copy-${Date.now()}-2`,
-        shiftTypeId: '6',
-        shiftType: mockShiftTypes[5],
-        date: weekDates[4], // Friday
-        order: 4
-      }
-    ];
-    
-    setUnassignedShifts(prev => [...prev, ...additionalShifts]);
+  const copyPreviousWeek = async () => {
+    try {
+      // For now, use first available schedule as source
+      // Updated to use new API structure
+      await copyPreviousWeekAPI();
+    } catch (err) {
+      console.error('Failed to copy previous week:', err);
+      // Could show error toast here
+    }
   };
 
   const clearAllShifts = () => {
+    // Clear all local state shifts
     setScheduleShifts([]);
     setUnassignedShifts([]);
+  };
+
+  const handleSaveDraft = async () => {
+    if (!selectedSchedule) {
+      console.error('No selected schedule to save');
+      return;
+    }
+
+    try {
+      console.log('Saving draft changes to backend...');
+
+      // Get the original data for comparison
+      const originalShifts = allScheduleShifts || [];
+      const currentShifts = [...scheduleShifts, ...unassignedShifts];
+
+      // Find new shifts (local shifts with temp IDs that don't exist in original data)
+      const newShifts = currentShifts.filter(shift => 
+        shift.id.startsWith('unassigned-') || shift.id.startsWith('shift-')
+      );
+
+      // Find shifts to delete (original shifts not in current local state)
+      const shiftsToDelete = originalShifts.filter(originalShift => 
+        !currentShifts.some(currentShift => currentShift.id === originalShift.id)
+      );
+
+      // Find shifts to update (existing shifts with changed assignments)
+      const shiftsToUpdate = currentShifts.filter(currentShift => {
+        const originalShift = originalShifts.find(orig => orig.id === currentShift.id);
+        return originalShift && (
+          originalShift.userId !== currentShift.userId ||
+          originalShift.order !== currentShift.order
+        );
+      });
+
+      console.log('Draft save summary:', {
+        newShifts: newShifts.length,
+        shiftsToUpdate: shiftsToUpdate.length,
+        shiftsToDelete: shiftsToDelete.length
+      });
+
+      console.log('DEBUG - Original shifts IDs:', originalShifts.map(s => s.id));
+      console.log('DEBUG - Current shifts IDs:', currentShifts.map(s => s.id));
+      console.log('DEBUG - New shifts detected:', newShifts.map(s => ({ id: s.id, shiftType: s.shiftType?.name })));
+      console.log('DEBUG - scheduleShifts count:', scheduleShifts.length);
+      console.log('DEBUG - unassignedShifts count:', unassignedShifts.length);
+
+      // If this is a published schedule, unpublish it first
+      if (selectedSchedule.status === 'published') {
+        console.log('Unpublishing schedule...');
+        await unpublishSchedule();
+      }
+
+      // Save all changes using the streamlined function
+      await saveScheduleChanges(newShifts, shiftsToUpdate, shiftsToDelete);
+
+      console.log('Schedule successfully saved as draft');
+      // Could show success toast here
+    } catch (err) {
+      console.error('Failed to save draft:', err);
+      // Could show error toast here
+    }
+  };
+
+  const handlePublishSchedule = async () => {
+    if (isSaving) {
+      console.log('Save already in progress, ignoring...');
+      return;
+    }
+
+    setIsSaving(true);
+
+    try {
+      await publishSchedule();
+      console.log('Schedule published successfully');
+      // Could show success toast and redirect
+    } catch (err) {
+      console.error('Failed to publish schedule:', err);
+      // Could show error toast here
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -809,9 +842,31 @@ export default function AssignShiftsPage() {
                 </nav>
               </div>
               <div className="flex space-x-3">
-                <Button variant="outline">Save Draft</Button>
-                <Button className="bg-primary hover:bg-primary/90">
-                  Publish Schedule
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    // Clear local state before going back
+                    setScheduleShifts([]);
+                    setUnassignedShifts([]);
+                    setSelectedSchedule(null);
+                  }}
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Schedules
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={handleSaveDraft}
+                  disabled={isSaving}
+                >
+                  {isSaving ? 'Saving...' : (selectedSchedule.status === 'published' ? 'Save as Draft' : 'Save Draft')}
+                </Button>
+                <Button 
+                  className="bg-primary hover:bg-primary/90" 
+                  onClick={handlePublishSchedule}
+                  disabled={isSaving}
+                >
+                  {isSaving ? 'Saving...' : (selectedSchedule.status === 'published' ? 'Save Schedule' : 'Publish Schedule')}
                 </Button>
               </div>
             </div>
@@ -826,7 +881,7 @@ export default function AssignShiftsPage() {
                 <Button variant="outline" size="sm">
                   <ArrowLeft className="w-4 h-4" />
                 </Button>
-                <h2 className="text-lg font-semibold">Week of January 15-21, 2024</h2>
+                <h2 className="text-lg font-semibold">{selectedSchedule.name}</h2>
                 <Button variant="outline" size="sm">
                   <ArrowRight className="w-4 h-4" />
                 </Button>
@@ -835,12 +890,16 @@ export default function AssignShiftsPage() {
               <div className="grid grid-cols-8 gap-1 border border-border rounded-lg overflow-hidden">
                 {/* Header */}
                 <div className="bg-muted p-2"></div>
-                {weekDays.map((day, index) => (
-                  <div key={day} className="bg-muted p-2 text-center">
-                    <div className="text-sm font-medium">{day}</div>
-                    <div className="text-xs text-muted-foreground">{dayNumbers[index]}</div>
-                  </div>
-                ))}
+                {weekDays.map((day, index) => {
+                  const dateObj = weekDates[index] ? new Date(weekDates[index]) : new Date();
+                  const dayNumber = dateObj.getDate();
+                  return (
+                    <div key={day} className="bg-muted p-2 text-center">
+                      <div className="text-sm font-medium">{day}</div>
+                      <div className="text-xs text-muted-foreground">{dayNumber}</div>
+                    </div>
+                  );
+                })}
 
                 {/* Assigned Employee Rows - only show employees who have assignments */}
                 {getAssignedEmployees().map((employee) => (
@@ -904,7 +963,7 @@ export default function AssignShiftsPage() {
                     )}
                   </div>
                   {weekDays.map((_, dayIndex) => (
-                    <DroppableUnassignedDay key={dayIndex} dayIndex={dayIndex}>
+                    <DroppableUnassignedDay key={dayIndex} dayIndex={dayIndex} draggedItemType={draggedItem?.type}>
                       {getUnassignedShiftsForDay(dayIndex).map((shift) => (
                         <DraggableScheduleShift 
                           key={shift.id} 
@@ -987,7 +1046,7 @@ export default function AssignShiftsPage() {
                   {sidebarView === 'employees' ? (
                     // Employees List
                     <>
-                      {mockEmployees.map((employee) => (
+                      {employees.map((employee) => (
                         <DraggableEmployee key={employee.id} employee={employee} />
                       ))}
                     </>

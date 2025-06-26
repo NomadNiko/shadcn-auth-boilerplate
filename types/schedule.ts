@@ -1,4 +1,4 @@
-// Mock data types for Schedule Manager
+// Types for Schedule Manager - compatible with backend
 
 export interface ShiftType {
   id: string;
@@ -6,10 +6,12 @@ export interface ShiftType {
   startTime: string; // HH:MM format
   endTime: string;   // HH:MM format
   colorIndex: number; // 0-9 for theme colors
+  isActive?: boolean;
 }
 
 export interface ScheduleShift {
   id: string;
+  scheduleId?: string;
   shiftTypeId: string;
   shiftType: ShiftType;
   date: string; // YYYY-MM-DD format
@@ -20,10 +22,12 @@ export interface ScheduleShift {
 
 export interface Employee {
   id: string;
+  _id?: string; // Backend compatibility
   firstName: string;
   lastName: string;
   role: string;
   avatar?: string;
+  email?: string;
 }
 
 export interface Schedule {
@@ -32,6 +36,8 @@ export interface Schedule {
   startDate: string;
   endDate: string;
   status: "draft" | "published";
+  totalShifts?: number;
+  assignedShifts?: number;
 }
 
 // Mock data

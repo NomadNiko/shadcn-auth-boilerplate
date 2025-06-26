@@ -1,0 +1,1780 @@
+[
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/auth/login",
+    "headers": {
+      "accept-language": "en-US,en;q=0.9",
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Linux\"",
+      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/auth/login",
+    "status": 200,
+    "headers": {
+      "cache-control": "s-maxage=31536000",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "text/html; charset=utf-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "\"k3z61iza09btv\"",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+      "x-powered-by": "Next.js",
+      "x-nextjs-cache": "HIT",
+      "x-nextjs-prerender": "1",
+      "x-nextjs-stale-time": "300"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/media/569ce4b8f30dc480-s.p.woff2",
+    "headers": {
+      "origin": "http://localhost:3000",
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/media/93f479601ee12b01-s.p.woff2",
+    "headers": {
+      "origin": "http://localhost:3000",
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/css/d2ed885841f8ef5c.css",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "text/css,*/*;q=0.1"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/media/569ce4b8f30dc480-s.p.woff2",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-length": "28356",
+      "content-type": "font/woff2",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"6ec4-197aaa7e141\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/css/d2ed885841f8ef5c.css",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "text/css; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"bf77-197aaa7e155\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/webpack-eb9b210c83e9fe2b.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/media/93f479601ee12b01-s.p.woff2",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-length": "31288",
+      "content-type": "font/woff2",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"7a38-197aaa7e141\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/4bd1b696-8bc4ddd2a0ef9fa2.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/684-46fe4288113e134d.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/main-app-4245bfca98617dd9.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/536-7bc82ae6d7e88e17.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/106-e0e05519b007b160.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/app/layout-e5f7a0e8cfd6b755.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/460-a51335f0beffb0a5.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/890-8b5d8bf78b4b852f.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/977-59b6532a3f7c4b72.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/745-ba56b242999ce3aa.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/874-f3c99d494dbb2237.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/703-43b153bdc74fe2ca.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/app/auth/login/page-e0ff040a13f5d206.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/webpack-eb9b210c83e9fe2b.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"ee8-197aaa7e149\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/main-app-4245bfca98617dd9.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-length": "518",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"206-197aaa7e141\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/106-e0e05519b007b160.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"cdfe-197aaa7e149\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/536-7bc82ae6d7e88e17.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"e47f-197aaa7e149\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/684-46fe4288113e134d.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"2aae4-197aaa7e14d\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/4bd1b696-8bc4ddd2a0ef9fa2.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"291dd-197aaa7e149\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/app/layout-e5f7a0e8cfd6b755.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"19b8-197aaa7e141\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/460-a51335f0beffb0a5.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"720f-197aaa7e149\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/890-8b5d8bf78b4b852f.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"635d-197aaa7e149\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/874-f3c99d494dbb2237.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"2123-197aaa7e14d\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/app/auth/login/page-e0ff040a13f5d206.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"1f8c-197aaa7e145\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/745-ba56b242999ce3aa.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"c053-197aaa7e14d\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/703-43b153bdc74fe2ca.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"2870-197aaa7e14d\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/977-59b6532a3f7c4b72.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"154f2-197aaa7e149\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/925.08efa3be7cf400e8.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/681.17a5e702ae465fba.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/925.08efa3be7cf400e8.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"4c9-197aaa7e151\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/681.17a5e702ae465fba.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-length": "528",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"210-197aaa7e155\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/favicon.ico",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "cookie": "i18next=en"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/favicon.ico",
+    "status": 200,
+    "headers": {
+      "connection": "keep-alive",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "cache-control": "public, max-age=0, must-revalidate",
+      "content-type": "image/x-icon",
+      "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
+      "x-nextjs-cache": "HIT",
+      "x-nextjs-prerender": "1"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/auth/forgot-password?_rsc=16nwh",
+    "headers": {
+      "rsc": "1",
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "next-router-prefetch": "1",
+      "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22auth%22%2C%7B%22children%22%3A%5B%22login%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2Fauth%2Flogin%22%2C%22refresh%22%5D%7D%5D%7D%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+      "next-url": "/auth/login",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "*/*",
+      "cookie": "i18next=en"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/auth/signup?_rsc=16nwh",
+    "headers": {
+      "rsc": "1",
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "next-router-prefetch": "1",
+      "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22auth%22%2C%7B%22children%22%3A%5B%22login%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2Fauth%2Flogin%22%2C%22refresh%22%5D%7D%5D%7D%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+      "next-url": "/auth/login",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "*/*",
+      "cookie": "i18next=en"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/auth/signup?_rsc=16nwh",
+    "status": 200,
+    "headers": {
+      "cache-control": "s-maxage=31536000",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "text/x-component",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+      "x-nextjs-cache": "HIT",
+      "x-nextjs-prerender": "1",
+      "x-nextjs-stale-time": "300"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/auth/forgot-password?_rsc=16nwh",
+    "status": 200,
+    "headers": {
+      "cache-control": "s-maxage=31536000",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "text/x-component",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+      "x-nextjs-cache": "HIT",
+      "x-nextjs-prerender": "1",
+      "x-nextjs-stale-time": "300"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/app/auth/signup/page-4951d1df86ec3384.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/app/auth/forgot-password/page-4313394c3d792c02.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/app/auth/signup/page-4951d1df86ec3384.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"216e-197aaa7e149\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/app/auth/forgot-password/page-4313394c3d792c02.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "etag": "W/\"1d97-197aaa7e145\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/auth/login",
+    "headers": {
+      "accept": "*/*",
+      "accept-language": "en-US,en;q=0.9",
+      "cookie": "i18next=en",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Linux\""
+    }
+  },
+  {
+    "type": "request",
+    "method": "OPTIONS",
+    "url": "http://localhost:3001/api/v1/auth/email/login",
+    "headers": {
+      "accept": "*/*",
+      "access-control-request-headers": "content-type",
+      "access-control-request-method": "POST",
+      "origin": "http://localhost:3000",
+      "sec-fetch-mode": "cors",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "referer": "http://localhost:3000/"
+    }
+  },
+  {
+    "type": "request",
+    "method": "POST",
+    "url": "http://localhost:3001/api/v1/auth/email/login",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "content-type": "application/json",
+      "origin": "http://localhost:3000"
+    },
+    "postData": "{\"email\":\"admin@nomadsoft.us\",\"password\":\"secret\"}"
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3001/api/v1/auth/email/login",
+    "status": 204,
+    "headers": {
+      "access-control-allow-headers": "content-type",
+      "access-control-allow-methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+      "access-control-allow-origin": "*",
+      "connection": "keep-alive",
+      "content-length": "0",
+      "date": "Thu, 26 Jun 2025 05:22:51 GMT",
+      "keep-alive": "timeout=5",
+      "vary": "Access-Control-Request-Headers",
+      "x-powered-by": "Express"
+    },
+    "data": "Could not read response body"
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/dashboard?_rsc=1yhn7",
+    "headers": {
+      "rsc": "1",
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22auth%22%2C%7B%22children%22%3A%5B%22login%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2Fauth%2Flogin%22%2C%22refresh%22%5D%7D%5D%7D%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+      "next-url": "/auth/login",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3001/api/v1/auth/email/login",
+    "status": 200,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "connection": "keep-alive",
+      "content-length": "961",
+      "content-type": "application/json; charset=utf-8",
+      "date": "Thu, 26 Jun 2025 05:22:51 GMT",
+      "etag": "W/\"3c1-agV+91ZX7Nyu/cLw3fzrSNfvOvs\"",
+      "keep-alive": "timeout=5",
+      "x-powered-by": "Express"
+    },
+    "data": "{\"refreshToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24\",\"tokenExpires\":1750916271314,\"user\":{\"_id\":\"685b9660a6eb67e3152ee627\",\"email\":\"admin@nomadsoft.us\",\"password\":\"$2b$10$AjD9XkBwBolj/Y0P6ZWi4.taRK/1lejPIqcoEg0a6sxPOZ1iAS2P2\",\"provider\":\"email\",\"socialId\":null,\"firstName\":\"Super\",\"lastName\":\"Admin\",\"role\":{\"id\":\"1\",\"_id\":\"1\"},\"status\":{\"id\":\"1\",\"_id\":\"1\"},\"createdAt\":\"2025-06-25T06:25:36.729Z\",\"updatedAt\":\"2025-06-25T06:25:36.729Z\",\"__v\":0}}"
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/dashboard?_rsc=1yhn7",
+    "status": 200,
+    "headers": {
+      "cache-control": "s-maxage=31536000",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "text/x-component",
+      "date": "Thu, 26 Jun 2025 05:22:51 GMT",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+      "x-nextjs-cache": "HIT",
+      "x-nextjs-prerender": "1",
+      "x-nextjs-stale-time": "300"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/app/dashboard/page-9291365ec23ccac2.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/app/dashboard/page-9291365ec23ccac2.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:51 GMT",
+      "etag": "W/\"4e37-197aaa7e149\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/826.c5a583b493319390.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/auth/login",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/826.c5a583b493319390.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:51 GMT",
+      "etag": "W/\"59e-197aaa7e155\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/schedule-manager/assign",
+    "headers": {
+      "accept-language": "en-US,en;q=0.9",
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Linux\"",
+      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/schedule-manager/assign",
+    "status": 200,
+    "headers": {
+      "cache-control": "s-maxage=31536000",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "text/html; charset=utf-8",
+      "date": "Thu, 26 Jun 2025 05:22:51 GMT",
+      "etag": "\"145nwy1pelh8uv\"",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+      "x-powered-by": "Next.js",
+      "x-nextjs-cache": "HIT",
+      "x-nextjs-prerender": "1",
+      "x-nextjs-stale-time": "300"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/media/569ce4b8f30dc480-s.p.woff2",
+    "headers": {
+      "origin": "http://localhost:3000",
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/media/93f479601ee12b01-s.p.woff2",
+    "headers": {
+      "origin": "http://localhost:3000",
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/css/d2ed885841f8ef5c.css",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "text/css,*/*;q=0.1",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/media/569ce4b8f30dc480-s.p.woff2",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "content-length": "28356",
+      "etag": "W/\"6ec4-197aaa7e141\"",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "font/woff2"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/css/d2ed885841f8ef5c.css",
+    "status": 200,
+    "headers": {
+      "cache-control": "public, max-age=31536000, immutable",
+      "content-encoding": "gzip",
+      "etag": "W/\"bf77-197aaa7e155\"",
+      "accept-ranges": "bytes",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "text/css; charset=UTF-8",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/media/93f479601ee12b01-s.p.woff2",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "content-length": "31288",
+      "etag": "W/\"7a38-197aaa7e141\"",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "font/woff2"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/webpack-eb9b210c83e9fe2b.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/4bd1b696-8bc4ddd2a0ef9fa2.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/684-46fe4288113e134d.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/main-app-4245bfca98617dd9.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/536-7bc82ae6d7e88e17.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/106-e0e05519b007b160.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/app/layout-e5f7a0e8cfd6b755.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/460-a51335f0beffb0a5.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/890-8b5d8bf78b4b852f.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/903-f5161036bfcbab92.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/app/schedule-manager/assign/page-aa3381ba24b3635b.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/webpack-eb9b210c83e9fe2b.js",
+    "status": 200,
+    "headers": {
+      "cache-control": "public, max-age=31536000, immutable",
+      "content-encoding": "gzip",
+      "etag": "W/\"ee8-197aaa7e149\"",
+      "accept-ranges": "bytes",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "application/javascript; charset=UTF-8",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/main-app-4245bfca98617dd9.js",
+    "status": 200,
+    "headers": {
+      "cache-control": "public, max-age=31536000, immutable",
+      "etag": "W/\"206-197aaa7e141\"",
+      "accept-ranges": "bytes",
+      "content-length": "518",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "application/javascript; charset=UTF-8",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/106-e0e05519b007b160.js",
+    "status": 200,
+    "headers": {
+      "cache-control": "public, max-age=31536000, immutable",
+      "content-encoding": "gzip",
+      "etag": "W/\"cdfe-197aaa7e149\"",
+      "accept-ranges": "bytes",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "application/javascript; charset=UTF-8",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/4bd1b696-8bc4ddd2a0ef9fa2.js",
+    "status": 200,
+    "headers": {
+      "cache-control": "public, max-age=31536000, immutable",
+      "content-encoding": "gzip",
+      "etag": "W/\"291dd-197aaa7e149\"",
+      "accept-ranges": "bytes",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "application/javascript; charset=UTF-8",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/app/layout-e5f7a0e8cfd6b755.js",
+    "status": 200,
+    "headers": {
+      "cache-control": "public, max-age=31536000, immutable",
+      "content-encoding": "gzip",
+      "etag": "W/\"19b8-197aaa7e141\"",
+      "accept-ranges": "bytes",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "application/javascript; charset=UTF-8",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/536-7bc82ae6d7e88e17.js",
+    "status": 200,
+    "headers": {
+      "cache-control": "public, max-age=31536000, immutable",
+      "content-encoding": "gzip",
+      "etag": "W/\"e47f-197aaa7e149\"",
+      "accept-ranges": "bytes",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "application/javascript; charset=UTF-8",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/684-46fe4288113e134d.js",
+    "status": 200,
+    "headers": {
+      "cache-control": "public, max-age=31536000, immutable",
+      "content-encoding": "gzip",
+      "etag": "W/\"2aae4-197aaa7e14d\"",
+      "accept-ranges": "bytes",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "application/javascript; charset=UTF-8",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/890-8b5d8bf78b4b852f.js",
+    "status": 200,
+    "headers": {
+      "cache-control": "public, max-age=31536000, immutable",
+      "content-encoding": "gzip",
+      "etag": "W/\"635d-197aaa7e149\"",
+      "accept-ranges": "bytes",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "application/javascript; charset=UTF-8",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/app/schedule-manager/assign/page-aa3381ba24b3635b.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:52 GMT",
+      "etag": "W/\"b631-197aaa7e149\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/903-f5161036bfcbab92.js",
+    "status": 200,
+    "headers": {
+      "accept-ranges": "bytes",
+      "cache-control": "public, max-age=31536000, immutable",
+      "connection": "keep-alive",
+      "content-encoding": "gzip",
+      "content-type": "application/javascript; charset=UTF-8",
+      "date": "Thu, 26 Jun 2025 05:22:52 GMT",
+      "etag": "W/\"c2ae-197aaa7e14d\"",
+      "keep-alive": "timeout=5",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "transfer-encoding": "chunked",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/460-a51335f0beffb0a5.js",
+    "status": 200,
+    "headers": {
+      "cache-control": "public, max-age=31536000, immutable",
+      "content-encoding": "gzip",
+      "etag": "W/\"720f-197aaa7e149\"",
+      "accept-ranges": "bytes",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "application/javascript; charset=UTF-8",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3000/_next/static/chunks/925.08efa3be7cf400e8.js",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "referer": "http://localhost:3000/schedule-manager/assign",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "sec-ch-ua-mobile": "?0",
+      "accept": "*/*",
+      "cookie": "i18next=en; hostelshifts-auth-token={%22token%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24%22%2C%22refreshToken%22:%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJoYXNoIjoiN2VlMzJhOWNlNjE5ZWVmZTEzZWM4MmI0NDM4NmMzNTY3ZWFiMzUyZjMyNTY2NDU1ZTFhNDQ4MDViMjEwYjNiNCIsImlhdCI6MTc1MDkxNTM3MSwiZXhwIjoyMDY2Mjc1MzcxfQ.Gf4YZwZ50j7hw1lLxgJv_u0KSKyGwQUE03Paik230rY%22%2C%22tokenExpires%22:1750916271314}"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3000/_next/static/chunks/925.08efa3be7cf400e8.js",
+    "status": 200,
+    "headers": {
+      "cache-control": "public, max-age=31536000, immutable",
+      "content-encoding": "gzip",
+      "etag": "W/\"4c9-197aaa7e151\"",
+      "accept-ranges": "bytes",
+      "date": "Thu, 26 Jun 2025 05:22:48 GMT",
+      "last-modified": "Thu, 26 Jun 2025 05:13:38 GMT",
+      "content-type": "application/javascript; charset=UTF-8",
+      "vary": "Accept-Encoding"
+    },
+    "data": null
+  },
+  {
+    "type": "request",
+    "method": "OPTIONS",
+    "url": "http://localhost:3001/api/v1/shift-types",
+    "headers": {
+      "accept": "*/*",
+      "access-control-request-headers": "authorization",
+      "access-control-request-method": "GET",
+      "origin": "http://localhost:3000",
+      "sec-fetch-mode": "cors",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "referer": "http://localhost:3000/"
+    }
+  },
+  {
+    "type": "request",
+    "method": "OPTIONS",
+    "url": "http://localhost:3001/api/v1/employees/all",
+    "headers": {
+      "accept": "*/*",
+      "access-control-request-headers": "authorization",
+      "access-control-request-method": "GET",
+      "origin": "http://localhost:3000",
+      "sec-fetch-mode": "cors",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "referer": "http://localhost:3000/"
+    }
+  },
+  {
+    "type": "request",
+    "method": "OPTIONS",
+    "url": "http://localhost:3001/api/v1/auth/me",
+    "headers": {
+      "accept": "*/*",
+      "access-control-request-headers": "authorization",
+      "access-control-request-method": "GET",
+      "origin": "http://localhost:3000",
+      "sec-fetch-mode": "cors",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "referer": "http://localhost:3000/"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3001/api/v1/shift-types",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24",
+      "referer": "http://localhost:3000/",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "origin": "http://localhost:3000"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3001/api/v1/employees/all",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24",
+      "referer": "http://localhost:3000/",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "origin": "http://localhost:3000"
+    }
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3001/api/v1/auth/me",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24",
+      "referer": "http://localhost:3000/",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "origin": "http://localhost:3000"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3001/api/v1/shift-types",
+    "status": 204,
+    "headers": {
+      "access-control-allow-headers": "authorization",
+      "access-control-allow-methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+      "access-control-allow-origin": "*",
+      "connection": "keep-alive",
+      "content-length": "0",
+      "date": "Thu, 26 Jun 2025 05:22:52 GMT",
+      "keep-alive": "timeout=5",
+      "vary": "Access-Control-Request-Headers",
+      "x-powered-by": "Express"
+    },
+    "data": "Could not read response body"
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3001/api/v1/employees/all",
+    "status": 204,
+    "headers": {
+      "access-control-allow-headers": "authorization",
+      "access-control-allow-methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+      "access-control-allow-origin": "*",
+      "connection": "keep-alive",
+      "content-length": "0",
+      "date": "Thu, 26 Jun 2025 05:22:52 GMT",
+      "keep-alive": "timeout=5",
+      "vary": "Access-Control-Request-Headers",
+      "x-powered-by": "Express"
+    },
+    "data": "Could not read response body"
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3001/api/v1/auth/me",
+    "status": 204,
+    "headers": {
+      "access-control-allow-headers": "authorization",
+      "access-control-allow-methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+      "access-control-allow-origin": "*",
+      "connection": "keep-alive",
+      "content-length": "0",
+      "date": "Thu, 26 Jun 2025 05:22:52 GMT",
+      "keep-alive": "timeout=5",
+      "vary": "Access-Control-Request-Headers",
+      "x-powered-by": "Express"
+    },
+    "data": "Could not read response body"
+  },
+  {
+    "type": "request",
+    "method": "OPTIONS",
+    "url": "http://localhost:3001/api/v1/schedules",
+    "headers": {
+      "accept": "*/*",
+      "access-control-request-headers": "authorization",
+      "access-control-request-method": "GET",
+      "origin": "http://localhost:3000",
+      "sec-fetch-mode": "cors",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "referer": "http://localhost:3000/"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3001/api/v1/shift-types",
+    "status": 200,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "connection": "keep-alive",
+      "content-length": "1228",
+      "content-type": "application/json; charset=utf-8",
+      "date": "Thu, 26 Jun 2025 05:22:52 GMT",
+      "etag": "W/\"4cc-Ytjc0lw9CExEyO4djPawAJ3Z2Is\"",
+      "keep-alive": "timeout=5",
+      "x-powered-by": "Express"
+    },
+    "data": "[{\"id\":\"685c0a61509006e201de1a71\",\"name\":\"Cleaner\",\"startTime\":\"10:00\",\"endTime\":\"14:00\",\"colorIndex\":3,\"isActive\":true,\"createdAt\":\"2025-06-25T14:40:33.073Z\",\"updatedAt\":\"2025-06-25T14:40:33.073Z\"},{\"id\":\"685c0a57509006e201de1a6f\",\"name\":\"Front Desk Afternoon\",\"startTime\":\"10:00\",\"endTime\":\"14:00\",\"colorIndex\":0,\"isActive\":true,\"createdAt\":\"2025-06-25T14:40:23.045Z\",\"updatedAt\":\"2025-06-25T14:40:23.045Z\"},{\"id\":\"685c0a4b509006e201de1a6d\",\"name\":\"Front Desk Morning\",\"startTime\":\"06:00\",\"endTime\":\"10:00\",\"colorIndex\":0,\"isActive\":true,\"createdAt\":\"2025-06-25T14:40:11.044Z\",\"updatedAt\":\"2025-06-25T14:40:11.044Z\"},{\"id\":\"685c0a6c509006e201de1a73\",\"name\":\"Security Night\",\"startTime\":\"22:00\",\"endTime\":\"04:00\",\"colorIndex\":4,\"isActive\":true,\"createdAt\":\"2025-06-25T14:40:44.916Z\",\"updatedAt\":\"2025-06-25T14:40:44.916Z\"},{\"id\":\"685c144b963ede1309731d69\",\"name\":\"Test Manager\",\"startTime\":\"09:00\",\"endTime\":\"17:00\",\"colorIndex\":2,\"isActive\":true,\"createdAt\":\"2025-06-25T15:22:51.179Z\",\"updatedAt\":\"2025-06-25T15:22:51.179Z\"},{\"id\":\"685c9dac1657d552d8d07700\",\"name\":\"Test Shift\",\"startTime\":\"09:00\",\"endTime\":\"17:00\",\"colorIndex\":5,\"isActive\":true,\"createdAt\":\"2025-06-26T01:09:00.143Z\",\"updatedAt\":\"2025-06-26T01:09:00.143Z\"}]"
+  },
+  {
+    "type": "request",
+    "method": "GET",
+    "url": "http://localhost:3001/api/v1/schedules",
+    "headers": {
+      "sec-ch-ua-platform": "\"Linux\"",
+      "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5NjYwYTZlYjY3ZTMxNTJlZTYyNyIsInJvbGUiOnsiaWQiOiIxIiwiX2lkIjoiMSJ9LCJzZXNzaW9uSWQiOiI2ODVjZDkyYjM5ZGU3ZmFkMTQxM2ZjMWEiLCJpYXQiOjE3NTA5MTUzNzEsImV4cCI6MTc1MDkxNjI3MX0.dtKFVtfjAMS_w8R5HKAB2rSRoQ0ToHObsvG2bD3rT24",
+      "referer": "http://localhost:3000/",
+      "accept-language": "en-US,en;q=0.9",
+      "sec-ch-ua": "\"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "origin": "http://localhost:3000"
+    }
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3001/api/v1/schedules",
+    "status": 204,
+    "headers": {
+      "access-control-allow-headers": "authorization",
+      "access-control-allow-methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+      "access-control-allow-origin": "*",
+      "connection": "keep-alive",
+      "content-length": "0",
+      "date": "Thu, 26 Jun 2025 05:22:52 GMT",
+      "keep-alive": "timeout=5",
+      "vary": "Access-Control-Request-Headers",
+      "x-powered-by": "Express"
+    },
+    "data": "Could not read response body"
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3001/api/v1/employees/all",
+    "status": 200,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "connection": "keep-alive",
+      "content-length": "1259",
+      "content-type": "application/json; charset=utf-8",
+      "date": "Thu, 26 Jun 2025 05:22:52 GMT",
+      "etag": "W/\"4eb-yUyV4Zi+JHeg/rjiIjE1r1LNM98\"",
+      "keep-alive": "timeout=5",
+      "x-powered-by": "Express"
+    },
+    "data": "[{\"_id\":\"685b9660a6eb67e3152ee627\",\"email\":\"admin@nomadsoft.us\",\"firstName\":\"Super\",\"lastName\":\"Admin\",\"role\":{\"id\":\"1\",\"_id\":\"1\"}},{\"_id\":\"685b9660a6eb67e3152ee62a\",\"email\":\"user@nomadsoft.us\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":{\"id\":\"2\",\"_id\":\"2\"}},{\"_id\":\"685babaa60a4b0f1aed9d365\",\"email\":\"jtest@nomadsoft.us\",\"firstName\":\"MrJohn\",\"lastName\":\"Testersonsmith\",\"role\":{\"id\":2}},{\"_id\":\"685bae5f60a4b0f1aed9d372\",\"email\":\"wconfirm@nomadsoft.us\",\"firstName\":\"NewTest\",\"lastName\":\"WithConfirm\",\"role\":{\"id\":2}},{\"_id\":\"685bb00960a4b0f1aed9d379\",\"email\":\"newtest1750839305@nomadsoft.us\",\"firstName\":\"New\",\"lastName\":\"Test\",\"role\":{\"id\":2}},{\"_id\":\"685bb4427e6871cc8ea9d66b\",\"email\":\"freshtest1750840386@nomadsoft.us\",\"firstName\":\"Fresh\",\"lastName\":\"Test\",\"role\":{\"id\":2}},{\"_id\":\"685bb9bd5b956158300476e5\",\"email\":\"john.cena@nomadsoft.us\",\"firstName\":\"John\",\"lastName\":\"Cena\",\"role\":{\"id\":2}},{\"_id\":\"685bbb315061658553a9f23f\",\"email\":\"pparker@nomadsoft.us\",\"firstName\":\"Peter\",\"lastName\":\"Parker\",\"role\":{\"id\":2}},{\"_id\":\"685bbb495061658553a9f242\",\"email\":\"spiderman@nomadsoft.us\",\"firstName\":\"Spider\",\"lastName\":\"Man\",\"role\":{\"id\":2}},{\"_id\":\"685bbe8591b7ead5e84bb038\",\"email\":\"hulk@nomadsoft.us\",\"firstName\":\"The\",\"lastName\":\"Hulk\",\"role\":{\"id\":2}}]"
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3001/api/v1/auth/me",
+    "status": 200,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "connection": "keep-alive",
+      "content-length": "355",
+      "content-type": "application/json; charset=utf-8",
+      "date": "Thu, 26 Jun 2025 05:22:52 GMT",
+      "etag": "W/\"163-NJ4ZLGwpLl6JaBT/TYzVQJh2P/o\"",
+      "keep-alive": "timeout=5",
+      "x-powered-by": "Express"
+    },
+    "data": "{\"_id\":\"685b9660a6eb67e3152ee627\",\"email\":\"admin@nomadsoft.us\",\"password\":\"$2b$10$AjD9XkBwBolj/Y0P6ZWi4.taRK/1lejPIqcoEg0a6sxPOZ1iAS2P2\",\"provider\":\"email\",\"socialId\":null,\"firstName\":\"Super\",\"lastName\":\"Admin\",\"role\":{\"id\":\"1\",\"_id\":\"1\"},\"status\":{\"id\":\"1\",\"_id\":\"1\"},\"createdAt\":\"2025-06-25T06:25:36.729Z\",\"updatedAt\":\"2025-06-25T06:25:36.729Z\",\"__v\":0}"
+  },
+  {
+    "type": "response",
+    "url": "http://localhost:3001/api/v1/schedules",
+    "status": 200,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "connection": "keep-alive",
+      "content-length": "410",
+      "content-type": "application/json; charset=utf-8",
+      "date": "Thu, 26 Jun 2025 05:22:52 GMT",
+      "etag": "W/\"19a-sPV0jnD8diHoc26SbpbsX7Xkf4Y\"",
+      "keep-alive": "timeout=5",
+      "x-powered-by": "Express"
+    },
+    "data": "[{\"id\":\"685cceb139de7fad1413fb88\",\"name\":\"Week of June 23-29,, 2025\",\"startDate\":\"2025-06-24T00:00:00.000Z\",\"endDate\":\"2025-06-30T00:00:00.000Z\",\"status\":\"published\",\"createdBy\":{\"_id\":{\"buffer\":{\"0\":104,\"1\":91,\"2\":150,\"3\":96,\"4\":166,\"5\":235,\"6\":103,\"7\":227,\"8\":21,\"9\":46,\"10\":230,\"11\":39}},\"firstName\":\"Super\",\"lastName\":\"Admin\"},\"createdAt\":\"2025-06-26T04:38:09.594Z\",\"updatedAt\":\"2025-06-26T05:14:58.404Z\"}]"
+  }
+]

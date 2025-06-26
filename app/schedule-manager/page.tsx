@@ -7,8 +7,8 @@ export default function ScheduleManagerPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to the required shifts page (first step)
-    router.replace("/schedule-manager/required-shifts");
+    // Redirect to the assign page
+    router.replace("/schedule-manager/assign");
   }, [router]);
 
   return null;
