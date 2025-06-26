@@ -54,6 +54,7 @@ export const useScheduleData = (scheduleId?: string) => {
   const loadShiftTypes = async () => {
     try {
       const data = await shiftTypesApi.getAll();
+      console.log('[useScheduleData] Loaded shift types:', data.length);
       setShiftTypes(data.map(convertShiftType));
     } catch (err) {
       console.error('Failed to load shift types:', err);
@@ -92,6 +93,11 @@ export const useScheduleData = (scheduleId?: string) => {
       const data = await scheduleShiftsApi.getBySchedule(schedId);
       // API returns {shifts: [], unassignedShifts: []}
       const allShifts = [...data.shifts, ...data.unassignedShifts];
+      console.log('[useScheduleData] Loaded schedule shifts:', {
+        assigned: data.shifts.length,
+        unassigned: data.unassignedShifts.length,
+        total: allShifts.length
+      });
       setScheduleShifts(allShifts.map(convertScheduleShift));
     } catch (err) {
       console.error('Failed to load schedule shifts:', err);
@@ -306,6 +312,8 @@ export const useScheduleData = (scheduleId?: string) => {
       setError(null);
 
       try {
+        console.log('[useScheduleData] Loading data for scheduleId:', scheduleId);
+        
         // Load shift types first
         await loadShiftTypes();
         
@@ -315,6 +323,8 @@ export const useScheduleData = (scheduleId?: string) => {
         // Load schedule shifts if we have a schedule
         if (currentScheduleId) {
           await loadScheduleShifts(currentScheduleId);
+        } else {
+          console.log('[useScheduleData] No schedule ID, skipping shift load');
         }
       } catch (err) {
         console.error('Failed to load initial data:', err);
