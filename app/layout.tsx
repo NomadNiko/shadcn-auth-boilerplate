@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/providers/auth-provider";
 import { StoreLanguageProvider } from "@/src/services/i18n";
+import { GlobalNav } from "@/components/global-nav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
       >
         <StoreLanguageProvider>
           <AuthProvider>
+            <GlobalNav />
             {children}
           </AuthProvider>
         </StoreLanguageProvider>

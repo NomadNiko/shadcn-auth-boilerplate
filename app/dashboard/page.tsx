@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth, useAuthActions } from "@/hooks/use-auth";
+import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { User, LogOut, Shield, Mail, UserPlus, Loader2 } from "lucide-react";
+import { User, Shield, Mail, UserPlus, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +16,6 @@ import api from "@/lib/api";
 import { AUTH_INVITE_USER_URL } from "@/lib/config";
 import { useTranslation } from "@/src/services/i18n";
 import { LanguageSwitcher } from "@/components/language-switcher";
-import Image from "next/image";
 
 const inviteSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -28,7 +27,6 @@ type InviteFormData = z.infer<typeof inviteSchema>;
 
 export default function DashboardPage() {
   const { user, isLoaded } = useAuth();
-  const { logOut } = useAuthActions();
   const router = useRouter();
   const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false);
   const [isInviting, setIsInviting] = useState(false);
@@ -45,10 +43,6 @@ export default function DashboardPage() {
     },
   });
 
-  const handleLogout = async () => {
-    await logOut();
-    router.push("/auth/login");
-  };
 
   const onInviteSubmit = async (data: InviteFormData) => {
     setIsInviting(true);
@@ -109,18 +103,9 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-background py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
-          <div className="flex items-center space-x-3">
-            <Image 
-              src="/hostel-shifts.svg" 
-              alt="HostelShifts" 
-              width={200} 
-              height={50}
-              className="h-10 w-auto"
-            />
-            <h1 className="text-3xl font-bold text-foreground">
-              {t("title")}
-            </h1>
-          </div>
+          <h1 className="text-3xl font-bold text-foreground">
+            {t("title")}
+          </h1>
           <div className="flex space-x-3">
             <LanguageSwitcher />
             <Dialog open={isInviteDialogOpen} onOpenChange={setIsInviteDialogOpen}>
@@ -226,10 +211,6 @@ export default function DashboardPage() {
                 </Form>
               </DialogContent>
             </Dialog>
-            <Button onClick={handleLogout} variant="outline" className="border-slate-600 hover:bg-slate-800">
-              <LogOut className="mr-2 h-4 w-4" />
-              {t("signOut")}
-            </Button>
           </div>
         </div>
 

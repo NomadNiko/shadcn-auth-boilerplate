@@ -186,4 +186,51 @@
     filter: blur(20px);
     z-index: -1;
   }
+
+  /* Style time picker icons for better visibility in dark theme */
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fbbf24' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3ccircle cx='12' cy='12' r='10'/%3e%3cpolyline points='12,6 12,12 16,14'/%3e%3c/svg%3e") !important;
+    background-size: 16px 16px !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    width: 20px !important;
+    height: 20px !important;
+    cursor: pointer !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  input[type="time"]::-webkit-calendar-picker-indicator:hover {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3ccircle cx='12' cy='12' r='10'/%3e%3cpolyline points='12,6 12,12 16,14'/%3e%3c/svg%3e") !important;
+  }
+
+  /* More specific targeting for shadcn inputs and dialog content */
+  .dark input[type="time"]::-webkit-calendar-picker-indicator,
+  [data-slot="input"][type="time"]::-webkit-calendar-picker-indicator,
+  .bg-card input[type="time"]::-webkit-calendar-picker-indicator {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fbbf24' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3ccircle cx='12' cy='12' r='10'/%3e%3cpolyline points='12,6 12,12 16,14'/%3e%3c/svg%3e") !important;
+    background-size: 16px 16px !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    width: 20px !important;
+    height: 20px !important;
+    cursor: pointer !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  /* Firefox time picker styling */
+  input[type="time"]::-moz-focus-inner {
+    border: 0;
+  }
+
+  /* For other browsers that support time input */
+  input[type="time"] {
+    color-scheme: dark;
+  }
+
+  /* Additional targeting for form controls */
+  .dark input[type="time"] {
+    color-scheme: dark !important;
+  }
 }

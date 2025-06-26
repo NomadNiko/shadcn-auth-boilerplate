@@ -296,9 +296,38 @@ export function useDragHandlers({
     console.log('Employee drop not implemented yet:', employee, overId);
   };
 
+  /**
+   * Handle dropping shifts on trash can (removal)
+   */
+  const handleTrashCanDrop = (shift: ScheduleShift) => {
+    console.log('🗑️ Handling trash can drop:', { shiftId: shift.id });
+
+    // Determine if this is a bulk operation
+    const isBulkOperation = selectedRequiredShifts.has(shift.id);
+    const shiftsToProcess = isBulkOperation 
+      ? [...scheduleShifts, ...unassignedShifts].filter(s => selectedRequiredShifts.has(s.id))
+      : [shift];
+
+    console.log(`🗑️ Removing ${shiftsToProcess.length} shifts (bulk: ${shiftsToProcess.length > 1})`);
+
+    // Remove shifts from both assigned and unassigned arrays
+    const shiftIdsToRemove = new Set(shiftsToProcess.map(s => s.id));
+    
+    setScheduleShifts(prev => prev.filter(s => !shiftIdsToRemove.has(s.id)));
+    setUnassignedShifts(prev => prev.filter(s => !shiftIdsToRemove.has(s.id)));
+
+    // Clear selection after successful bulk operation
+    if (isBulkOperation) {
+      onClearSelectedRequiredShifts();
+    }
+
+    console.log(`✅ Removed ${shiftsToProcess.length} shifts`);
+  };
+
   return {
     handleShiftTypeDrop,
     handleShiftDrop,
-    handleEmployeeDrop
+    handleEmployeeDrop,
+    handleTrashCanDrop
   };
 }

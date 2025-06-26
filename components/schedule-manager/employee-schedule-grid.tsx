@@ -12,6 +12,7 @@ import { CalendarHeader } from "./calendar-header";
 import { CalendarGridHeader } from "./calendar-grid-header";
 import { EmployeeRow } from "./employee-row";
 import { UnassignedShiftsRow } from "./unassigned-shifts-row";
+import { TrashCanComponent } from "./trash-can-component";
 import { EmptyEmployeeState } from "./empty-employee-state";
 
 interface EmployeeScheduleGridProps {
@@ -127,6 +128,12 @@ export function EmployeeScheduleGrid({
           onShiftClickToMove={onShiftClickToMove}
           onClickToUnassignShift={onClickToUnassignShift}
           onEditTimes={onEditTimes}
+        />
+
+        {/* Trash Can Component */}
+        <TrashCanComponent
+          weekDays={weekDays}
+          draggedItemType={draggedItemType}
         />
       </div>
     </div>

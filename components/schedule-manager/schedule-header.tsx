@@ -7,85 +7,35 @@
 
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
 import type { Schedule } from "@/types/schedule";
-import Image from "next/image";
 
 interface ScheduleHeaderProps {
   /** The currently selected schedule */
   selectedSchedule: Schedule;
-
-  /** Whether a save operation is in progress */
-  isSaving: boolean;
-
-  /** Callback to handle back navigation */
-  onBack: () => void;
-
-  /** Callback to save the schedule as draft */
-  onSaveDraft: () => void;
-
-  /** Callback to publish the schedule */
-  onPublish: () => void;
 }
 
 export function ScheduleHeader({
-  selectedSchedule,
-  isSaving,
-  onBack,
-  onSaveDraft,
-  onPublish,
+  selectedSchedule
 }: ScheduleHeaderProps) {
   return (
     <div className="border-b border-border bg-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between py-4">
-          {/* Left side - Branding and Schedule Info */}
-          <div className="flex items-center space-x-6">
-            {/* Brand Logo */}
-            <Image 
-              src="/hostel-shifts.svg" 
-              alt="HostelShifts" 
-              width={160} 
-              height={40}
-              className="h-8 w-auto"
-            />
-
-            {/* Schedule Name */}
-            <div className="text-lg font-medium text-foreground">
-              Schedule Manager
-            </div>
-          </div>
-
-          {/* Right side - Action Buttons */}
-          <div className="flex space-x-3">
-            {/* Back Button */}
-            <Button variant="outline" onClick={onBack}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Schedules
-            </Button>
-
-            {/* Save Draft Button */}
-            <Button variant="outline" onClick={onSaveDraft} disabled={isSaving}>
-              {isSaving
-                ? "Saving..."
-                : selectedSchedule.status === "published"
-                ? "Save as Draft"
-                : "Save Draft"}
-            </Button>
-
-            {/* Publish/Save Button */}
-            <Button
-              className="bg-primary hover:bg-primary/90"
-              onClick={onPublish}
-              disabled={isSaving}
-            >
-              {isSaving
-                ? "Saving..."
-                : selectedSchedule.status === "published"
-                ? "Save Schedule"
-                : "Publish Schedule"}
-            </Button>
+        <div className="flex items-center justify-center py-4">
+          {/* Schedule Info */}
+          <div className="text-center">
+            <h2 className="text-xl font-semibold text-foreground">
+              {selectedSchedule.name}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {new Date(selectedSchedule.startDate).toLocaleDateString()} - {new Date(selectedSchedule.endDate).toLocaleDateString()}
+            </p>
+            <span className={`inline-block px-2 py-1 text-xs rounded-full mt-1 ${
+              selectedSchedule.status === 'published' 
+                ? 'bg-green-900/30 text-green-300 border border-green-700/30'
+                : 'bg-yellow-900/30 text-yellow-300 border border-yellow-700/30'
+            }`}>
+              {selectedSchedule.status.toUpperCase()}
+            </span>
           </div>
         </div>
       </div>

@@ -10,7 +10,6 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ScheduleSelector } from "@/components/schedule-selector";
-import { ScheduleHeader } from "@/components/schedule-manager/schedule-header";
 import { EmployeeScheduleGrid } from "@/components/schedule-manager/employee-schedule-grid";
 import { ScheduleSidebar } from "@/components/schedule-manager/schedule-sidebar";
 import { DragDropProvider } from "@/components/schedule-manager/drag-drop-provider";
@@ -310,16 +309,7 @@ function ScheduleAssignPageContent() {
       employees={employees}
       shiftTypes={shiftTypes}
     >
-      <div className="min-h-screen bg-background">
-        {/* Header */}
-        <ScheduleHeader
-          selectedSchedule={selectedSchedule}
-          isSaving={isSaving}
-          onBack={handleBack}
-          onSaveDraft={handleSaveDraft}
-          onPublish={handlePublish}
-        />
-
+      <div className="bg-background">
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-12 gap-6">
@@ -346,6 +336,8 @@ function ScheduleAssignPageContent() {
               shiftTypes={shiftTypes}
               selectedShiftTypes={selectedShiftTypes}
               shiftTypeQuantities={shiftTypeQuantities}
+              selectedSchedule={selectedSchedule}
+              isSaving={isSaving}
               onCopyPreviousWeek={handleCopyPreviousWeek}
               onClearAllShifts={clearAllShifts}
               onShiftTypeSelect={handleShiftTypeSelect}
@@ -353,6 +345,9 @@ function ScheduleAssignPageContent() {
               onClearAllSelections={clearAllSelections}
               onCreateShiftType={handleCreateShiftType}
               onUpdateShiftType={handleUpdateShiftType}
+              onBack={handleBack}
+              onSaveDraft={handleSaveDraft}
+              onPublish={handlePublish}
             />
           </div>
         </div>

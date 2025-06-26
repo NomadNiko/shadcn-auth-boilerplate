@@ -10,8 +10,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Copy, Trash2 } from "lucide-react";
-import type { Employee, ShiftType } from "@/types/schedule";
+import { Copy, Trash2, ArrowLeft, Save, Upload } from "lucide-react";
+import type { Employee, ShiftType, Schedule } from "@/types/schedule";
 import { EmployeePanel } from "./employee-panel";
 import { ShiftTypePanel } from "./shift-type-panel";
 
@@ -27,6 +27,12 @@ interface ScheduleSidebarProps {
   
   /** Map of shift type ID to quantity */
   shiftTypeQuantities: Map<string, number>;
+  
+  /** The currently selected schedule */
+  selectedSchedule: Schedule;
+
+  /** Whether a save operation is in progress */
+  isSaving: boolean;
   
   /** Callback to copy previous week's shifts */
   onCopyPreviousWeek: () => void;
@@ -48,6 +54,15 @@ interface ScheduleSidebarProps {
   
   /** Callback to update existing shift type */
   onUpdateShiftType: (id: string, shiftType: Omit<ShiftType, 'id' | 'isActive'>) => Promise<void>;
+
+  /** Callback to handle back navigation */
+  onBack: () => void;
+
+  /** Callback to save the schedule as draft */
+  onSaveDraft: () => void;
+
+  /** Callback to publish the schedule */
+  onPublish: () => void;
 }
 
 type SidebarView = 'employees' | 'shifts';
@@ -57,13 +72,18 @@ export function ScheduleSidebar({
   shiftTypes,
   selectedShiftTypes,
   shiftTypeQuantities,
+  selectedSchedule,
+  isSaving,
   onCopyPreviousWeek,
   onClearAllShifts,
   onShiftTypeSelect,
   onQuantityChange,
   onClearAllSelections,
   onCreateShiftType,
-  onUpdateShiftType
+  onUpdateShiftType,
+  onBack,
+  onSaveDraft,
+  onPublish
 }: ScheduleSidebarProps) {
   const [sidebarView, setSidebarView] = useState<SidebarView>('shifts');
 
@@ -75,22 +95,63 @@ export function ScheduleSidebar({
           <CardTitle className="text-lg">Quick Actions</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
+          {/* Schedule Management Actions */}
           <Button 
             variant="outline" 
-            onClick={onCopyPreviousWeek}
+            onClick={onBack}
             className="w-full justify-start"
+            disabled={isSaving}
           >
-            <Copy className="w-4 h-4 mr-2" />
-            Copy Previous Week
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Schedules
           </Button>
+          
           <Button 
             variant="outline" 
-            onClick={onClearAllShifts}
+            onClick={onSaveDraft}
             className="w-full justify-start"
+            disabled={isSaving}
           >
-            <Trash2 className="w-4 h-4 mr-2" />
-            Clear All Shifts
+            <Save className="w-4 h-4 mr-2" />
+            {isSaving
+              ? "Saving..."
+              : selectedSchedule.status === "published"
+              ? "Save as Draft"
+              : "Save Draft"}
           </Button>
+          
+          <Button 
+            onClick={onPublish}
+            className="w-full justify-start bg-primary hover:bg-primary/90"
+            disabled={isSaving}
+          >
+            <Upload className="w-4 h-4 mr-2" />
+            {isSaving
+              ? "Saving..."
+              : selectedSchedule.status === "published"
+              ? "Save Schedule"
+              : "Publish Schedule"}
+          </Button>
+
+          {/* Shift Management Actions */}
+          <div className="border-t pt-3 mt-4">
+            <Button 
+              variant="outline" 
+              onClick={onCopyPreviousWeek}
+              className="w-full justify-start mb-2"
+            >
+              <Copy className="w-4 h-4 mr-2" />
+              Copy Previous Week
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={onClearAllShifts}
+              className="w-full justify-start"
+            >
+              <Trash2 className="w-4 h-4 mr-2" />
+              Clear All Shifts
+            </Button>
+          </div>
         </CardContent>
       </Card>
 

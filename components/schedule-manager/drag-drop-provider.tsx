@@ -99,7 +99,8 @@ export function DragDropProvider({
   const {
     handleShiftTypeDrop,
     handleShiftDrop,
-    handleEmployeeDrop
+    handleEmployeeDrop,
+    handleTrashCanDrop
   } = useDragHandlers({
     weekDates,
     scheduleShifts,
@@ -152,7 +153,12 @@ export function DragDropProvider({
         handleShiftTypeDrop(active.data.current.shiftType, overId);
         break;
       case 'shift':
-        handleShiftDrop(active.data.current.shift, overId);
+        // Check if dropping on trash can
+        if (overId === 'trash-can') {
+          handleTrashCanDrop(active.data.current.shift);
+        } else {
+          handleShiftDrop(active.data.current.shift, overId);
+        }
         break;
       case 'employee':
         handleEmployeeDrop(active.data.current.employee, overId);
