@@ -35,12 +35,13 @@ export function ScheduleHeader({
   onSaveDraft,
   onPublish
 }: ScheduleHeaderProps) {
+  
   return (
     <div className="border-b border-border bg-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-4">
-          {/* Left side - Branding and Navigation */}
-          <div className="flex items-center space-x-4">
+          {/* Left side - Branding and Schedule Info */}
+          <div className="flex items-center space-x-6">
             {/* Brand Logo and Title */}
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -49,21 +50,10 @@ export function ScheduleHeader({
               <span className="text-xl font-semibold">Schedule Manager</span>
             </div>
             
-            {/* Navigation Tabs */}
-            <nav className="flex space-x-6">
-              <Button variant="link" className="text-primary">
-                Schedule
-              </Button>
-              <Button variant="link" className="text-muted-foreground">
-                Shifts
-              </Button>
-              <Button variant="link" className="text-muted-foreground">
-                Employees
-              </Button>
-              <Button variant="link" className="text-muted-foreground">
-                Reports
-              </Button>
-            </nav>
+            {/* Schedule Name */}
+            <div className="text-lg font-medium text-foreground">
+              {selectedSchedule.name}
+            </div>
           </div>
           
           {/* Right side - Action Buttons */}

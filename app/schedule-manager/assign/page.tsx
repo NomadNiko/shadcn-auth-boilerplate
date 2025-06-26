@@ -8,7 +8,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { ScheduleSelector } from "@/components/schedule-selector";
 import { ScheduleHeader } from "@/components/schedule-manager/schedule-header";
 import { EmployeeScheduleGrid } from "@/components/schedule-manager/employee-schedule-grid";
@@ -22,6 +22,7 @@ import type { Schedule, ShiftType } from "@/types/schedule";
 
 function ScheduleAssignPageContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   
   // Local state for schedule selection
   const [selectedSchedule, setSelectedSchedule] = useState<Schedule | null>(null);
@@ -93,7 +94,6 @@ function ScheduleAssignPageContent() {
     getUnassignedShiftsForDay,
     getChangeSummary,
     clearAllShifts,
-    resetToOriginalState,
     // TEMPORARY: Click-to-move functionality
     selectedShiftForMove,
     handleShiftClickToMove,
@@ -118,8 +118,7 @@ function ScheduleAssignPageContent() {
    * Handle back navigation
    */
   const handleBack = () => {
-    setSelectedSchedule(null);
-    resetToOriginalState();
+    router.push('/schedule-manager');
   };
 
   /**

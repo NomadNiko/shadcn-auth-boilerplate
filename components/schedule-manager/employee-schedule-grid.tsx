@@ -27,6 +27,9 @@ interface EmployeeScheduleGridProps {
   /** Set of selected required shifts */
   selectedRequiredShifts: Set<string>;
   
+  /** Whether there are unsaved changes */
+  hasChanges?: boolean;
+  
   /** Type of currently dragged item */
   draggedItemType?: string;
   
@@ -42,12 +45,6 @@ interface EmployeeScheduleGridProps {
   /** Callback to clear selected required shifts */
   onClearSelectedRequiredShifts: () => void;
   
-  /** Callback for previous week navigation */
-  onPreviousWeek?: () => void;
-  
-  /** Callback for next week navigation */
-  onNextWeek?: () => void;
-  
   // TEMPORARY: Click-to-move functionality
   selectedShiftForMove?: ScheduleShift | null;
   onShiftClickToMove?: (shift: ScheduleShift) => void;
@@ -62,13 +59,12 @@ export function EmployeeScheduleGrid({
   weekDates,
   assignedEmployees,
   selectedRequiredShifts,
+  hasChanges = false,
   draggedItemType,
   getAssignedShiftsForEmployeeAndDay,
   getUnassignedShiftsForDay,
   onRequiredShiftSelect,
   onClearSelectedRequiredShifts,
-  onPreviousWeek,
-  onNextWeek,
   // TEMPORARY: Click-to-move functionality
   selectedShiftForMove,
   onShiftClickToMove,
@@ -87,8 +83,8 @@ export function EmployeeScheduleGrid({
       {/* Calendar Navigation and Header */}
       <CalendarHeader
         scheduleName={selectedSchedule.name}
-        onPreviousWeek={onPreviousWeek}
-        onNextWeek={onNextWeek}
+        scheduleStatus={selectedSchedule.status}
+        hasChanges={hasChanges}
       />
 
       {/* Calendar Grid */}

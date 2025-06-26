@@ -83,11 +83,10 @@ export function ScheduleSelector({ onScheduleSelect }: ScheduleSelectorProps) {
     });
     const endStr = endDate.toLocaleDateString('en-US', { 
       month: 'long', 
-      day: 'numeric',
-      year: 'numeric'
+      day: 'numeric'
     });
     
-    return `Week of ${startStr}-${endStr.split(' ')[1]}, ${endDate.getFullYear()}`;
+    return `Week of ${startStr}-${endStr}, ${endDate.getFullYear()}`;
   };
 
   const createNewSchedule = async () => {
