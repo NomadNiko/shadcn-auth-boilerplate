@@ -7,7 +7,8 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { ScheduleSelector } from "@/components/schedule-selector";
 import { ScheduleHeader } from "@/components/schedule-manager/schedule-header";
 import { EmployeeScheduleGrid } from "@/components/schedule-manager/employee-schedule-grid";
@@ -16,12 +17,43 @@ import { DragDropProvider } from "@/components/schedule-manager/drag-drop-provid
 import { useScheduleData } from "@/hooks/use-schedule-data";
 import { useEmployees } from "@/hooks/use-employees";
 import { useScheduleEdit } from "@/hooks/use-schedule-edit";
+import { schedulesApi } from "@/lib/api-services";
 import type { Schedule, ShiftType } from "@/types/schedule";
 
-export default function ScheduleAssignPage() {
+function ScheduleAssignPageContent() {
+  const searchParams = useSearchParams();
   
   // Local state for schedule selection
   const [selectedSchedule, setSelectedSchedule] = useState<Schedule | null>(null);
+  const [loadingScheduleFromUrl, setLoadingScheduleFromUrl] = useState(false);
+
+  // Check for scheduleId in URL parameters
+  useEffect(() => {
+    const scheduleId = searchParams.get('scheduleId');
+    if (scheduleId && !selectedSchedule) {
+      setLoadingScheduleFromUrl(true);
+      // Load the specific schedule
+      schedulesApi.getById(scheduleId)
+        .then(dto => {
+          const schedule = {
+            id: dto.id,
+            name: dto.name,
+            startDate: typeof dto.startDate === 'string' ? dto.startDate : new Date(dto.startDate).toISOString().split('T')[0],
+            endDate: typeof dto.endDate === 'string' ? dto.endDate : new Date(dto.endDate).toISOString().split('T')[0],
+            status: dto.status,
+            totalShifts: dto.totalShifts,
+            assignedShifts: dto.assignedShifts
+          };
+          setSelectedSchedule(schedule);
+        })
+        .catch(err => {
+          console.error('Failed to load schedule from URL:', err);
+        })
+        .finally(() => {
+          setLoadingScheduleFromUrl(false);
+        });
+    }
+  }, [searchParams, selectedSchedule]);
   
   // Core data hooks
   const {
@@ -175,7 +207,7 @@ export default function ScheduleAssignPage() {
   };
 
   // Show loading state
-  if (loading) {
+  if (loading || loadingScheduleFromUrl) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -224,6 +256,8 @@ export default function ScheduleAssignPage() {
       unassignedShifts={unassignedShifts}
       setUnassignedShifts={setUnassignedShifts}
       selectedShiftTypes={selectedShiftTypes}
+      selectedRequiredShifts={selectedRequiredShifts}
+      onClearSelectedRequiredShifts={clearSelectedRequiredShifts}
       shiftTypeQuantities={shiftTypeQuantities}
       employees={employees}
       shiftTypes={shiftTypes}
@@ -299,5 +333,20 @@ export default function ScheduleAssignPage() {
         )}
       </div>
     </DragDropProvider>
+  );
+}
+
+export default function ScheduleAssignPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-lg font-semibold mb-2">Loading Schedule Manager...</div>
+          <div className="text-sm text-muted-foreground">Please wait while we load your data</div>
+        </div>
+      </div>
+    }>
+      <ScheduleAssignPageContent />
+    </Suspense>
   );
 }

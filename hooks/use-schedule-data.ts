@@ -221,7 +221,7 @@ export const useScheduleData = (scheduleId?: string) => {
     }
   };
 
-  // Single bulk operation save - NO individual API calls
+  // Chunked bulk operation save to avoid server limits
   const saveScheduleChanges = async (
     newShifts: ScheduleShift[],
     shiftsToUpdate: ScheduleShift[],
@@ -230,7 +230,7 @@ export const useScheduleData = (scheduleId?: string) => {
     if (!currentSchedule) throw new Error('No current schedule');
 
     try {
-      console.log('🔥 BULK SAVE: Preparing single API call for all changes...', {
+      console.log('🔥 BULK SAVE: Preparing chunked API calls for all changes...', {
         newShifts: newShifts.length,
         shiftsToUpdate: shiftsToUpdate.length,
         shiftsToDelete: shiftsToDelete.length
@@ -280,26 +280,53 @@ export const useScheduleData = (scheduleId?: string) => {
         return true;
       }
 
-      console.log(`🚀 MAKING SINGLE BULK API CALL with ${operations.length} operations`);
+      // Define chunk size - limit to 15 operations per batch to stay well under limits
+      const CHUNK_SIZE = 15;
+      const chunks = [];
       
-      // Execute single bulk operation API call
-      const result = await scheduleShiftsApi.bulkOperations(currentSchedule.id, { operations });
-
-      console.log('🎉 BULK SAVE RESULT:', result);
-
-      if (!result.allSuccessful) {
-        const failedOps = result.results.filter(r => !r.success);
-        console.error('Some operations failed:', failedOps);
-        throw new Error(`${result.failedOperations} operations failed`);
+      for (let i = 0; i < operations.length; i += CHUNK_SIZE) {
+        chunks.push(operations.slice(i, i + CHUNK_SIZE));
       }
+
+      console.log(`🚀 MAKING ${chunks.length} CHUNKED API CALLS with ${operations.length} total operations (max ${CHUNK_SIZE} per chunk)`);
+      
+      // Execute chunked bulk operations
+      let allResults: any[] = [];
+      
+      for (let i = 0; i < chunks.length; i++) {
+        const chunk = chunks[i];
+        console.log(`📦 Processing chunk ${i + 1}/${chunks.length} with ${chunk.length} operations`);
+        
+        try {
+          const result = await scheduleShiftsApi.bulkOperations(currentSchedule.id, { operations: chunk });
+          allResults.push(result);
+          
+          if (!result.allSuccessful) {
+            const failedOps = result.results.filter(r => !r.success);
+            console.error(`Chunk ${i + 1} had failures:`, failedOps);
+            throw new Error(`Chunk ${i + 1}: ${result.failedOperations} operations failed`);
+          }
+          
+          console.log(`✅ Chunk ${i + 1}/${chunks.length} completed successfully`);
+        } catch (chunkErr) {
+          console.error(`💥 Chunk ${i + 1} failed:`, chunkErr);
+          throw new Error(`Chunk ${i + 1} failed: ${chunkErr instanceof Error ? chunkErr.message : String(chunkErr)}`);
+        }
+      }
+
+      console.log('🎉 ALL CHUNKS COMPLETED SUCCESSFULLY:', {
+        totalChunks: chunks.length,
+        totalOperations: operations.length,
+        results: allResults.length
+      });
 
       // Refresh data to get latest state
       await loadScheduleShifts(currentSchedule.id);
 
-      console.log('✅ ALL CHANGES SAVED IN SINGLE API CALL');
+      console.log('✅ ALL CHANGES SAVED IN CHUNKED API CALLS');
       return true;
     } catch (err) {
-      console.error('💥 Bulk save failed:', err);
+      console.error('💥 Chunked bulk save failed:', err);
       // Re-load data to reset to server state
       await loadScheduleShifts(currentSchedule.id);
       throw err;

@@ -10,6 +10,7 @@
 import {
   DndContext,
   DragEndEvent,
+  DragStartEvent,
   DragOverlay,
   useSensor,
   useSensors,
@@ -18,6 +19,9 @@ import {
 } from '@dnd-kit/core';
 import type { ShiftType, ScheduleShift, Employee } from "@/types/schedule";
 import { useDragHandlers } from "./drag-handlers";
+import { DraggableScheduleShift } from "./draggable-schedule-shift";
+import { shiftTypeColors } from "@/types/schedule";
+import { useState } from "react";
 
 interface DragDropProviderProps {
   /** Child components */
@@ -41,6 +45,12 @@ interface DragDropProviderProps {
   /** Selected shift types */
   selectedShiftTypes: Set<string>;
   
+  /** Selected required (unassigned) shifts */
+  selectedRequiredShifts: Set<string>;
+  
+  /** Callback to clear selected required shifts */
+  onClearSelectedRequiredShifts: () => void;
+  
   /** Shift type quantities */
   shiftTypeQuantities: Map<string, number>;
   
@@ -60,10 +70,20 @@ export function DragDropProvider({
   unassignedShifts,
   setUnassignedShifts,
   selectedShiftTypes,
+  selectedRequiredShifts,
+  onClearSelectedRequiredShifts,
   shiftTypeQuantities,
   employees,
   shiftTypes
 }: DragDropProviderProps) {
+  
+  // State for drag overlay
+  const [activeDragData, setActiveDragData] = useState<{
+    type: 'shift' | 'shiftType' | 'employee';
+    shift?: ScheduleShift;
+    shiftType?: ShiftType;
+    employee?: Employee;
+  } | null>(null);
 
   // Configure drag sensors
   const sensors = useSensors(
@@ -87,6 +107,8 @@ export function DragDropProvider({
     unassignedShifts,
     setUnassignedShifts,
     selectedShiftTypes,
+    selectedRequiredShifts,
+    onClearSelectedRequiredShifts,
     shiftTypeQuantities,
     employees,
     shiftTypes
@@ -95,8 +117,17 @@ export function DragDropProvider({
   /**
    * Handle drag start event
    */
-  const handleDragStart = () => {
-    // Drag start event - overlay disabled
+  const handleDragStart = (event: DragStartEvent) => {
+    // Store active drag data for overlay
+    const data = event.active.data.current;
+    if (data && data.type) {
+      setActiveDragData(data as {
+        type: 'shift' | 'shiftType' | 'employee';
+        shift?: ScheduleShift;
+        shiftType?: ShiftType;
+        employee?: Employee;
+      });
+    }
   };
 
   /**
@@ -104,6 +135,9 @@ export function DragDropProvider({
    */
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+
+    // Clear drag overlay data
+    setActiveDragData(null);
 
     if (!over || !active.data.current) return;
 
@@ -126,7 +160,55 @@ export function DragDropProvider({
     }
   };
 
-  // Drag overlay functionality disabled to remove visual shadow/copy effect
+  /**
+   * Render drag overlay content based on what's being dragged
+   */
+  const renderDragOverlay = () => {
+    if (!activeDragData) return null;
+
+    switch (activeDragData.type) {
+      case 'shift':
+        return activeDragData.shift ? (
+          <div className="cursor-grabbing">
+            <DraggableScheduleShift 
+              shift={activeDragData.shift}
+              isUnassigned={!activeDragData.shift.userId}
+            />
+          </div>
+        ) : null;
+      case 'shiftType':
+        const shiftType = activeDragData.shiftType;
+        return shiftType ? (
+          <div className={`cursor-grabbing rounded-lg border p-2 flex items-center space-x-2 ${shiftTypeColors[shiftType.colorIndex]}`}>
+            <div>
+              <div className="text-sm font-medium">{shiftType.name}</div>
+              <div className="text-xs opacity-90">
+                {shiftType.startTime} - {shiftType.endTime}
+              </div>
+            </div>
+          </div>
+        ) : null;
+      case 'employee':
+        const employee = activeDragData.employee;
+        return employee ? (
+          <div className="cursor-grabbing flex items-center space-x-3 p-2 rounded-lg bg-card border">
+            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-medium">
+              {employee.firstName[0]}
+            </div>
+            <div>
+              <div className="text-sm font-medium">
+                {employee.firstName} {employee.lastName}
+              </div>
+              <div className="text-xs text-muted-foreground">
+                {employee.role}
+              </div>
+            </div>
+          </div>
+        ) : null;
+      default:
+        return null;
+    }
+  };
 
   return (
     <DndContext
@@ -137,8 +219,7 @@ export function DragDropProvider({
       {children}
       
       <DragOverlay>
-        {/* Disabled drag overlay to remove visual shadow/copy effect */}
-        {null}
+        {renderDragOverlay()}
       </DragOverlay>
     </DndContext>
   );

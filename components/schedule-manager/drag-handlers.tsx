@@ -28,6 +28,12 @@ interface DragHandlersProps {
   /** Selected shift types */
   selectedShiftTypes: Set<string>;
   
+  /** Selected required (unassigned) shifts */
+  selectedRequiredShifts: Set<string>;
+  
+  /** Callback to clear selected required shifts */
+  onClearSelectedRequiredShifts: () => void;
+  
   /** Shift type quantities */
   shiftTypeQuantities: Map<string, number>;
   
@@ -48,6 +54,8 @@ export function useDragHandlers({
   unassignedShifts,
   setUnassignedShifts,
   selectedShiftTypes,
+  selectedRequiredShifts,
+  onClearSelectedRequiredShifts,
   shiftTypeQuantities,
   employees,
   shiftTypes
@@ -209,10 +217,18 @@ export function useDragHandlers({
   };
 
   /**
-   * Handle dropping existing shifts (reassignment)
+   * Handle dropping existing shifts (reassignment) - supports bulk operations
    */
   const handleShiftDrop = (shift: ScheduleShift, overId: string) => {
     console.log('🎯 Handling shift drop:', { shiftId: shift.id, overId });
+
+    // Determine if this is a bulk operation
+    const isBulkOperation = selectedRequiredShifts.has(shift.id);
+    const shiftsToProcess = isBulkOperation 
+      ? [...scheduleShifts, ...unassignedShifts].filter(s => selectedRequiredShifts.has(s.id))
+      : [shift];
+
+    console.log(`📦 Processing ${shiftsToProcess.length} shifts (bulk: ${shiftsToProcess.length > 1})`);
 
     // Parse drop target
     if (overId.startsWith('employee-') && overId.includes('-day-')) {
@@ -223,22 +239,50 @@ export function useDragHandlers({
       const employee = employees.find(e => e.id === employeeId);
       
       if (employee && weekDates[dayIndex]) {
-        reassignShift(shift, employee, weekDates[dayIndex], dayIndex);
+        shiftsToProcess.forEach(s => {
+          // Check if shift is already assigned to same employee on same day - skip if so
+          if (s.userId === employeeId && s.date === weekDates[dayIndex]) {
+            console.log('⏭️ Skipping - shift already assigned to same employee on same day:', s.id);
+            return;
+          }
+          reassignShift(s, employee, weekDates[dayIndex], dayIndex);
+        });
+        // Clear selection after successful bulk operation
+        if (isBulkOperation) {
+          onClearSelectedRequiredShifts();
+        }
       }
     } else if (overId.startsWith('unassigned-day-')) {
       // Move to unassigned
       const dayIndex = parseInt(overId.split('-')[2]);
       
       if (weekDates[dayIndex]) {
-        unassignShift(shift, weekDates[dayIndex], dayIndex);
+        shiftsToProcess.forEach(s => {
+          // Check if shift is already unassigned on the same day - skip if so
+          if (!s.userId && s.date === weekDates[dayIndex]) {
+            console.log('⏭️ Skipping - shift already unassigned on same day:', s.id);
+            return;
+          }
+          unassignShift(s, weekDates[dayIndex], dayIndex);
+        });
+        // Clear selection after successful bulk operation
+        if (isBulkOperation) {
+          onClearSelectedRequiredShifts();
+        }
       }
     } else if (overId.startsWith('drop-employee-')) {
-      // Drop on employee in sidebar (remove assignment)
+      // Drop on employee in sidebar (assign to employee keeping original date)
       const employeeId = overId.split('-')[2];
       const employee = employees.find(e => e.id === employeeId);
       
       if (employee) {
-        reassignShift(shift, employee, shift.date, getDateIndex(shift.date));
+        shiftsToProcess.forEach(s => {
+          reassignShift(s, employee, s.date, getDateIndex(s.date));
+        });
+        // Clear selection after successful bulk operation
+        if (isBulkOperation) {
+          onClearSelectedRequiredShifts();
+        }
       }
     }
   };
