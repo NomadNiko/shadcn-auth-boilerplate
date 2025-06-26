@@ -16,6 +16,7 @@ import api from "@/lib/api";
 import { AUTH_INVITE_USER_URL } from "@/lib/config";
 import { useTranslation } from "@/src/services/i18n";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { MyScheduleWidget } from "@/components/my-schedule-widget";
 
 const inviteSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -101,7 +102,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-background py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-foreground">
             {t("title")}
@@ -214,7 +215,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="border-slate-700 bg-card card-glow">
             <CardHeader>
               <CardTitle className="flex items-center">
@@ -292,6 +293,9 @@ export default function DashboardPage() {
               </Button>
             </CardContent>
           </Card>
+
+          {/* My Schedule Widget */}
+          <MyScheduleWidget />
         </div>
       </div>
     </div>

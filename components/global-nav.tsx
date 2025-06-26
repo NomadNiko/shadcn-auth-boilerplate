@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { LogOut, LayoutDashboard, Calendar } from "lucide-react";
+import { LogOut, LayoutDashboard, Calendar, CalendarDays } from "lucide-react";
 
 export function GlobalNav() {
   const { user, isLoaded } = useAuth();
@@ -90,6 +90,12 @@ export function GlobalNav() {
                   <Link href="/dashboard" className="cursor-pointer">
                     <LayoutDashboard className="mr-2 h-4 w-4" />
                     <span>Dashboard</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/my-schedule" className="cursor-pointer">
+                    <CalendarDays className="mr-2 h-4 w-4" />
+                    <span>My Schedule</span>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>

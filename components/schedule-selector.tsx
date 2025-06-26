@@ -173,7 +173,7 @@ export function ScheduleSelector({ onScheduleSelect }: ScheduleSelectorProps) {
   if (view === 'list') {
     return (
       <div className="min-h-screen bg-background p-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-bold">Select Schedule</h1>
