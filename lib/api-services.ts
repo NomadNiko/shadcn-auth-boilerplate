@@ -67,6 +67,11 @@ export interface UpdateScheduleShiftDto {
   date?: string;
 }
 
+export interface UpdateShiftTimesDto {
+  actualStartTime?: string;
+  actualEndTime?: string;
+}
+
 // Bulk Operations Types
 export enum BulkOperationType {
   CREATE = 'create',
@@ -224,6 +229,11 @@ export const scheduleShiftsApi = {
 
   update: async (scheduleId: string, id: string, data: UpdateScheduleShiftDto): Promise<ScheduleShiftDto> => {
     const response = await api.patch(`${SCHEDULES_URL}/${scheduleId}/shifts/${id}`, data);
+    return response.data;
+  },
+
+  updateTimes: async (scheduleId: string, id: string, data: UpdateShiftTimesDto): Promise<ScheduleShiftDto> => {
+    const response = await api.patch(`${SCHEDULES_URL}/${scheduleId}/shifts/${id}/times`, data);
     return response.data;
   },
 

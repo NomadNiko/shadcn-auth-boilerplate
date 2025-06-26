@@ -7,12 +7,14 @@
 
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { GripVertical } from "lucide-react";
+import { GripVertical, Edit } from "lucide-react";
 import { useDraggable } from '@dnd-kit/core';
 import type { ShiftType } from "@/types/schedule";
 import { shiftTypeColors } from "@/types/schedule";
 import { CreateShiftTypeDialog } from "@/components/create-shift-type-dialog";
+import { EditShiftTypeDialog } from "@/components/edit-shift-type-dialog";
 
 interface ShiftTypePanelProps {
   /** Array of available shift types */
@@ -35,6 +37,9 @@ interface ShiftTypePanelProps {
   
   /** Callback to create new shift type */
   onCreateShiftType: (shiftType: Omit<ShiftType, 'id' | 'isActive'>) => Promise<void>;
+  
+  /** Callback to update existing shift type */
+  onUpdateShiftType: (id: string, shiftType: Omit<ShiftType, 'id' | 'isActive'>) => Promise<void>;
 }
 
 /**
@@ -46,7 +51,8 @@ function DraggableShiftType({
   onSelect,
   selectedCount,
   quantity,
-  onQuantityChange
+  onQuantityChange,
+  onEdit
 }: { 
   shiftType: ShiftType; 
   isSelected: boolean;
@@ -54,6 +60,7 @@ function DraggableShiftType({
   selectedCount: number;
   quantity: number;
   onQuantityChange: (shiftTypeId: string, quantity: number) => void;
+  onEdit: (shiftType: ShiftType) => void;
 }) {
   const {
     attributes,
@@ -82,6 +89,12 @@ function DraggableShiftType({
     onQuantityChange(shiftType.id, newQuantity);
   };
 
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onEdit(shiftType);
+  };
+
   return (
     <div
       ref={setNodeRef}
@@ -90,12 +103,12 @@ function DraggableShiftType({
         isSelected ? 'ring-2 ring-primary ring-offset-2' : ''
       } ${shiftTypeColors[shiftType.colorIndex]}`}
     >
-      {/* Left 60% - Draggable area */}
+      {/* Left 50% - Draggable area */}
       <div
         {...attributes}
         {...listeners}
         className="flex-1 p-2 cursor-move flex items-center space-x-2"
-        style={{ width: '60%' }}
+        style={{ width: '50%' }}
       >
         <GripVertical className="w-4 h-4 opacity-60 flex-shrink-0" />
         <div className="flex-1">
@@ -106,8 +119,8 @@ function DraggableShiftType({
         </div>
       </div>
 
-      {/* Middle 25% - Quantity selector */}
-      <div className="flex items-center justify-center p-1 border-l border-current/20 space-x-1" style={{ width: '25%' }}>
+      {/* Quantity selector 20% */}
+      <div className="flex items-center justify-center p-1 border-l border-current/20 space-x-1" style={{ width: '20%' }}>
         <button
           onClick={(e) => handleQuantityChange(-1, e)}
           className="w-4 h-4 text-xs font-bold hover:bg-current/20 rounded flex items-center justify-center"
@@ -123,7 +136,18 @@ function DraggableShiftType({
         </button>
       </div>
 
-      {/* Right 15% - Selection area */}
+      {/* Edit button 15% */}
+      <div className="flex items-center justify-center p-1 border-l border-current/20" style={{ width: '15%' }}>
+        <button
+          onClick={handleEditClick}
+          className="w-5 h-5 hover:bg-current/20 rounded flex items-center justify-center opacity-60 hover:opacity-100"
+          title="Edit shift type"
+        >
+          <Edit className="w-3 h-3" />
+        </button>
+      </div>
+
+      {/* Selection area 15% */}
       <div
         onClick={handleSelectClick}
         className="flex items-center justify-center cursor-pointer p-2 border-l border-current/20"
@@ -153,8 +177,29 @@ export function ShiftTypePanel({
   onShiftTypeSelect,
   onQuantityChange,
   onClearAllSelections,
-  onCreateShiftType
+  onCreateShiftType,
+  onUpdateShiftType
 }: ShiftTypePanelProps) {
+  // State for edit dialog
+  const [editingShiftType, setEditingShiftType] = useState<ShiftType | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
+  /**
+   * Handle edit shift type
+   */
+  const handleEditShiftType = (shiftType: ShiftType) => {
+    setEditingShiftType(shiftType);
+    setIsEditDialogOpen(true);
+  };
+
+  /**
+   * Handle close edit dialog
+   */
+  const handleCloseEditDialog = () => {
+    setIsEditDialogOpen(false);
+    setEditingShiftType(null);
+  };
+
   /**
    * Get quantity for a specific shift type
    */
@@ -199,12 +244,21 @@ export function ShiftTypePanel({
             selectedCount={selectedShiftTypes.size}
             quantity={getQuantityForShiftType(shiftType.id)}
             onQuantityChange={onQuantityChange}
+            onEdit={handleEditShiftType}
           />
         ))}
         
         {/* Create New Shift Type */}
         <CreateShiftTypeDialog onCreateShiftType={onCreateShiftType} />
       </div>
+
+      {/* Edit Shift Type Dialog */}
+      <EditShiftTypeDialog
+        shiftType={editingShiftType}
+        open={isEditDialogOpen}
+        onClose={handleCloseEditDialog}
+        onUpdateShiftType={onUpdateShiftType}
+      />
     </div>
   );
 }

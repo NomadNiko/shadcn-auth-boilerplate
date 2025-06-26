@@ -25,6 +25,9 @@ interface EmployeeRowProps {
   selectedShiftForMove?: ScheduleShift | null;
   onShiftClickToMove?: (shift: ScheduleShift) => void;
   onClickToPlaceShift?: (employeeId: string, dayIndex: number) => void;
+  
+  /** Callback for editing shift times */
+  onEditTimes?: (shift: ScheduleShift) => void;
 }
 
 /**
@@ -52,7 +55,8 @@ export function EmployeeRow({
   getAssignedShiftsForDay,
   selectedShiftForMove,
   onShiftClickToMove,
-  onClickToPlaceShift
+  onClickToPlaceShift,
+  onEditTimes
 }: EmployeeRowProps) {
   return (
     <div className="contents">
@@ -74,6 +78,7 @@ export function EmployeeRow({
               shift={shift}
               isClickSelected={selectedShiftForMove?.id === shift.id}
               onClickSelect={onShiftClickToMove}
+              onEditTimes={onEditTimes}
             />
           ))}
         </DroppableEmployeeDay>

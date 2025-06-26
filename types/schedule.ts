@@ -18,6 +18,8 @@ export interface ScheduleShift {
   order: number; // Timeline position
   userId?: string; // null if unassigned
   user?: Employee;
+  actualStartTime?: string; // HH:MM format - actual start time (different from shift type template)
+  actualEndTime?: string; // HH:MM format - actual end time (different from shift type template)
 }
 
 export interface Employee {

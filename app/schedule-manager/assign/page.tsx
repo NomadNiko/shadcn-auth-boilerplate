@@ -14,11 +14,12 @@ import { ScheduleHeader } from "@/components/schedule-manager/schedule-header";
 import { EmployeeScheduleGrid } from "@/components/schedule-manager/employee-schedule-grid";
 import { ScheduleSidebar } from "@/components/schedule-manager/schedule-sidebar";
 import { DragDropProvider } from "@/components/schedule-manager/drag-drop-provider";
+import { EditShiftTimesDialog } from "@/components/edit-shift-times-dialog";
 import { useScheduleData } from "@/hooks/use-schedule-data";
 import { useEmployees } from "@/hooks/use-employees";
 import { useScheduleEdit } from "@/hooks/use-schedule-edit";
 import { schedulesApi } from "@/lib/api-services";
-import type { Schedule, ShiftType } from "@/types/schedule";
+import type { Schedule, ShiftType, ScheduleShift } from "@/types/schedule";
 
 function ScheduleAssignPageContent() {
   const searchParams = useSearchParams();
@@ -27,6 +28,10 @@ function ScheduleAssignPageContent() {
   // Local state for schedule selection
   const [selectedSchedule, setSelectedSchedule] = useState<Schedule | null>(null);
   const [loadingScheduleFromUrl, setLoadingScheduleFromUrl] = useState(false);
+  
+  // Edit shift times dialog state
+  const [editingShift, setEditingShift] = useState<ScheduleShift | null>(null);
+  const [isEditTimesDialogOpen, setIsEditTimesDialogOpen] = useState(false);
 
   // Check for scheduleId in URL parameters
   useEffect(() => {
@@ -63,6 +68,8 @@ function ScheduleAssignPageContent() {
     loading,
     error,
     createShiftType,
+    updateShiftType,
+    updateShiftTimes,
     saveScheduleChanges,
     copyPreviousWeek,
     publishSchedule
@@ -205,6 +212,48 @@ function ScheduleAssignPageContent() {
     }
   };
 
+  /**
+   * Handle update shift type
+   */
+  const handleUpdateShiftType = async (id: string, shiftTypeData: Omit<ShiftType, 'id' | 'isActive'>) => {
+    try {
+      await updateShiftType(id, shiftTypeData);
+      console.log('Shift type updated successfully');
+    } catch (err) {
+      console.error('Failed to update shift type:', err);
+      throw err;
+    }
+  };
+
+  /**
+   * Handle edit shift times
+   */
+  const handleEditShiftTimes = (shift: ScheduleShift) => {
+    setEditingShift(shift);
+    setIsEditTimesDialogOpen(true);
+  };
+
+  /**
+   * Handle close edit times dialog
+   */
+  const handleCloseEditTimesDialog = () => {
+    setIsEditTimesDialogOpen(false);
+    setEditingShift(null);
+  };
+
+  /**
+   * Handle update shift times
+   */
+  const handleUpdateShiftTimes = async (shiftId: string, times: { actualStartTime?: string; actualEndTime?: string }) => {
+    try {
+      await updateShiftTimes(shiftId, times);
+      console.log('Shift times updated successfully');
+    } catch (err) {
+      console.error('Failed to update shift times:', err);
+      throw err;
+    }
+  };
+
   // Show loading state
   if (loading || loadingScheduleFromUrl) {
     return (
@@ -288,6 +337,7 @@ function ScheduleAssignPageContent() {
               onShiftClickToMove={handleShiftClickToMove}
               onClickToPlaceShift={handleClickToPlaceShift}
               onClickToUnassignShift={handleClickToUnassignShift}
+              onEditTimes={handleEditShiftTimes}
             />
 
             {/* Sidebar */}
@@ -302,6 +352,7 @@ function ScheduleAssignPageContent() {
               onQuantityChange={handleQuantityChange}
               onClearAllSelections={clearAllSelections}
               onCreateShiftType={handleCreateShiftType}
+              onUpdateShiftType={handleUpdateShiftType}
             />
           </div>
         </div>
@@ -330,6 +381,14 @@ function ScheduleAssignPageContent() {
             </div>
           </div>
         )}
+
+        {/* Edit Shift Times Dialog */}
+        <EditShiftTimesDialog
+          shift={editingShift}
+          open={isEditTimesDialogOpen}
+          onClose={handleCloseEditTimesDialog}
+          onUpdateShiftTimes={handleUpdateShiftTimes}
+        />
       </div>
     </DragDropProvider>
   );

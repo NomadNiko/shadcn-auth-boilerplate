@@ -34,6 +34,9 @@ interface UnassignedShiftsRowProps {
   selectedShiftForMove?: ScheduleShift | null;
   onShiftClickToMove?: (shift: ScheduleShift) => void;
   onClickToUnassignShift?: (dayIndex: number) => void;
+  
+  /** Callback for editing shift times */
+  onEditTimes?: (shift: ScheduleShift) => void;
 }
 
 /**
@@ -76,7 +79,8 @@ export function UnassignedShiftsRow({
   onClearSelectedRequiredShifts,
   selectedShiftForMove,
   onShiftClickToMove,
-  onClickToUnassignShift
+  onClickToUnassignShift,
+  onEditTimes
 }: UnassignedShiftsRowProps) {
   return (
     <div className="contents">
@@ -105,6 +109,7 @@ export function UnassignedShiftsRow({
               selectedCount={selectedRequiredShifts.size}
               isClickSelected={selectedShiftForMove?.id === shift.id}
               onClickSelect={onShiftClickToMove}
+              onEditTimes={onEditTimes}
             />
           ))}
         </DroppableUnassignedDay>

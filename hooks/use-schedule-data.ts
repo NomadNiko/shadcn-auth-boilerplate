@@ -39,7 +39,9 @@ const convertScheduleShift = (dto: any): ScheduleShift => ({
     lastName: dto.user.lastName || '',
     role: typeof dto.user.role === 'string' ? dto.user.role : (dto.user.role?.name || 'Employee'),
     email: dto.user.email
-  } : undefined
+  } : undefined,
+  actualStartTime: dto.actualStartTime || undefined,
+  actualEndTime: dto.actualEndTime || undefined
 });
 
 export const useScheduleData = (scheduleId?: string) => {
@@ -118,6 +120,19 @@ export const useScheduleData = (scheduleId?: string) => {
     }
   };
 
+  // Update existing shift type
+  const updateShiftType = async (id: string, shiftTypeData: Omit<ShiftType, 'id' | 'isActive'>) => {
+    try {
+      const updatedShiftType = await shiftTypesApi.update(id, shiftTypeData);
+      const converted = convertShiftType(updatedShiftType);
+      setShiftTypes(prev => prev.map(st => st.id === id ? converted : st));
+      return converted;
+    } catch (err) {
+      console.error('Failed to update shift type:', err);
+      throw new Error('Failed to update shift type');
+    }
+  };
+
   // Create schedule shifts one by one (no bulk endpoint in current API)
   const createScheduleShifts = async (shifts: Omit<ScheduleShift, 'id'>[]) => {
     if (!currentSchedule) return [];
@@ -157,6 +172,24 @@ export const useScheduleData = (scheduleId?: string) => {
     } catch (err) {
       console.error('Failed to update schedule shift:', err);
       throw new Error('Failed to update schedule shift');
+    }
+  };
+
+  // Update shift times (for published schedules only)
+  const updateShiftTimes = async (shiftId: string, times: { actualStartTime?: string; actualEndTime?: string }) => {
+    if (!currentSchedule) throw new Error('No current schedule');
+
+    try {
+      const updatedShift = await scheduleShiftsApi.updateTimes(currentSchedule.id, shiftId, times);
+      const converted = convertScheduleShift(updatedShift);
+      
+      setScheduleShifts(prev => 
+        prev.map(shift => shift.id === shiftId ? converted : shift)
+      );
+      return converted;
+    } catch (err) {
+      console.error('Failed to update shift times:', err);
+      throw new Error('Failed to update shift times');
     }
   };
 
@@ -378,8 +411,10 @@ export const useScheduleData = (scheduleId?: string) => {
     
     // Actions
     createShiftType,
+    updateShiftType,
     createScheduleShifts,
     updateScheduleShift,
+    updateShiftTimes,
     deleteScheduleShifts,
     saveScheduleChanges,
     copyPreviousWeek,

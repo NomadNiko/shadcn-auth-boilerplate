@@ -45,6 +45,9 @@ interface ScheduleSidebarProps {
   
   /** Callback to create new shift type */
   onCreateShiftType: (shiftType: Omit<ShiftType, 'id' | 'isActive'>) => Promise<void>;
+  
+  /** Callback to update existing shift type */
+  onUpdateShiftType: (id: string, shiftType: Omit<ShiftType, 'id' | 'isActive'>) => Promise<void>;
 }
 
 type SidebarView = 'employees' | 'shifts';
@@ -59,7 +62,8 @@ export function ScheduleSidebar({
   onShiftTypeSelect,
   onQuantityChange,
   onClearAllSelections,
-  onCreateShiftType
+  onCreateShiftType,
+  onUpdateShiftType
 }: ScheduleSidebarProps) {
   const [sidebarView, setSidebarView] = useState<SidebarView>('shifts');
 
@@ -129,6 +133,7 @@ export function ScheduleSidebar({
               onQuantityChange={onQuantityChange}
               onClearAllSelections={onClearAllSelections}
               onCreateShiftType={onCreateShiftType}
+              onUpdateShiftType={onUpdateShiftType}
             />
           )}
         </CardContent>

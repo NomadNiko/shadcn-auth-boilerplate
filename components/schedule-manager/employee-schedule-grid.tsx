@@ -50,6 +50,9 @@ interface EmployeeScheduleGridProps {
   onShiftClickToMove?: (shift: ScheduleShift) => void;
   onClickToPlaceShift?: (employeeId: string, dayIndex: number) => void;
   onClickToUnassignShift?: (dayIndex: number) => void;
+  
+  /** Callback for editing shift times */
+  onEditTimes?: (shift: ScheduleShift) => void;
 }
 
 const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -69,7 +72,8 @@ export function EmployeeScheduleGrid({
   selectedShiftForMove,
   onShiftClickToMove,
   onClickToPlaceShift,
-  onClickToUnassignShift
+  onClickToUnassignShift,
+  onEditTimes
 }: EmployeeScheduleGridProps) {
   
   /**
@@ -102,6 +106,7 @@ export function EmployeeScheduleGrid({
             selectedShiftForMove={selectedShiftForMove}
             onShiftClickToMove={onShiftClickToMove}
             onClickToPlaceShift={onClickToPlaceShift}
+            onEditTimes={onEditTimes}
           />
         ))}
 
@@ -121,6 +126,7 @@ export function EmployeeScheduleGrid({
           selectedShiftForMove={selectedShiftForMove}
           onShiftClickToMove={onShiftClickToMove}
           onClickToUnassignShift={onClickToUnassignShift}
+          onEditTimes={onEditTimes}
         />
       </div>
     </div>

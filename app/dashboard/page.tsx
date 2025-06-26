@@ -16,6 +16,7 @@ import api from "@/lib/api";
 import { AUTH_INVITE_USER_URL } from "@/lib/config";
 import { useTranslation } from "@/src/services/i18n";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import Image from "next/image";
 
 const inviteSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -108,9 +109,18 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-background py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-foreground">
-            <span className="text-primary">HostelShifts</span> {t("title")}
-          </h1>
+          <div className="flex items-center space-x-3">
+            <Image 
+              src="/hostel-shifts.svg" 
+              alt="HostelShifts" 
+              width={200} 
+              height={50}
+              className="h-10 w-auto"
+            />
+            <h1 className="text-3xl font-bold text-foreground">
+              {t("title")}
+            </h1>
+          </div>
           <div className="flex space-x-3">
             <LanguageSwitcher />
             <Dialog open={isInviteDialogOpen} onOpenChange={setIsInviteDialogOpen}>
