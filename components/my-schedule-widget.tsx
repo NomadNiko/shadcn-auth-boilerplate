@@ -38,9 +38,6 @@ function ShiftCard({ shift }: ShiftCardProps) {
           <div className="flex items-center space-x-1 text-xs">
             <Clock className="w-2.5 h-2.5 flex-shrink-0" />
             <span className="whitespace-nowrap">{actualStartTime} - {actualEndTime}</span>
-            {(shift.actualStartTime || shift.actualEndTime) && (
-              <span className="text-yellow-400">*</span>
-            )}
           </div>
         </div>
         <div className="text-xs opacity-90 ml-2 whitespace-nowrap">

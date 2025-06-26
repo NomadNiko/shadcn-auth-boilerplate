@@ -93,7 +93,7 @@
   --shift-0: oklch(56.379% 0.13634 121.762); /* Vibrant dark slate blue */
   --shift-1: oklch(37.979% 0.17723 262.13); /* Vibrant dark blue */
   --shift-2: oklch(46.229% 0.10551 62.893); /* Vibrant dark cyan */
-  --shift-3: oklch(43.735% 0.07475 173.299); /* Vibrant dark teal */
+  --shift-3: oklch(31.541% 0.05086 174.764); /* Vibrant dark teal */
   --shift-4: oklch(39.589% 0.17856 308.689); /* Vibrant dark emerald */
   --shift-5: oklch(44.926% 0.18437 29.223); /* Vibrant dark indigo */
   --shift-6: oklch(44.879% 0.1369 348.041); /* Vibrant dark purple */
@@ -139,12 +139,12 @@
   --shift-0: oklch(56.379% 0.13634 121.762); /* Vibrant dark slate blue */
   --shift-1: oklch(37.979% 0.17723 262.13); /* Vibrant dark blue */
   --shift-2: oklch(46.229% 0.10551 62.893); /* Vibrant dark cyan */
-  --shift-3: oklch(43.735% 0.07475 173.299); /* Vibrant dark teal */
+  --shift-3: oklch(43.799% 0.0872 169.513); /* Vibrant dark teal */
   --shift-4: oklch(39.589% 0.17856 308.689); /* Vibrant dark emerald */
-  --shift-5: oklch(44.926% 0.18437 29.223); /* Vibrant dark indigo */
-  --shift-6: oklch(44.879% 0.1369 348.041); /* Vibrant dark purple */
-  --shift-7: oklch(64.945% 0.10708 218.941); /* Vibrant dark violet */
-  --shift-8: oklch(0.4 0.18 220); /* Vibrant dark sky blue */
+  --shift-5: oklch(45.022% 0.11011 22.509); /* Vibrant dark indigo */
+  --shift-6: oklch(40.641% 0.17246 318.517); /* Vibrant dark purple */
+  --shift-7: oklch(50.136% 0.07723 218.268); /* Vibrant dark violet */
+  --shift-8: oklch(37.676% 0.08098 240.656); /* Vibrant dark sky blue */
   --shift-9: oklch(0.28 0.18 245); /* Vibrant very dark blue */
 }
 

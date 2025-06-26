@@ -52,60 +52,98 @@ function FullScheduleGrid({ shifts, employees, startDate, endDate }: FullSchedul
 
   return (
     <div className="border border-slate-700 rounded-lg overflow-hidden">
-      {/* Header Row */}
-      <div className="grid grid-cols-8 bg-slate-800">
-        <div className="p-3 border-r border-slate-700">
-          <div className="text-sm font-medium text-slate-300">Employees</div>
-          <div className="text-xs text-slate-400">
-            {format(monday, "MMM d")} - {format(addDays(monday, 6), "MMM d")}
+      {/* Desktop View - Hidden on mobile */}
+      <div className="hidden md:block">
+        {/* Header Row */}
+        <div className="grid grid-cols-8 bg-slate-800">
+          <div className="p-3 border-r border-slate-700">
+            <div className="text-sm font-medium text-slate-300">Employees</div>
+            <div className="text-xs text-slate-400">
+              {format(monday, "MMM d")} - {format(addDays(monday, 6), "MMM d")}
+            </div>
           </div>
+          {weekDays.map((day, index) => (
+            <div key={index} className="p-3 text-center border-r border-slate-700 last:border-r-0">
+              <div className="text-sm font-medium text-slate-300">{format(day, "EEE")}</div>
+              <div className="text-xs text-slate-400">{format(day, "d")}</div>
+            </div>
+          ))}
         </div>
-        {weekDays.map((day, index) => (
-          <div key={index} className="p-3 text-center border-r border-slate-700 last:border-r-0">
-            <div className="text-sm font-medium text-slate-300">{format(day, "EEE")}</div>
-            <div className="text-xs text-slate-400">{format(day, "d")}</div>
+
+        {/* Employee Rows */}
+        {employeesWithShifts.map((employee) => (
+          <div key={employee.id} className="grid grid-cols-8 min-h-[80px] border-b border-slate-700/50 last:border-b-0">
+            <div className="p-3 border-r border-slate-700 bg-slate-900 flex items-center">
+              <div className="flex items-center text-sm">
+                <User className="w-4 h-4 mr-2 text-slate-400" />
+                <div>
+                  <div className="text-slate-300 font-medium">
+                    {employee.firstName} {employee.lastName}
+                  </div>
+                  <div className="text-xs text-slate-500">{employee.role}</div>
+                </div>
+              </div>
+            </div>
+            {weekDays.map((day, dayIndex) => {
+              const dayShifts = getShiftsForEmployeeAndDay(employee.id, day);
+              
+              return (
+                <div 
+                  key={dayIndex} 
+                  className="p-2 border-r border-slate-700 last:border-r-0 space-y-1"
+                >
+                  {dayShifts.map((shift) => {
+                    const actualStartTime = shift.actualStartTime || shift.shiftType.startTime;
+                    const actualEndTime = shift.actualEndTime || shift.shiftType.endTime;
+                    
+                    return (
+                      <div 
+                        key={shift.id}
+                        className={`rounded-md p-2 text-xs ${shiftTypeColors[shift.shiftType.colorIndex]}`}
+                      >
+                        <div className="font-medium mb-1">{shift.shiftType.name}</div>
+                        <div className="flex items-center space-x-1">
+                          <Clock className="w-3 h-3" />
+                          <span>{actualStartTime} - {actualEndTime}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
           </div>
         ))}
-      </div>
 
-      {/* Employee Rows */}
-      {employeesWithShifts.map((employee) => (
-        <div key={employee.id} className="grid grid-cols-8 min-h-[80px] border-b border-slate-700/50 last:border-b-0">
+        {/* Unassigned Shifts Row */}
+        <div className="grid grid-cols-8 min-h-[80px] border-t border-slate-700">
           <div className="p-3 border-r border-slate-700 bg-slate-900 flex items-center">
-            <div className="flex items-center text-sm">
-              <User className="w-4 h-4 mr-2 text-slate-400" />
-              <div>
-                <div className="text-slate-300 font-medium">
-                  {employee.firstName} {employee.lastName}
-                </div>
-                <div className="text-xs text-slate-500">{employee.role}</div>
-              </div>
+            <div className="text-sm text-slate-400">
+              <div className="font-medium">Unassigned</div>
+              <div className="text-xs">Need assignment</div>
             </div>
           </div>
           {weekDays.map((day, dayIndex) => {
-            const dayShifts = getShiftsForEmployeeAndDay(employee.id, day);
+            const unassignedShifts = getUnassignedShiftsForDay(day);
             
             return (
               <div 
                 key={dayIndex} 
                 className="p-2 border-r border-slate-700 last:border-r-0 space-y-1"
               >
-                {dayShifts.map((shift) => {
+                {unassignedShifts.map((shift) => {
                   const actualStartTime = shift.actualStartTime || shift.shiftType.startTime;
                   const actualEndTime = shift.actualEndTime || shift.shiftType.endTime;
                   
                   return (
                     <div 
                       key={shift.id}
-                      className={`rounded-md p-2 text-xs ${shiftTypeColors[shift.shiftType.colorIndex]}`}
+                      className={`rounded-md p-2 text-xs border-2 border-dashed border-slate-600 ${shiftTypeColors[shift.shiftType.colorIndex]} opacity-75`}
                     >
                       <div className="font-medium mb-1">{shift.shiftType.name}</div>
                       <div className="flex items-center space-x-1">
                         <Clock className="w-3 h-3" />
                         <span>{actualStartTime} - {actualEndTime}</span>
-                        {(shift.actualStartTime || shift.actualEndTime) && (
-                          <span className="text-yellow-400">*</span>
-                        )}
                       </div>
                     </div>
                   );
@@ -114,44 +152,119 @@ function FullScheduleGrid({ shifts, employees, startDate, endDate }: FullSchedul
             );
           })}
         </div>
-      ))}
+      </div>
 
-      {/* Unassigned Shifts Row */}
-      <div className="grid grid-cols-8 min-h-[80px] border-t border-slate-700">
-        <div className="p-3 border-r border-slate-700 bg-slate-900 flex items-center">
-          <div className="text-sm text-slate-400">
-            <div className="font-medium">Unassigned</div>
-            <div className="text-xs">Need assignment</div>
+      {/* Mobile View - Stacked days */}
+      <div className="md:hidden">
+        {/* Week Header */}
+        <div className="bg-slate-800 p-3 border-b border-slate-700">
+          <div className="text-sm font-medium text-slate-300">Full Schedule</div>
+          <div className="text-xs text-slate-400">
+            {format(monday, "MMM d")} - {format(addDays(monday, 6), "MMM d")}
           </div>
         </div>
-        {weekDays.map((day, dayIndex) => {
-          const unassignedShifts = getUnassignedShiftsForDay(day);
-          
-          return (
-            <div 
-              key={dayIndex} 
-              className="p-2 border-r border-slate-700 last:border-r-0 space-y-1"
-            >
-              {unassignedShifts.map((shift) => {
-                const actualStartTime = shift.actualStartTime || shift.shiftType.startTime;
-                const actualEndTime = shift.actualEndTime || shift.shiftType.endTime;
-                
-                return (
-                  <div 
-                    key={shift.id}
-                    className={`rounded-md p-2 text-xs border-2 border-dashed border-slate-600 ${shiftTypeColors[shift.shiftType.colorIndex]} opacity-75`}
-                  >
-                    <div className="font-medium mb-1">{shift.shiftType.name}</div>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="w-3 h-3" />
-                      <span>{actualStartTime} - {actualEndTime}</span>
+
+        {/* Stacked Days */}
+        <div className="space-y-0">
+          {weekDays.map((day, dayIndex) => {
+            const dayString = format(day, 'yyyy-MM-dd');
+            const isToday = format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd');
+            
+            // Get all shifts for this day (assigned and unassigned)
+            const dayAssignedShifts = employeesWithShifts.flatMap(employee => 
+              getShiftsForEmployeeAndDay(employee.id, day).map(shift => ({
+                ...shift,
+                employee
+              }))
+            );
+            const dayUnassignedShifts = getUnassignedShiftsForDay(day);
+            const totalShifts = dayAssignedShifts.length + dayUnassignedShifts.length;
+            
+            return (
+              <div 
+                key={dayIndex} 
+                className={`border-b border-slate-700/50 last:border-b-0 ${
+                  isToday ? 'bg-slate-800/30' : ''
+                }`}
+              >
+                {/* Day Header */}
+                <div className="p-3 bg-slate-800/50 border-b border-slate-700/30">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-sm font-medium text-slate-300">
+                        {format(day, "EEEE")}
+                      </div>
+                      <div className="text-xs text-slate-400">
+                        {format(day, "MMM d")}
+                        {isToday && <span className="ml-2 text-yellow-400">Today</span>}
+                      </div>
+                    </div>
+                    <div className="text-xs text-slate-500">
+                      {totalShifts} shift{totalShifts !== 1 ? 's' : ''}
                     </div>
                   </div>
-                );
-              })}
-            </div>
-          );
-        })}
+                </div>
+
+                {/* Day Shifts */}
+                <div className="p-3">
+                  {totalShifts > 0 ? (
+                    <div className="space-y-3">
+                      {/* Assigned Shifts */}
+                      {dayAssignedShifts.map((shift) => {
+                        const actualStartTime = shift.actualStartTime || shift.shiftType.startTime;
+                        const actualEndTime = shift.actualEndTime || shift.shiftType.endTime;
+                        
+                        return (
+                          <div 
+                            key={shift.id}
+                            className={`rounded-lg p-3 ${shiftTypeColors[shift.shiftType.colorIndex]}`}
+                          >
+                            <div className="flex items-center justify-between mb-1">
+                              <div className="font-medium text-sm">{shift.shiftType.name}</div>
+                              <div className="text-xs opacity-75">
+                                {shift.employee.firstName} {shift.employee.lastName}
+                              </div>
+                            </div>
+                            <div className="flex items-center space-x-1 text-xs">
+                              <Clock className="w-3 h-3" />
+                              <span>{actualStartTime} - {actualEndTime}</span>
+                            </div>
+                          </div>
+                        );
+                      })}
+
+                      {/* Unassigned Shifts */}
+                      {dayUnassignedShifts.map((shift) => {
+                        const actualStartTime = shift.actualStartTime || shift.shiftType.startTime;
+                        const actualEndTime = shift.actualEndTime || shift.shiftType.endTime;
+                        
+                        return (
+                          <div 
+                            key={shift.id}
+                            className={`rounded-lg p-3 border-2 border-dashed border-slate-600 ${shiftTypeColors[shift.shiftType.colorIndex]} opacity-75`}
+                          >
+                            <div className="flex items-center justify-between mb-1">
+                              <div className="font-medium text-sm">{shift.shiftType.name}</div>
+                              <div className="text-xs text-amber-400">Unassigned</div>
+                            </div>
+                            <div className="flex items-center space-x-1 text-xs">
+                              <Clock className="w-3 h-3" />
+                              <span>{actualStartTime} - {actualEndTime}</span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="text-center py-4 text-slate-500 text-sm">
+                      No shifts scheduled
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
@@ -239,13 +352,6 @@ function FullScheduleCard({ schedule, employees, getScheduleData, isExpanded, on
             <div className="mt-3 text-xs text-amber-400 flex items-center">
               <span className="mr-1">⚠️</span>
               {unassignedShifts.length} unassigned shift{unassignedShifts.length !== 1 ? 's' : ''} need attention
-            </div>
-          )}
-          
-          {allShifts.some(s => s.actualStartTime || s.actualEndTime) && (
-            <div className="mt-2 text-xs text-slate-400 flex items-center">
-              <span className="text-yellow-400 mr-1">*</span>
-              Indicates adjusted shift times
             </div>
           )}
         </CardContent>
