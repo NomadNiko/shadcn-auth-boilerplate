@@ -114,6 +114,12 @@ export function useScheduleEdit({
     const assigned = originalScheduleShifts.filter(shift => shift.userId);
     const unassigned = originalScheduleShifts.filter(shift => !shift.userId);
     
+    console.log('🔄 [useScheduleEdit] Initializing local state:', {
+      totalOriginal: originalScheduleShifts.length,
+      assigned: assigned.length,
+      unassigned: unassigned.length
+    });
+    
     setScheduleShifts(assigned);
     setUnassignedShifts(unassigned);
     setHasBeenInitialized(true);

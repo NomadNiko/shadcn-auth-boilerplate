@@ -17,6 +17,7 @@ import { AUTH_INVITE_USER_URL } from "@/lib/config";
 import { useTranslation } from "@/src/services/i18n";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { MyScheduleWidget } from "@/components/my-schedule-widget";
+import { ScheduleManagerWidget } from "@/components/schedule-manager-widget";
 
 const inviteSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -96,7 +97,7 @@ export default function DashboardPage() {
   const userEmail = user.email || "N/A";
   const userFirstName = user.firstName || "";
   const userLastName = user.lastName || "";
-  const userId = user._id || "N/A";
+  // const userId = user._id || "N/A"; // Commented out since not used after widget replacement
   const userRole = user.role || { _id: "unknown", id: "unknown" };
   const userStatus = user.status || { _id: "unknown", id: "unknown" };
 
@@ -263,36 +264,8 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-slate-700 bg-card card-glow">
-            <CardHeader>
-              <CardTitle>{t("welcomeCard.title")}</CardTitle>
-              <CardDescription>
-                {t("welcomeCard.subtitle")}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                {t("welcomeCard.description")}
-              </p>
-              <div className="space-y-3 mb-4">
-                <p className="text-xs text-slate-400">
-                  <strong>{t("welcomeCard.userId")}</strong> {userId}
-                </p>
-                <p className="text-xs text-slate-400">
-                  <strong>{t("welcomeCard.apiBackend")}</strong> http://localhost:3001
-                </p>
-                <p className="text-xs text-slate-400">
-                  <strong>{t("welcomeCard.authentication")}</strong> {t("welcomeCard.authMethod")}
-                </p>
-              </div>
-              <Button 
-                onClick={() => router.push("/schedule-manager/assign")}
-                className="w-full bg-primary hover:bg-primary/90"
-              >
-                Open Schedule Manager
-              </Button>
-            </CardContent>
-          </Card>
+          {/* Schedule Manager Widget */}
+          <ScheduleManagerWidget />
 
           {/* My Schedule Widget */}
           <MyScheduleWidget />

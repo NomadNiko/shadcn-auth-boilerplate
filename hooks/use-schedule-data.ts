@@ -214,9 +214,57 @@ export const useScheduleData = (scheduleId?: string) => {
     if (!currentSchedule) return;
 
     try {
+      console.log('🔄 Getting shift patterns from previous week...');
       const result = await scheduleShiftsApi.copyPrevious(currentSchedule.id);
-      // Reload schedule shifts to get the copied data
-      await loadScheduleShifts(currentSchedule.id);
+      
+      console.log('📊 Copy Previous Week result:', result);
+      
+      if (result.shiftsToCreate && result.shiftsToCreate.length > 0) {
+        // Create shifts locally based on the patterns returned
+        const newShifts: ScheduleShift[] = result.shiftsToCreate.map((pattern, index) => {
+          // Find the shift type for this pattern
+          const shiftType = shiftTypes.find(st => st.id === pattern.shiftTypeId);
+          if (!shiftType) {
+            console.error('Shift type not found for pattern:', pattern);
+            return null;
+          }
+          
+          return {
+            id: `temp-copy-${index}`, // Temporary ID for local state
+            scheduleId: currentSchedule.id,
+            shiftTypeId: pattern.shiftTypeId,
+            shiftType: shiftType,
+            date: pattern.date,
+            order: pattern.order,
+            userId: undefined, // Unassigned
+            user: undefined,
+            actualStartTime: undefined,
+            actualEndTime: undefined
+          };
+        }).filter(Boolean) as ScheduleShift[];
+        
+        console.log('✨ Created local shifts from patterns:', newShifts.length);
+        console.log('🔍 New shifts details:', newShifts.map(s => ({
+          id: s.id,
+          shiftType: s.shiftType.name,
+          date: s.date,
+          order: s.order,
+          userId: s.userId
+        })));
+        
+        // Add the new shifts to the current state (they are unassigned, so add them to the full list)
+        setScheduleShifts(prev => {
+          const updated = [...prev, ...newShifts];
+          console.log('🔍 Updated scheduleShifts length:', updated.length, 'was:', prev.length);
+          return updated;
+        });
+        
+        return {
+          ...result,
+          localShiftsCreated: newShifts.length
+        };
+      }
+      
       return result;
     } catch (err) {
       console.error('Failed to copy previous week:', err);

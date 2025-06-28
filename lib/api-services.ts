@@ -8,6 +8,8 @@ const SHIFT_TYPES_URL = `${API_URL}/api/v1/shift-types`;
 const SCHEDULES_URL = `${API_URL}/api/v1/schedules`;
 const EMPLOYEES_URL = `${API_URL}/api/v1/employees/all`;
 const USERS_URL = `${API_URL}/api/v1/auth/me`;
+const ADMIN_USERS_URL = `${API_URL}/api/v1/users`;
+const INVITE_URL = `${API_URL}/api/v1/auth/invite`;
 
 // Types matching backend DTOs
 export interface ShiftTypeDto {
@@ -70,6 +72,46 @@ export interface UpdateScheduleShiftDto {
 export interface UpdateShiftTimesDto {
   actualStartTime?: string;
   actualEndTime?: string;
+}
+
+// User Management Types
+export interface UserDto {
+  _id: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  role: {
+    _id: string;
+    id: string;
+  };
+  status: {
+    _id: string;
+    id: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateUserDto {
+  email: string;
+  password: string;
+  firstName?: string;
+  lastName?: string;
+  role?: string | { id: string; _id: string };
+}
+
+export interface UpdateUserDto {
+  firstName?: string;
+  lastName?: string;
+  role?: string | { id: string; _id: string };
+  status?: string | { id: string; _id: string };
+}
+
+export interface InviteUserDto {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  role?: string;
 }
 
 // Bulk Operations Types
@@ -241,7 +283,12 @@ export const scheduleShiftsApi = {
     await api.delete(`${SCHEDULES_URL}/${scheduleId}/shifts/${id}`);
   },
 
-  copyPrevious: async (scheduleId: string): Promise<{message: string, count: number}> => {
+  copyPrevious: async (scheduleId: string): Promise<{
+    message: string, 
+    count: number,
+    shiftsToCreate: Array<{shiftTypeId: string, date: string, order: number}>,
+    sourceScheduleName: string
+  }> => {
     const response = await api.post(`${SCHEDULES_URL}/${scheduleId}/shifts/copy-previous`);
     return response.data;
   },
@@ -261,6 +308,50 @@ export const usersApi = {
 
   getAllEmployees: async () => {
     const response = await api.get(EMPLOYEES_URL);
+    return response.data;
+  },
+
+  // Admin user management
+  getAll: async (): Promise<UserDto[]> => {
+    const response = await api.get(ADMIN_USERS_URL, {
+      params: { limit: 1000 } // Request large limit to get all users
+    });
+    
+    // Handle paginated response format: { data: UserDto[], hasNextPage: boolean }
+    if (response.data && Array.isArray(response.data.data)) {
+      return response.data.data;
+    }
+    
+    // Fallback: if it's already an array, return it directly
+    if (Array.isArray(response.data)) {
+      return response.data;
+    }
+    
+    // Return empty array for unexpected formats
+    return [];
+  },
+
+  getById: async (id: string): Promise<UserDto> => {
+    const response = await api.get(`${ADMIN_USERS_URL}/${id}`);
+    return response.data;
+  },
+
+  create: async (data: CreateUserDto): Promise<UserDto> => {
+    const response = await api.post(ADMIN_USERS_URL, data);
+    return response.data;
+  },
+
+  update: async (id: string, data: UpdateUserDto): Promise<UserDto> => {
+    const response = await api.patch(`${ADMIN_USERS_URL}/${id}`, data);
+    return response.data;
+  },
+
+  delete: async (id: string): Promise<void> => {
+    await api.delete(`${ADMIN_USERS_URL}/${id}`);
+  },
+
+  invite: async (data: InviteUserDto): Promise<{ message: string; user: UserDto }> => {
+    const response = await api.post(INVITE_URL, data);
     return response.data;
   }
 };

@@ -3,14 +3,14 @@ module.exports = {
     {
       name: 'hostelshifts-client',
       script: 'yarn',
-      args: 'dev',
+      args: 'start',
       cwd: '/var/dev/hostelshifts-client',
       instances: 1,
       autorestart: true,
       watch: false,
       max_memory_restart: '1G',
       env: {
-        NODE_ENV: 'development',
+        NODE_ENV: 'production',
         PORT: 3000
       },
       env_production: {

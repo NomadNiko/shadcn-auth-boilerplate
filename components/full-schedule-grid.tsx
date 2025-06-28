@@ -17,10 +17,10 @@ interface FullScheduleGridProps {
   shifts: ScheduleShift[];
   employees: Employee[];
   startDate: string;
-  endDate: string;
+  endDate?: string;
 }
 
-function FullScheduleGrid({ shifts, employees, startDate, endDate }: FullScheduleGridProps) {
+function FullScheduleGrid({ shifts, employees, startDate }: FullScheduleGridProps) {
   const start = parseISO(startDate);
   
   // Ensure we always show Monday-Sunday for the schedule week
@@ -167,7 +167,6 @@ function FullScheduleGrid({ shifts, employees, startDate, endDate }: FullSchedul
         {/* Stacked Days */}
         <div className="space-y-0">
           {weekDays.map((day, dayIndex) => {
-            const dayString = format(day, 'yyyy-MM-dd');
             const isToday = format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd');
             
             // Get all shifts for this day (assigned and unassigned)

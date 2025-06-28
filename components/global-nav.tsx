@@ -14,7 +14,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { LogOut, LayoutDashboard, Calendar, CalendarDays } from "lucide-react";
+import { LogOut, LayoutDashboard, Calendar, CalendarDays, Users } from "lucide-react";
+import { isAdmin } from "@/lib/role-utils";
 
 export function GlobalNav() {
   const { user, isLoaded } = useAuth();
@@ -104,6 +105,17 @@ export function GlobalNav() {
                     <span>Schedule Manager</span>
                   </Link>
                 </DropdownMenuItem>
+                {isAdmin(user) && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/users" className="cursor-pointer">
+                        <Users className="mr-2 h-4 w-4" />
+                        <span>User Management</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem 
                   onClick={handleLogout}
